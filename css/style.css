@@ -753,15 +753,15 @@ a {
 
 .car-badge-type.badge-type-competition {
   background-color: rgba(12, 14, 18, 0.82);
-  border: 1px solid rgba(230, 57, 70, 0.45);
+  border: 1px solid rgba(230, 57, 70, 0.55);
   font-size: 0.86rem;
   line-height: 1;
 }
 
 .car-badge-type.badge-type-street {
   background-color: rgba(12, 14, 18, 0.82);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  color: #94a3b8;
+  border: 1px solid rgba(59, 130, 246, 0.55);
+  color: #60a5fa;
 }
 
 .badge-road-icon {
@@ -772,14 +772,16 @@ a {
 
 .car-card:hover .car-badge-type.badge-type-competition {
   background-color: rgba(230, 57, 70, 0.22);
-  border-color: rgba(230, 57, 70, 0.8);
+  border-color: rgba(230, 57, 70, 0.9);
+  box-shadow: 0 0 10px rgba(230, 57, 70, 0.35);
   transform: scale(1.08);
 }
 
 .car-card:hover .car-badge-type.badge-type-street {
-  background-color: rgba(22, 27, 36, 0.95);
-  border-color: rgba(255, 255, 255, 0.28);
-  color: #f1f5f9;
+  background-color: rgba(59, 130, 246, 0.22);
+  border-color: rgba(59, 130, 246, 0.9);
+  color: #93c5fd;
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.35);
   transform: scale(1.08);
 }
 
