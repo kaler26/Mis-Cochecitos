@@ -1,0 +1,24 @@
+# Archivos Excel maestros y temporales (NO incluir en el repositorio público)
+*.xlsx
+*.xls
+*.csv
+*~$*
+~$*.xlsx
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs y temporales
+*.log
+.vscode/
+.idea/
