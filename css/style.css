@@ -942,13 +942,9 @@ a {
 }
 
 .modal-close-btn {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  z-index: 10;
   width: 36px;
   height: 36px;
-  background-color: rgba(12, 14, 18, 0.75);
+  background-color: var(--bg-surface);
   border: 1px solid var(--border-subtle);
   border-radius: 50%;
   color: var(--text-secondary);
@@ -957,6 +953,7 @@ a {
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  flex-shrink: 0;
   transition: all var(--transition-fast);
 }
 
@@ -966,14 +963,24 @@ a {
   border-color: var(--accent);
 }
 
-/* Barra de navegación del modal (Anterior / Siguiente) */
+/* Barra de navegación del modal (Anterior / Siguiente + Cerrar) */
 .modal-navigation-bar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.85rem 1.25rem;
+  padding: 0.75rem 1.25rem;
   background-color: var(--bg-surface-elevated);
   border-bottom: 1px solid var(--border-subtle);
+  gap: 0.75rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.modal-nav-group {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  min-width: 0;
 }
 
 .nav-arrow-btn {
@@ -1850,12 +1857,136 @@ a {
     font-size: 0.68rem;
   }
 
-  .modal-dialog {
-    max-height: 95vh;
+  /* Modal en móviles: diseño full-width tipo bottom-sheet sin scroll horizontal */
+  .modal-overlay {
+    padding: 0.5rem 0.35rem;
+    align-items: flex-end;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
   }
 
-  .modal-overlay {
-    padding: 0.5rem;
+  .modal-dialog {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    max-height: 90vh;
+    box-sizing: border-box;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  .modal-navigation-bar {
+    padding: 0.5rem 0.65rem;
+    gap: 0.35rem;
+  }
+
+  .modal-nav-group {
+    gap: 0.35rem;
+  }
+
+  .nav-arrow-btn {
+    padding: 0.4rem 0.55rem;
+    font-size: 0.76rem;
+    gap: 0.25rem;
+  }
+
+  .modal-position-indicator {
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0 0.15rem;
+    white-space: nowrap;
+  }
+
+  .modal-close-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 0.95rem;
+  }
+
+  .modal-content-grid {
+    grid-template-columns: 1fr;
+    width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
+  }
+
+  .modal-image-col {
+    min-height: 180px;
+    max-height: 250px;
+    padding: 0.85rem 0.5rem;
+    border-right: none;
+    border-bottom: 1px solid var(--border-subtle);
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  .modal-image-wrapper {
+    padding: 0.35rem;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .modal-car-img {
+    max-height: 200px;
+    width: auto;
+    max-width: 100%;
+  }
+
+  .modal-info-col {
+    padding: 1rem 0.85rem 1.5rem 0.85rem;
+    gap: 1rem;
+    width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
+  }
+
+  .modal-brand-badge {
+    font-size: 0.78rem;
+  }
+
+  .modal-model-title {
+    font-size: 1.25rem;
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
+
+  .modal-specs-table {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .spec-row {
+    padding: 0.55rem 0.75rem;
+    font-size: 0.82rem;
+    gap: 0.5rem;
+  }
+
+  .spec-label {
+    font-size: 0.76rem;
+    flex-shrink: 0;
+  }
+
+  .spec-value {
+    font-size: 0.82rem;
+    text-align: right;
+    word-break: break-word;
+  }
+
+  .modal-actions-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .modal-actions-footer .btn {
+    width: 100%;
+    justify-content: center;
   }
 }
 

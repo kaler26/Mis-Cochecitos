@@ -763,8 +763,8 @@
     const car = state.filteredCars[index];
     if (!car) return;
 
-    // Actualizar indicador de posición respetando los filtros activos
-    dom.modalCarPosition.textContent = `${formatNumber(index + 1)} de ${formatNumber(totalFiltered)} en catálogo actual`;
+    // Actualizar indicador de posición respetando los filtros activos (formato compacto para móvil y desktop)
+    dom.modalCarPosition.textContent = `${formatNumber(index + 1)} / ${formatNumber(totalFiltered)}`;
 
     // Botones Anterior / Siguiente
     dom.modalPrevBtn.disabled = index === 0;
