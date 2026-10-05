@@ -1,41 +1,62 @@
-@echo off
+﻿@echo off
+setlocal enabledelayedexpansion
 chcp 65001 > nul
+
 echo =======================================================
 echo   ACTUALIZADOR AUTOMATICO DE LA COLECCION DE COCHES
 echo =======================================================
 echo.
 
-echo [1/2] Procesando archivo Excel y copiando nuevas fotos de SinFondo...
-python tools/excel_to_json.py --copy-images
+set "PY_EXE="
+if exist "%LOCALAPPDATA%\Programs\Python\Python312\python.exe" (
+    set "PY_EXE=%LOCALAPPDATA%\Programs\Python\Python312\python.exe"
+) else (
+    where py >nul 2>nul
+    if !ERRORLEVEL! EQU 0 (
+        set "PY_EXE=py"
+    ) else (
+        where python >nul 2>nul
+        if !ERRORLEVEL! EQU 0 (
+            set "PY_EXE=python"
+        )
+    )
+)
 
-if %ERRORLEVEL% NEQ 0 (
+if "%PY_EXE%"=="" (
+    echo [ERROR] No se encontro instalacion de Python en el equipo.
+    echo Por favor asegurese de tener Python instalado.
+    pause
+    exit /b 1
+)
+
+echo [1/2] Procesando archivo Excel y sincronizando fotos de SinFondo...
+"%PY_EXE%" tools\excel_to_json.py --copy-images
+
+if !ERRORLEVEL! NEQ 0 (
     echo.
     echo [ERROR] Hubo un problema al procesar el Excel. Revisa los mensajes anteriores.
     pause
-    exit /b %ERRORLEVEL%
+    exit /b !ERRORLEVEL!
 )
 
 echo.
 echo [2/2] Validando catalogo e imagenes...
-python tools/test_catalog.py
+"%PY_EXE%" tools\test_catalog.py
 
-if %ERRORLEVEL% NEQ 0 (
+if !ERRORLEVEL! NEQ 0 (
     echo.
     echo [AVISO] Se detecto alguna inconsistencia en las pruebas.
     pause
-    exit /b %ERRORLEVEL%
+    exit /b !ERRORLEVEL!
 )
 
 echo.
 echo =======================================================
 echo   ¡COLECCION ACTUALIZADA CON EXITO!
 echo =======================================================
-echo   - cars.json ha sido actualizado.
-echo   - Las nuevas fotos de SinFondo han sido copiadas a images/.
-echo   - Si tienes tu repositorio en GitHub, sube los cambios ejecutando:
-echo       git add .
-echo       git commit -m "Actualizar coleccion"
-echo       git push
+echo   - cars.json ha sido actualizado con los nuevos datos.
+echo   - Las fotos corregidas han sido sincronizadas en images/.
+echo   - Abre GitHub Desktop para hacer "Commit to main" y "Push".
 echo =======================================================
 echo.
 pause
