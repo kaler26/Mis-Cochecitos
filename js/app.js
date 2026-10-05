@@ -471,7 +471,19 @@
     article.innerHTML = `
       <div class="car-card-media">
         <span class="car-badge-id">#${formattedId}</span>
-        ${car.competition ? `<span class="car-badge-competition">🏁 Competición</span>` : ''}
+        ${car.competition ? `
+          <span class="car-badge-type badge-type-competition" title="Competición / Carreras" aria-label="Competición">🏁</span>
+        ` : `
+          <span class="car-badge-type badge-type-street" title="Vehículo de calle / carretera" aria-label="De calle">
+            <svg class="badge-road-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M4 19L8 5"></path>
+              <path d="M20 19L16 5"></path>
+              <line x1="12" y1="6" x2="12" y2="8.5"></line>
+              <line x1="12" y1="11.5" x2="12" y2="14"></line>
+              <line x1="12" y1="17" x2="12" y2="19.5"></line>
+            </svg>
+          </span>
+        `}
         <img 
           class="car-card-img" 
           src="./${car.image || ''}" 
@@ -790,10 +802,16 @@
     // Competición
     if (car.competition) {
       dom.modalSpecCompBadge.className = 'badge-competition competition-yes';
-      dom.modalSpecCompBadge.textContent = '🏁 Competición';
+      dom.modalSpecCompBadge.innerHTML = '<span>🏁</span><span>Competición</span>';
     } else {
       dom.modalSpecCompBadge.className = 'badge-competition competition-no';
-      dom.modalSpecCompBadge.textContent = '🚗 Calle / Carretera';
+      dom.modalSpecCompBadge.innerHTML = `
+        <svg class="modal-badge-road-icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M4 19L8 5"></path><path d="M20 19L16 5"></path>
+          <line x1="12" y1="6" x2="12" y2="8.5"></line><line x1="12" y1="11.5" x2="12" y2="14"></line><line x1="12" y1="17" x2="12" y2="19.5"></line>
+        </svg>
+        <span>Calle / Carretera</span>
+      `;
     }
 
     // Configurar acción "Ver más de esta marca"

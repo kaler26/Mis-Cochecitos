@@ -731,23 +731,56 @@ a {
   letter-spacing: 0.5px;
 }
 
-.car-badge-competition {
+/* Insignias de tipo en tarjeta principal (Carreras 🏁 vs Calle 🛣️) */
+.car-badge-type {
   position: absolute;
   top: 0.5rem;
   right: 0.5rem;
-  background-color: rgba(230, 57, 70, 0.88);
-  backdrop-filter: blur(4px);
-  color: #ffffff;
-  font-size: 0.65rem;
-  font-weight: 800;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  padding: 0.18rem 0.45rem;
-  border-radius: var(--radius-sm);
-  display: flex;
+  height: 22px;
+  min-width: 26px;
+  padding: 0 0.35rem;
+  display: inline-flex;
   align-items: center;
-  gap: 0.25rem;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.45);
+  transition: transform var(--transition-fast), background-color var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
+  z-index: 2;
+  user-select: none;
+}
+
+.car-badge-type.badge-type-competition {
+  background-color: rgba(12, 14, 18, 0.82);
+  border: 1px solid rgba(230, 57, 70, 0.45);
+  font-size: 0.86rem;
+  line-height: 1;
+}
+
+.car-badge-type.badge-type-street {
+  background-color: rgba(12, 14, 18, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #94a3b8;
+}
+
+.badge-road-icon {
+  width: 14px;
+  height: 14px;
+  display: block;
+}
+
+.car-card:hover .car-badge-type.badge-type-competition {
+  background-color: rgba(230, 57, 70, 0.22);
+  border-color: rgba(230, 57, 70, 0.8);
+  transform: scale(1.08);
+}
+
+.car-card:hover .car-badge-type.badge-type-street {
+  background-color: rgba(22, 27, 36, 0.95);
+  border-color: rgba(255, 255, 255, 0.28);
+  color: #f1f5f9;
+  transform: scale(1.08);
 }
 
 /* Cuerpo de la tarjeta */
@@ -1161,7 +1194,9 @@ a {
 }
 
 .badge-competition {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
   padding: 0.2rem 0.6rem;
   border-radius: var(--radius-sm);
   font-size: 0.75rem;
@@ -1180,6 +1215,13 @@ a {
   background-color: var(--badge-street-bg);
   color: var(--badge-street-text);
   border: 1px solid var(--badge-street-border);
+}
+
+.modal-badge-road-icon {
+  width: 13px;
+  height: 13px;
+  display: inline-block;
+  flex-shrink: 0;
 }
 
 .modal-actions-footer {
