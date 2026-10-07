@@ -175,6 +175,31 @@ else:
     total_special = len(ff_items) + len(pop_items) + len(motos_items)
     print(f"✔ 100% de las {total_special} fotografías de colecciones especiales existen en disco")
 
+# 11. Test Modo Feria & Antirrepeticiones
+assert 'id="nav-tab-feria"' in html_content
+assert 'id="tab-feria"' in html_content
+assert 'id="feria-search-input"' in html_content
+assert 'id="feria-status-banner"' in html_content
+assert "getAllFeriaItems" in js_content
+assert "renderFeria" in js_content
+assert "exportFeriaChecklist" in js_content
+print("✔ Modo Feria & Antirrepeticiones verificado en HTML y JS")
+
+# 12. Test Deslizamiento Táctil en Móvil (Swipe) y Modo de Vista
+assert 'modal-swipe-tip' in html_content
+assert 'btn-view-grid' in html_content
+assert 'btn-view-compact' in html_content
+assert "initTouchSwipe" in js_content
+assert "triggerSwipeFeedback" in js_content
+assert "setViewMode" in js_content
+with open(css_path, "r", encoding="utf-8") as f:
+    css_content = f.read()
+assert ".modal-swipe-tip" in css_content
+assert ".compact-list-mode" in css_content
+assert ".hero-feria" in css_content
+print("✔ Gestos táctiles de deslizamiento (swipe) y modos de vista verificados")
+
 print("\n==================================================")
-print(" ¡TODAS LAS PRUEBAS AUTOMATIZADAS PASARON (11/11)!")
+print(" ¡TODAS LAS PRUEBAS AUTOMATIZADAS PASARON (13/13)!")
 print("==================================================")
+

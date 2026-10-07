@@ -57,6 +57,14 @@
           </svg>
           <span>Motos</span>
         </button>
+        <button type="button" class="nav-btn" data-tab="feria" id="nav-tab-feria">
+          <svg class="nav-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+            <polyline points="9 10 11 12 15 8"></polyline>
+          </svg>
+          <span>Modo Feria</span>
+        </button>
         <button type="button" class="nav-btn" data-tab="estadisticas" id="nav-tab-estadisticas">
           <svg class="nav-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <line x1="18" y1="20" x2="18" y2="10"></line>
@@ -242,6 +250,28 @@
                   </select>
                 </div>
               </div>
+
+              <!-- Selector Modo de Vista (Cuadrícula / Lista compacta) -->
+              <div class="view-mode-wrapper" role="group" aria-label="Modo de vista">
+                <button type="button" id="btn-view-grid" class="view-toggle-btn active" title="Vista cuadrícula" aria-pressed="true" aria-label="Vista cuadrícula">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="3" width="7" height="7"></rect>
+                    <rect x="14" y="3" width="7" height="7"></rect>
+                    <rect x="14" y="14" width="7" height="7"></rect>
+                    <rect x="3" y="14" width="7" height="7"></rect>
+                  </svg>
+                </button>
+                <button type="button" id="btn-view-compact" class="view-toggle-btn" title="Vista lista compacta" aria-pressed="false" aria-label="Vista lista compacta">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="8" y1="6" x2="21" y2="6"></line>
+                    <line x1="8" y1="12" x2="21" y2="12"></line>
+                    <line x1="8" y1="18" x2="21" y2="18"></line>
+                    <circle cx="4" cy="6" r="1.5" fill="currentColor"></circle>
+                    <circle cx="4" cy="12" r="1.5" fill="currentColor"></circle>
+                    <circle cx="4" cy="18" r="1.5" fill="currentColor"></circle>
+                  </svg>
+                </button>
+              </div>
             </div>
           </div>
 
@@ -375,6 +405,87 @@
             <p>No se encontraron motocicletas con ese filtro.</p>
           </div>
         </div>
+      </div>
+    </section>
+
+    <!-- PESTAÑA: MODO FERIA & ANTIRREPETICIONES -->
+    <section id="tab-feria" class="tab-pane" aria-labelledby="nav-tab-feria" hidden>
+      <div class="special-section-container feria-container">
+        
+        <!-- CABECERA TEMÁTICA MODO FERIA -->
+        <header class="special-hero hero-feria">
+          <div class="special-hero-badge">🎪 MODO FERIA & ANTIRREPETICIONES</div>
+          <h2 class="special-hero-title">Verificador Rápido para Compras</h2>
+          <p class="special-hero-desc">Consulta en 2 segundos si ya tienes un coche o moto cuando estés en tiendas, mercadillos o ferias para no comprar piezas repetidas.</p>
+        </header>
+
+        <!-- PANEL DE BÚSQUEDA RÁPIDA -->
+        <section class="feria-controls-panel" aria-label="Buscador rápido antirrepeticiones">
+          <div class="feria-search-box">
+            <div class="feria-input-wrapper">
+              <svg class="search-icon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <input type="search" id="feria-search-input" class="feria-search-input" placeholder="Escribe modelo, marca o fabricante (ej: Skyline, Supra, Batmobile, CBR)..." autocomplete="off">
+              <button type="button" id="feria-search-clear" class="search-clear-btn hidden" aria-label="Limpiar búsqueda">✕</button>
+            </div>
+
+            <div class="feria-options-row">
+              <div class="feria-scope-select-wrap">
+                <label for="feria-scope-filter" class="feria-label">Buscar en:</label>
+                <div class="select-wrapper">
+                  <select id="feria-scope-filter" class="filter-select">
+                    <option value="all">Todas las colecciones (1.533 piezas)</option>
+                    <option value="coleccion">Catálogo Principal (1.452)</option>
+                    <option value="fast_and_furious">Fast & Furious (33)</option>
+                    <option value="cultura_pop">Cultura Pop (26)</option>
+                    <option value="motos">Motos (22)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="feria-actions-wrap">
+                <button type="button" id="feria-export-btn" class="btn btn-secondary btn-sm" title="Copiar lista de coches para llevar en el bloc de notas">
+                  <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                  </svg>
+                  <span id="feria-export-text">Copiar Checklist</span>
+                </button>
+                <button type="button" id="feria-print-btn" class="btn btn-secondary btn-sm" title="Imprimir checklist para llevar en papel">
+                  <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="6 9 6 2 18 2 18 9"></polyline>
+                    <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+                    <rect x="6" y="14" width="12" height="8"></rect>
+                  </svg>
+                  <span>Imprimir</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- CARTEL DE RESULTADO ANTIRREPETICIONES -->
+            <div id="feria-status-banner" class="feria-status-banner state-idle">
+              <span class="feria-status-icon" id="feria-status-icon">🔍</span>
+              <div class="feria-status-text-wrap">
+                <div class="feria-status-title" id="feria-status-title">Escribe un modelo arriba para verificar</div>
+                <div class="feria-status-desc" id="feria-status-desc">Busca al instante entre todos los modelos de tu colección completa.</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- LISTA COMPACTA DE RESULTADOS / CHECKLIST -->
+        <section class="feria-results-section" aria-label="Resultados modo feria">
+          <div class="feria-results-header">
+            <span id="feria-counter" class="feria-counter">1.533 vehículos disponibles</span>
+            <span class="feria-counter-hint">Toca cualquier fila para ver foto y detalles</span>
+          </div>
+          <div id="feria-list-container" class="feria-list-container">
+            <!-- Renderizado dinámico de tarjetas compactas -->
+          </div>
+        </section>
+
       </div>
     </section>
 
@@ -539,6 +650,7 @@
               <polyline points="9 18 15 12 9 6"></polyline>
             </svg>
           </button>
+          <span class="modal-swipe-tip" title="Desliza horizontalmente con el dedo para cambiar de coche">👈 Desliza 👉</span>
         </div>
         <button type="button" class="modal-close-btn" id="modal-close-btn" aria-label="Cerrar ficha (Escape)">✕</button>
       </div>
