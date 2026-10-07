@@ -233,25 +233,30 @@
   // =========================================================================
   async function loadData() {
     try {
-      // Rutas relativas para máxima compatibilidad con GitHub Pages
-      const [response, specialResponse] = await Promise.all([
-        fetch('./data/cars.json'),
-        fetch('./data/special_collections.json').catch(() => null)
-      ]);
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+      // 1. Carga de colección principal: directa (soporta file:/// sin CORS) o vía fetch relativo
+      if (window.CATALOGO_CARS && Array.isArray(window.CATALOGO_CARS)) {
+        state.allCars = window.CATALOGO_CARS;
+        state.filteredCars = [...state.allCars];
+      } else {
+        const response = await fetch('./data/cars.json');
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        state.allCars = await response.json();
+        state.filteredCars = [...state.allCars];
       }
-      const data = await response.json();
-      
-      state.allCars = data;
-      state.filteredCars = [...state.allCars];
 
-      if (specialResponse && specialResponse.ok) {
-        try {
-          state.specialCollections = await specialResponse.json();
-        } catch (e) {
-          console.warn('Error al parsear special_collections.json:', e);
+      // 2. Carga de colecciones especiales: directa o vía fetch relativo
+      if (window.SPECIAL_COLLECTIONS && typeof window.SPECIAL_COLLECTIONS === 'object') {
+        state.specialCollections = window.SPECIAL_COLLECTIONS;
+      } else {
+        const specialResponse = await fetch('./data/special_collections.json').catch(() => null);
+        if (specialResponse && specialResponse.ok) {
+          try {
+            state.specialCollections = await specialResponse.json();
+          } catch (e) {
+            console.warn('Error al parsear special_collections.json:', e);
+          }
         }
       }
 
@@ -267,12 +272,12 @@
       initRouting();
 
     } catch (error) {
-      console.error('Error cargando cars.json:', error);
+      console.error('Error cargando el catálogo:', error);
       dom.resultsCounter.textContent = 'Error al cargar los datos de la colección.';
       dom.carsGrid.innerHTML = `
         <div style="grid-column: 1 / -1; text-align: center; padding: 3rem 1rem; color: #ff5263;">
           <h3>No se pudo cargar el catálogo de coches</h3>
-          <p style="margin-top: 0.5rem; color: #9ea5b3;">Asegúrate de que el archivo <code>data/cars.json</code> existe y es accesible.</p>
+          <p style="margin-top: 0.5rem; color: #9ea5b3;">Asegúrate de que los archivos de datos existen y son accesibles.</p>
         </div>
       `;
     }

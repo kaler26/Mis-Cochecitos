@@ -25,8 +25,8 @@ Catálogo web moderno, 100% estático, responsive y de alto rendimiento para col
 - `index.html`: Estructura principal con catálogo general, pestañas dedicadas (Fast & Furious, Cultura Pop, Motos), buscador instantáneo, modal y estadísticas.
 - `css/style.css`: Estilos visuales en tema oscuro automovilístico (dark theme) con tarjetas y cabeceras temáticas.
 - `js/app.js`: Lógica de filtrado dinámico, enrutamiento por hash (`#ff-1`, `#pop-1`, `#moto-1`), modal navegable y estadísticas.
-- `data/cars.json`: Base de datos estática de la colección principal (~1.452 modelos).
-- `data/special_collections.json`: Base de datos de Fast & Furious, Cultura Pop y Motos.
+- `data/cars.json` y `data/cars.js`: Base de datos estática de la colección principal (~1.452 modelos) con soporte dual online/offline.
+- `data/special_collections.json` y `data/special_collections.js`: Base de datos de Fast & Furious, Cultura Pop y Motos.
 - `images/`: Fotos transparentes de los modelos (`.png`) e icono general `logo.png`.
 - `tools/excel_to_json.py`: Script extractor dinámico de Excel a JSON con sincronización inteligente de fotos.
 - `tools/test_catalog.py`: Suite de 11 pruebas automatizadas para verificar integridad de datos, rutas e imágenes.

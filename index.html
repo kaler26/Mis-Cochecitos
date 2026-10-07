@@ -8,7 +8,7 @@
   <title>MIS COCHECITOS · Coches a Escala</title>
   
   <link rel="icon" type="image/png" href="./images/logo.png">
-  <link rel="stylesheet" href="./css/style.css">
+  <link rel="stylesheet" href="./css/style.css?v=2.2">
 </head>
 <body>
   <!-- CABECERA PRINCIPAL -->
@@ -293,7 +293,7 @@
                 <option value="">Todas las películas</option>
               </select>
             </div>
-            <div class="special-results-count" id="count-ff">33 coches</div>
+            <div class="special-results-count" id="count-ff">-</div>
           </div>
         </section>
 
@@ -329,7 +329,7 @@
                 <option value="">Todos los universos</option>
               </select>
             </div>
-            <div class="special-results-count" id="count-pop">26 vehículos</div>
+            <div class="special-results-count" id="count-pop">-</div>
           </div>
         </section>
 
@@ -365,7 +365,7 @@
                 <option value="">Todas las marcas</option>
               </select>
             </div>
-            <div class="special-results-count" id="count-motos">22 motos</div>
+            <div class="special-results-count" id="count-motos">-</div>
           </div>
         </section>
 
@@ -665,7 +665,11 @@
     </div>
   </footer>
 
-  <!-- SCRIPT PRINCIPAL -->
-  <script src="./js/app.js"></script>
+  <!-- DATOS DE LA COLECCIÓN (Permite funcionamiento local directo con doble clic sin servidor) -->
+  <script src="./data/cars.js"></script>
+  <script src="./data/special_collections.js"></script>
+
+  <!-- SCRIPT PRINCIPAL (v=2.2 para evitar que el navegador use caché antigua) -->
+  <script src="./js/app.js?v=2.2"></script>
 </body>
 </html>

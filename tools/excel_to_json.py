@@ -277,6 +277,11 @@ def main():
     with open(args.output, "w", encoding="utf-8") as f:
         json.dump(cars, f, ensure_ascii=False, indent=2)
 
+    # También generar data/cars.js para soporte 100% local sin servidor (file:///)
+    cars_js_path = os.path.splitext(args.output)[0] + ".js"
+    with open(cars_js_path, "w", encoding="utf-8") as f:
+        f.write("window.CATALOGO_CARS = " + json.dumps(cars, ensure_ascii=False) + ";\n")
+
     # 11. Extraer dinámicamente las colecciones temáticas (Fast & Furious, Cultura Pop, Motos...)
     special_collections, special_copied = extract_special_collections(ws, args, warnings)
 
@@ -515,6 +520,11 @@ def extract_special_collections(ws, args, warnings):
     os.makedirs(os.path.dirname(os.path.abspath(args.output_special)), exist_ok=True)
     with open(args.output_special, "w", encoding="utf-8") as f:
         json.dump(special_collections, f, ensure_ascii=False, indent=2)
+
+    # También guardar data/special_collections.js para ejecución local (file:///)
+    special_js_path = os.path.splitext(args.output_special)[0] + ".js"
+    with open(special_js_path, "w", encoding="utf-8") as f:
+        f.write("window.SPECIAL_COLLECTIONS = " + json.dumps(special_collections, ensure_ascii=False) + ";\n")
 
     print(f"[INFO] Colecciones especiales guardadas en: {args.output_special}")
     return special_collections, copied_count

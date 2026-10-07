@@ -110,21 +110,25 @@ print(f"✔ Filtro competición: {len(comp_cars)} de competición, {len(street_c
 with open(html_path, "r", encoding="utf-8") as f:
     html_content = f.read()
 
-assert 'href="./css/style.css"' in html_content
-assert 'src="./js/app.js"' in html_content
+assert 'href="./css/style.css' in html_content
+assert 'src="./js/app.js' in html_content
 assert 'src="./images/logo.png"' in html_content
+assert 'src="./data/cars.js"' in html_content
+assert 'src="./data/special_collections.js"' in html_content
 assert 'href="/css/' not in html_content, "Ruta absoluta detectada en HTML (rompería GitHub Pages)"
 assert 'src="/js/' not in html_content, "Ruta absoluta detectada en HTML"
-print("✔ Todas las rutas en index.html son relativas y compatibles con GitHub Pages")
+print("✔ Todas las rutas en index.html son relativas y compatibles con GitHub Pages y ejecución local")
 
-# 9. Test de Rutas Relativas en app.js
+# 9. Test de Rutas Relativas y Soporte Dual (Local + Fetch) en app.js
 with open(js_path, "r", encoding="utf-8") as f:
     js_content = f.read()
 
 assert "fetch('./data/cars.json')" in js_content or 'fetch("./data/cars.json")' in js_content
 assert "fetch('./data/special_collections.json')" in js_content or 'fetch("./data/special_collections.json")' in js_content
+assert "window.CATALOGO_CARS" in js_content
+assert "window.SPECIAL_COLLECTIONS" in js_content
 assert "fetch('/data/" not in js_content, "Ruta absoluta en fetch de app.js"
-print("✔ Peticiones fetch en app.js utilizan rutas relativas ('./data/...')")
+print("✔ app.js soporta doble vía: directa para file:/// y fetch relativo para GitHub Pages")
 
 # 10. Test de Colecciones Especiales (Fast & Furious, Cultura Pop, Motos)
 special_json_path = os.path.join(base_dir, "data", "special_collections.json")
