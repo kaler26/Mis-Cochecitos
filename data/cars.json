@@ -912,7 +912,7 @@
   {
     "id": 92,
     "brand": "Porsche",
-    "model": "935.0",
+    "model": "935",
     "manufacturer": "Hot Wheels",
     "year": 1976,
     "color": "Blanco",
@@ -922,7 +922,7 @@
   {
     "id": 93,
     "brand": "Porsche",
-    "model": "944.0",
+    "model": "944",
     "manufacturer": "Hot Wheels",
     "year": 1986,
     "color": "Gris",
@@ -1222,7 +1222,7 @@
   {
     "id": 123,
     "brand": "Honda",
-    "model": "33.0",
+    "model": "33",
     "manufacturer": "Hot Wheels",
     "year": 1985,
     "color": "Blanco",
@@ -1462,7 +1462,7 @@
   {
     "id": 147,
     "brand": "BMW",
-    "model": "2002.0",
+    "model": "2002",
     "manufacturer": "Matchbox",
     "year": 1969,
     "color": "Verde",
@@ -1952,7 +1952,7 @@
   {
     "id": 196,
     "brand": "Mazda",
-    "model": "3.0",
+    "model": "3",
     "manufacturer": "Matchbox",
     "year": 2019,
     "color": "Rojo",
@@ -2732,7 +2732,7 @@
   {
     "id": 274,
     "brand": "Porsche",
-    "model": "934.0",
+    "model": "934",
     "manufacturer": "Majorette",
     "year": 1977,
     "color": "Blanco",
@@ -2762,7 +2762,7 @@
   {
     "id": 277,
     "brand": "Oldsmobile",
-    "model": "442.0",
+    "model": "442",
     "manufacturer": "Hot Wheels",
     "year": 1967,
     "color": "Azul",
@@ -2812,7 +2812,7 @@
   {
     "id": 282,
     "brand": "Porsche",
-    "model": "914.0",
+    "model": "914",
     "manufacturer": "Matchbox",
     "year": 1971,
     "color": "Rojo",
@@ -3102,7 +3102,7 @@
   {
     "id": 311,
     "brand": "Porsche",
-    "model": "935.0",
+    "model": "935",
     "manufacturer": "Hot Wheels",
     "year": 2021,
     "color": "Negro",
@@ -3242,7 +3242,7 @@
   {
     "id": 325,
     "brand": "Porsche",
-    "model": "934.0",
+    "model": "934",
     "manufacturer": "Majorette",
     "year": 1976,
     "color": "Azul",
@@ -3842,7 +3842,7 @@
   {
     "id": 385,
     "brand": "Volvo",
-    "model": "240.0",
+    "model": "240",
     "manufacturer": "Hot Wheels",
     "year": 1986,
     "color": "Rojo",
@@ -4242,7 +4242,7 @@
   {
     "id": 425,
     "brand": "Porsche",
-    "model": "917.0",
+    "model": "917",
     "manufacturer": "Majorette",
     "year": 1971,
     "color": "Rosa",
@@ -4392,7 +4392,7 @@
   {
     "id": 440,
     "brand": "Porsche",
-    "model": "918.0",
+    "model": "918",
     "manufacturer": "Matchbox",
     "year": 2013,
     "color": "Plateado",
@@ -4532,7 +4532,7 @@
   {
     "id": 454,
     "brand": "Peugeot",
-    "model": "208.0",
+    "model": "208",
     "manufacturer": "Majorette",
     "year": 2021,
     "color": "Azul",
@@ -4832,7 +4832,7 @@
   {
     "id": 484,
     "brand": "BMW",
-    "model": "507.0",
+    "model": "507",
     "manufacturer": "Hot Wheels",
     "year": 1957,
     "color": "Blanco",
@@ -4882,7 +4882,7 @@
   {
     "id": 489,
     "brand": "Porsche",
-    "model": "935.0",
+    "model": "935",
     "manufacturer": "Hot Wheels",
     "year": 1976,
     "color": "Azul",
@@ -5072,7 +5072,7 @@
   {
     "id": 508,
     "brand": "Porsche",
-    "model": "911.0",
+    "model": "911",
     "manufacturer": "Hot Wheels",
     "year": 1971,
     "color": "Blanco",
@@ -5632,7 +5632,7 @@
   {
     "id": 564,
     "brand": "Datsun",
-    "model": "510.0",
+    "model": "510",
     "manufacturer": "Matchbox",
     "year": 1970,
     "color": "Naranja",
@@ -6032,7 +6032,7 @@
   {
     "id": 604,
     "brand": "Trabant",
-    "model": "601.0",
+    "model": "601",
     "manufacturer": "Welly",
     "year": 1965,
     "color": "Azul",
@@ -6472,7 +6472,7 @@
   {
     "id": 648,
     "brand": "Porsche",
-    "model": "935.0",
+    "model": "935",
     "manufacturer": "Hot Wheels Premium",
     "year": 2021,
     "color": "Morado",
@@ -6772,7 +6772,7 @@
   {
     "id": 678,
     "brand": "Volvo",
-    "model": "240.0",
+    "model": "240",
     "manufacturer": "Matchbox",
     "year": 1986,
     "color": "Azul",
@@ -7522,7 +7522,7 @@
   {
     "id": 753,
     "brand": "Porsche",
-    "model": "934.0",
+    "model": "934",
     "manufacturer": "Majorette",
     "year": 1977,
     "color": "Blanco",
@@ -7632,7 +7632,7 @@
   {
     "id": 764,
     "brand": "Porsche",
-    "model": "935.0",
+    "model": "935",
     "manufacturer": "Hot Wheels",
     "year": 2022,
     "color": "Azul",
@@ -7642,7 +7642,7 @@
   {
     "id": 765,
     "brand": "BMW",
-    "model": "2002.0",
+    "model": "2002",
     "manufacturer": "Hot Wheels",
     "year": 1974,
     "color": "Blanco",
@@ -7662,7 +7662,7 @@
   {
     "id": 767,
     "brand": "BMW",
-    "model": "507.0",
+    "model": "507",
     "manufacturer": "Hot Wheels",
     "year": 1958,
     "color": "Amarillo",
@@ -8402,7 +8402,7 @@
   {
     "id": 841,
     "brand": "Toyota",
-    "model": "7.0",
+    "model": "7",
     "manufacturer": "Tomica Premium",
     "year": 1969,
     "color": "Blanco",
@@ -8492,7 +8492,7 @@
   {
     "id": 850,
     "brand": "Porsche",
-    "model": "935.0",
+    "model": "935",
     "manufacturer": "Majorette",
     "year": 1977,
     "color": "Verde",
@@ -8722,7 +8722,7 @@
   {
     "id": 873,
     "brand": "Oldsmobile",
-    "model": "442.0",
+    "model": "442",
     "manufacturer": "Matchbox",
     "year": 1970,
     "color": "Azul",
@@ -10202,7 +10202,7 @@
   {
     "id": 1021,
     "brand": "Datsun",
-    "model": "510.0",
+    "model": "510",
     "manufacturer": "Hot Wheels",
     "year": 1972,
     "color": "Marrón",
@@ -10972,7 +10972,7 @@
   {
     "id": 1098,
     "brand": "Ferrari",
-    "model": "348.0",
+    "model": "348",
     "manufacturer": "Hot Wheels",
     "year": 1993,
     "color": "Negro",
@@ -11382,7 +11382,7 @@
   {
     "id": 1139,
     "brand": "Lotus",
-    "model": "49.0",
+    "model": "49",
     "manufacturer": "Hot Wheels",
     "year": 1967,
     "color": "Rojo",
@@ -11772,7 +11772,7 @@
   {
     "id": 1178,
     "brand": "Peugeot",
-    "model": "505.0",
+    "model": "505",
     "manufacturer": "DCT",
     "year": 1987,
     "color": "Blanco",
@@ -12042,7 +12042,7 @@
   {
     "id": 1205,
     "brand": "Porsche",
-    "model": "963.0",
+    "model": "963",
     "manufacturer": "Spark",
     "year": 2023,
     "color": "Blanco",
@@ -12352,7 +12352,7 @@
   {
     "id": 1236,
     "brand": "Fiat",
-    "model": "125.0",
+    "model": "125",
     "manufacturer": "Welly",
     "year": 1973,
     "color": "Rojo",
@@ -13272,7 +13272,7 @@
   {
     "id": 1328,
     "brand": "Porsche",
-    "model": "963.0",
+    "model": "963",
     "manufacturer": "Hot Wheels Elite",
     "year": 2023,
     "color": "Blanco",
@@ -13478,5 +13478,1045 @@
     "color": "Azul",
     "competition": false,
     "image": "images/1348 - Nissan Skyline 2000GT-R LBWK & Fleet Flyer.png"
+  },
+  {
+    "id": 1349,
+    "brand": "BMW",
+    "model": "M3 Touring",
+    "manufacturer": "Majorette",
+    "year": 2025,
+    "color": "Negro",
+    "competition": false,
+    "image": "images/1349 - BMW M3 Touring.png"
+  },
+  {
+    "id": 1350,
+    "brand": "Ford",
+    "model": "Puma ST",
+    "manufacturer": "Majorette",
+    "year": 2025,
+    "color": "Verde",
+    "competition": false,
+    "image": "images/1350 - Ford Puma ST.png"
+  },
+  {
+    "id": 1351,
+    "brand": "Volkswagen",
+    "model": "ID Buggy",
+    "manufacturer": "Majorette",
+    "year": 2019,
+    "color": "Rosa",
+    "competition": false,
+    "image": "images/1351 - Volkswagen ID Buggy.png"
+  },
+  {
+    "id": 1352,
+    "brand": "Renault",
+    "model": "Master",
+    "manufacturer": "Majorette",
+    "year": 2015,
+    "color": "Azul",
+    "competition": false,
+    "image": "images/1352 - Renault Master.png"
+  },
+  {
+    "id": 1353,
+    "brand": "Buick",
+    "model": "Riviera",
+    "manufacturer": "Hot Wheels",
+    "year": 1966,
+    "color": "Negro",
+    "competition": false,
+    "image": "images/1353 - Buick Riviera.png"
+  },
+  {
+    "id": 1354,
+    "brand": "Ferrari",
+    "model": "SF-25",
+    "manufacturer": "BBurago",
+    "year": 2025,
+    "color": "Rojo",
+    "competition": true,
+    "image": "images/1354 - Ferrar SF-25.png"
+  },
+  {
+    "id": 1355,
+    "brand": "Lexus",
+    "model": "IS500 F Sport",
+    "manufacturer": "Matchbox",
+    "year": 2024,
+    "color": "Azul",
+    "competition": false,
+    "image": "images/1355 - Lexus IS500 F Sport.png"
+  },
+  {
+    "id": 1356,
+    "brand": "Lexus",
+    "model": "GS400",
+    "manufacturer": "Matchbox",
+    "year": 2004,
+    "color": "Gris",
+    "competition": false,
+    "image": "images/1356 - Lexus GS400.png"
+  },
+  {
+    "id": 1357,
+    "brand": "Polestar",
+    "model": "5",
+    "manufacturer": "Matchbox",
+    "year": 2025,
+    "color": "Blanco",
+    "competition": false,
+    "image": "images/1357 - Polestar 5.png"
+  },
+  {
+    "id": 1358,
+    "brand": "Ford",
+    "model": "Bronco Raptor",
+    "manufacturer": "Matchbox",
+    "year": 2024,
+    "color": "Naranja",
+    "competition": false,
+    "image": "images/1358 - Ford Bronco Raptor.png"
+  },
+  {
+    "id": 1359,
+    "brand": "Chevrolet",
+    "model": "Corvette Corvair Concept",
+    "manufacturer": "Nisu",
+    "year": 1954,
+    "color": "Azul",
+    "competition": false,
+    "image": "images/1359 - Chevrolete Corvette Corvair Concept.png"
+  },
+  {
+    "id": 1360,
+    "brand": "Pontiac",
+    "model": "Firebird Trans Am",
+    "manufacturer": "Nisu",
+    "year": 1975,
+    "color": "Negro",
+    "competition": false,
+    "image": "images/1360 - Pontiac Firebird Trans Am.png"
+  },
+  {
+    "id": 1361,
+    "brand": "Mercedes",
+    "model": "EQB",
+    "manufacturer": "Matchbox",
+    "year": 2024,
+    "color": "Blanco",
+    "competition": false,
+    "image": "images/1361 - Mercedes EQB.png"
+  },
+  {
+    "id": 1362,
+    "brand": "Subaru",
+    "model": "Impreza WRX STI",
+    "manufacturer": "Hot Wheels Premium",
+    "year": 2002,
+    "color": "Amarillo",
+    "competition": false,
+    "image": "images/1362 - Subaru Impreza WRX STi.png"
+  },
+  {
+    "id": 1363,
+    "brand": "Lancia",
+    "model": "Delta S4",
+    "manufacturer": "Hot Wheels Premium",
+    "year": 1986,
+    "color": "Blanco",
+    "competition": true,
+    "image": "images/1363 - Lancia Delta S4.png"
+  },
+  {
+    "id": 1364,
+    "brand": "Iveco",
+    "model": "Eurocargo",
+    "manufacturer": "Majorette",
+    "year": 2017,
+    "color": "Blanco",
+    "competition": false,
+    "image": "images/1364 - Iveco Eurocargo.png"
+  },
+  {
+    "id": 1365,
+    "brand": "Honda",
+    "model": "e Custom",
+    "manufacturer": "Hot Wheels",
+    "year": 2020,
+    "color": "Amarillo",
+    "competition": false,
+    "image": "images/1365 - Honda e Custom.png"
+  },
+  {
+    "id": 1366,
+    "brand": "Oldsmobile",
+    "model": "Toronado",
+    "manufacturer": "Hot Wheels",
+    "year": 1966,
+    "color": "Rojo",
+    "competition": false,
+    "image": "images/1366 - Oldsmobile Toronado.png"
+  },
+  {
+    "id": 1367,
+    "brand": "Ford",
+    "model": "Sierra Cosworth",
+    "manufacturer": "Hot Wheels",
+    "year": 1987,
+    "color": "Rosa",
+    "competition": true,
+    "image": "images/1367 - Ford Sierra Cosworth.png"
+  },
+  {
+    "id": 1368,
+    "brand": "Maserati",
+    "model": "Tipo 61",
+    "manufacturer": "Hot Wheels",
+    "year": 1959,
+    "color": "Blanco",
+    "competition": true,
+    "image": "images/1368 - Maserati Tipo 61.png"
+  },
+  {
+    "id": 1369,
+    "brand": "Aston Martin",
+    "model": "AMR25",
+    "manufacturer": "MiniGT",
+    "year": 2025,
+    "color": "Verde",
+    "competition": true,
+    "image": "images/1369 - Aston Martin AMR25.png"
+  },
+  {
+    "id": 1370,
+    "brand": "Subaru",
+    "model": "Impreza WRX Sti",
+    "manufacturer": "MiniGT",
+    "year": 1998,
+    "color": "Azul",
+    "competition": true,
+    "image": "images/1370 - Subaru Impreza WRX STI.png"
+  },
+  {
+    "id": 1371,
+    "brand": "lamborghini",
+    "model": "Countach LB-Works",
+    "manufacturer": "MiniGT",
+    "year": 1988,
+    "color": "Negro",
+    "competition": true,
+    "image": "images/1371 - Lamborghini Countach LB-Works.png"
+  },
+  {
+    "id": 1372,
+    "brand": "Mercedes",
+    "model": "300 SEL 6.8 AMG",
+    "manufacturer": "Hot Wheels Premium",
+    "year": 1971,
+    "color": "Negro",
+    "competition": false,
+    "image": "images/1372 - Mercedes 300 SEL 6.8 AMG.png"
+  },
+  {
+    "id": 1373,
+    "brand": "Mitsubishi",
+    "model": "Lancer Evo VI",
+    "manufacturer": "Hot Wheels Premium",
+    "year": 1999,
+    "color": "Rojo",
+    "competition": true,
+    "image": "images/1373 - Mitsubishi Lancer Evo VI.png"
+  },
+  {
+    "id": 1374,
+    "brand": "Toyota",
+    "model": "Supra GR & Fleet Street",
+    "manufacturer": "Hot Wheels Premium",
+    "year": 2020,
+    "color": "Amarillo",
+    "competition": true,
+    "image": "images/1374 - Toyota Supra GR & Fleet Street.png"
+  },
+  {
+    "id": 1375,
+    "brand": "Red Bull",
+    "model": "RB21",
+    "manufacturer": "Hot Wheels",
+    "year": 2025,
+    "color": "Azul",
+    "competition": true,
+    "image": "images/1375 - Red Bull RB21.png"
+  },
+  {
+    "id": 1376,
+    "brand": "Mercedes",
+    "model": "W16 E Performance",
+    "manufacturer": "Hot Wheels",
+    "year": 2025,
+    "color": "Plateado",
+    "competition": true,
+    "image": "images/1376 - Mercedes W16 E Performance.png"
+  },
+  {
+    "id": 1377,
+    "brand": "Alpine",
+    "model": "A525",
+    "manufacturer": "Hot Wheels",
+    "year": 2025,
+    "color": "Azul",
+    "competition": true,
+    "image": "images/1377 - Alpine A525.png"
+  },
+  {
+    "id": 1378,
+    "brand": "Haas",
+    "model": "VF-25",
+    "manufacturer": "Hot Wheels",
+    "year": 2025,
+    "color": "Blanco",
+    "competition": true,
+    "image": "images/1378 - Haas VF-25.png"
+  },
+  {
+    "id": 1379,
+    "brand": "Williams",
+    "model": "FW47",
+    "manufacturer": "Hot Wheels",
+    "year": 2025,
+    "color": "Azul",
+    "competition": true,
+    "image": "images/1379 - Williams FW47.png"
+  },
+  {
+    "id": 1380,
+    "brand": "Lancia",
+    "model": "037 Rally",
+    "manufacturer": "Hot Wheels",
+    "year": 1982,
+    "color": "Negro",
+    "competition": true,
+    "image": "images/1380 - Lancia 037 Rally.png"
+  },
+  {
+    "id": 1381,
+    "brand": "Audi",
+    "model": "Quattro",
+    "manufacturer": "Hot Wheels",
+    "year": 1985,
+    "color": "Plateado",
+    "competition": true,
+    "image": "images/1381 - Audi Quattro.png"
+  },
+  {
+    "id": 1382,
+    "brand": "Dodge",
+    "model": "330",
+    "manufacturer": "Hot Wheels",
+    "year": 1964,
+    "color": "Blanco",
+    "competition": true,
+    "image": "images/1382 - Dodge 330.png"
+  },
+  {
+    "id": 1383,
+    "brand": "Toyota",
+    "model": "Tacoma",
+    "manufacturer": "Matchbox",
+    "year": 2024,
+    "color": "Marrón",
+    "competition": false,
+    "image": "images/1383 - Toyota Tacoma.png"
+  },
+  {
+    "id": 1384,
+    "brand": "Honda",
+    "model": "CR-X Del Sol",
+    "manufacturer": "Hot Wheels Premium",
+    "year": 1994,
+    "color": "Blanco",
+    "competition": false,
+    "image": "images/1384 - Honda CR-X Del Sol.png"
+  },
+  {
+    "id": 1385,
+    "brand": "Chevrolet",
+    "model": "Corvette C7 Z06",
+    "manufacturer": "Hot Wheels",
+    "year": 2016,
+    "color": "Rosa",
+    "competition": true,
+    "image": "images/1385 - Chevrolet Corvette C7 Z06.png"
+  },
+  {
+    "id": 1386,
+    "brand": "Ford",
+    "model": "F-350 Stake Bed",
+    "manufacturer": "Matchbox",
+    "year": 2017,
+    "color": "Azul",
+    "competition": false,
+    "image": "images/1386 - Ford F-350 Stake Bed.png"
+  },
+  {
+    "id": 1387,
+    "brand": "Volkswagen",
+    "model": "Beetle Twisted Tbug",
+    "manufacturer": "Matchbox",
+    "year": 2025,
+    "color": "Azul",
+    "competition": false,
+    "image": "images/1387 - Volkswagen Beetle Twisted Bug.png"
+  },
+  {
+    "id": 1388,
+    "brand": "Toyota",
+    "model": "Prius Custom",
+    "manufacturer": "Hot Wheels",
+    "year": 2025,
+    "color": "Blanco",
+    "competition": false,
+    "image": "images/1388 - Toyota Prius Custom.png"
+  },
+  {
+    "id": 1389,
+    "brand": "Red Bull",
+    "model": "RB21",
+    "manufacturer": "BBurago",
+    "year": 2025,
+    "color": "Azul",
+    "competition": true,
+    "image": "images/1389 - Red Bull RB21.png"
+  },
+  {
+    "id": 1390,
+    "brand": "Ford",
+    "model": "Ranchero",
+    "manufacturer": "Matchbox",
+    "year": 1961,
+    "color": "Blanco",
+    "competition": false,
+    "image": "images/1390 - Ford Ranchero.png"
+  },
+  {
+    "id": 1391,
+    "brand": "Audi",
+    "model": "RS6 Avant",
+    "manufacturer": "Hot Wheels Premium",
+    "year": 2017,
+    "color": "Blanco",
+    "competition": true,
+    "image": "images/1391 - Audi RS6 Avant.png"
+  },
+  {
+    "id": 1392,
+    "brand": "Chevrolet",
+    "model": "Bel Air",
+    "manufacturer": "Majorette Collection",
+    "year": 1955,
+    "color": "Azul",
+    "competition": false,
+    "image": "images/1392 - Chevrolet Bel Air.png"
+  },
+  {
+    "id": 1393,
+    "brand": "Nissan",
+    "model": "Junior",
+    "manufacturer": "Matchbox",
+    "year": 1962,
+    "color": "Rosa",
+    "competition": false,
+    "image": "images/1393 - Nissan Junior.png"
+  },
+  {
+    "id": 1394,
+    "brand": "Lancia",
+    "model": "Delta HF Integrale Evo",
+    "manufacturer": "MiniGT",
+    "year": 1993,
+    "color": "Blanco",
+    "competition": true,
+    "image": "images/1394 - Lancia Delta HF Integrale Evo.png"
+  },
+  {
+    "id": 1395,
+    "brand": "Porsche",
+    "model": "911 GT3 R",
+    "manufacturer": "MiniGT",
+    "year": 2025,
+    "color": "Rosa",
+    "competition": true,
+    "image": "images/1395 - Porsche 911 GT3 R.png"
+  },
+  {
+    "id": 1396,
+    "brand": "Subaru",
+    "model": "Impreza WRC",
+    "manufacturer": "MiniGT",
+    "year": 2000,
+    "color": "Azul",
+    "competition": true,
+    "image": "images/1396 - Subaru Impreza WRC.png"
+  },
+  {
+    "id": 1397,
+    "brand": "Acura",
+    "model": "ARX-06 GTP",
+    "manufacturer": "MiniGT",
+    "year": 2024,
+    "color": "Azul",
+    "competition": true,
+    "image": "images/1397 - Acura ARX-06 GTP.png"
+  },
+  {
+    "id": 1398,
+    "brand": "Toyota",
+    "model": "Prius Custom Roof Box",
+    "manufacturer": "Hot Wheels",
+    "year": 2023,
+    "color": "Blanco",
+    "competition": false,
+    "image": "images/1398 - Toyota Prius Custom Roof Box.png"
+  },
+  {
+    "id": 1399,
+    "brand": "Nissan",
+    "model": "Skyline 2000 GT-R",
+    "manufacturer": "Hot Wheels",
+    "year": 1973,
+    "color": "Naranja",
+    "competition": true,
+    "image": "images/1399 - Nissan Skyline 2000 GT-R.png"
+  },
+  {
+    "id": 1400,
+    "brand": "Ford",
+    "model": "Scort RS2000",
+    "manufacturer": "Hot Wheels",
+    "year": 1978,
+    "color": "Azul",
+    "competition": true,
+    "image": "images/1400 - Ford Scort RS2000.png"
+  },
+  {
+    "id": 1401,
+    "brand": "RB",
+    "model": "VCARB02",
+    "manufacturer": "Hot Wheels",
+    "year": 2025,
+    "color": "Blanco",
+    "competition": true,
+    "image": "images/1401 - RB VCARB02.png"
+  },
+  {
+    "id": 1402,
+    "brand": "Cadillac",
+    "model": "ATS-V R",
+    "manufacturer": "Hot Wheels",
+    "year": 2016,
+    "color": "Naranja",
+    "competition": true,
+    "image": "images/1402 - Cadillac ATS-V R.png"
+  },
+  {
+    "id": 1403,
+    "brand": "Volkswagen",
+    "model": "Caddy",
+    "manufacturer": "Matchbox",
+    "year": 2004,
+    "color": "Blanco",
+    "competition": false,
+    "image": "images/1403 - Volkswagen Caddy.png"
+  },
+  {
+    "id": 1404,
+    "brand": "Nissan",
+    "model": "Skyline GT-R Police",
+    "manufacturer": "Tomica",
+    "year": 1999,
+    "color": "Blanco",
+    "competition": false,
+    "image": "images/1404 - Nissan Skyline GT-R Police.png"
+  },
+  {
+    "id": 1405,
+    "brand": "Mitsubishi",
+    "model": "Delica Fire Command",
+    "manufacturer": "Tomica",
+    "year": 2019,
+    "color": "Rojo",
+    "competition": false,
+    "image": "images/1405 - Mitsubishi Delica Fire Command.png"
+  },
+  {
+    "id": 1406,
+    "brand": "Toyota",
+    "model": "Yaris WRC",
+    "manufacturer": "Majorette",
+    "year": 2023,
+    "color": "Negro",
+    "competition": false,
+    "image": "images/1406 - Toyota Yaris WRC.png"
+  },
+  {
+    "id": 1407,
+    "brand": "Volkswagen",
+    "model": "SP2",
+    "manufacturer": "Hot wheels",
+    "year": 1974,
+    "color": "Morado",
+    "competition": true,
+    "image": "images/1407 - Volkswagen SP2.png"
+  },
+  {
+    "id": 1408,
+    "brand": "Chevrolet",
+    "model": "K1500",
+    "manufacturer": "Matchbox",
+    "year": 1997,
+    "color": "Azul",
+    "competition": false,
+    "image": "images/1408 - Chevrolet K1500.png"
+  },
+  {
+    "id": 1409,
+    "brand": "Chevrolet",
+    "model": "Tahoe Z71",
+    "manufacturer": "Matchbox",
+    "year": 2023,
+    "color": "Rojo",
+    "competition": false,
+    "image": "images/1409 - Chevrolet Tahoe Z71.png"
+  },
+  {
+    "id": 1410,
+    "brand": "Mercedes",
+    "model": "230 SL",
+    "manufacturer": "Matchbox",
+    "year": 1963,
+    "color": "Azul",
+    "competition": false,
+    "image": "images/1410 - Mercedes 230 SL.png"
+  },
+  {
+    "id": 1411,
+    "brand": "Mclaren",
+    "model": "F1 GT",
+    "manufacturer": "Matchbox",
+    "year": 1997,
+    "color": "Verde",
+    "competition": false,
+    "image": "images/1411 - Mclaren F1 GT.png"
+  },
+  {
+    "id": 1412,
+    "brand": "Buick",
+    "model": "Roadmaster Estate Wagon",
+    "manufacturer": "Matchbox",
+    "year": 1992,
+    "color": "Rojo",
+    "competition": false,
+    "image": "images/1412 - Buick Roadmaster Estate Wagon.png"
+  },
+  {
+    "id": 1413,
+    "brand": "Porsche",
+    "model": "718 Spyder RS",
+    "manufacturer": "Matchbox",
+    "year": 2024,
+    "color": "Verde",
+    "competition": false,
+    "image": "images/1413 - Porsche 718 Spyder RS.png"
+  },
+  {
+    "id": 1414,
+    "brand": "Subaru",
+    "model": "Impreza WRX STI Wagon",
+    "manufacturer": "Hot Wheels",
+    "year": 1999,
+    "color": "Rojo",
+    "competition": false,
+    "image": "images/1414 - Subaru Impreza WRX STI Wagon.png"
+  },
+  {
+    "id": 1415,
+    "brand": "Jeep",
+    "model": "J10 Stepside",
+    "manufacturer": "Matchbox",
+    "year": 1980,
+    "color": "Rojo",
+    "competition": false,
+    "image": "images/1415 - Jeep J10 Stepside.png"
+  },
+  {
+    "id": 1416,
+    "brand": "Toyota",
+    "model": "Land Cruiser 78 Pickup",
+    "manufacturer": "Matchbox",
+    "year": 2017,
+    "color": "Beige",
+    "competition": false,
+    "image": "images/1416 - Toyota Land Cruiser 78 Pickup.png"
+  },
+  {
+    "id": 1417,
+    "brand": "Honda",
+    "model": "Ridgeline",
+    "manufacturer": "Matchbox",
+    "year": 2015,
+    "color": "Rojo",
+    "competition": true,
+    "image": "images/1417 - Honda Ridgeline.png"
+  },
+  {
+    "id": 1418,
+    "brand": "Toyota",
+    "model": "RAV4",
+    "manufacturer": "Matchbox",
+    "year": 1997,
+    "color": "Azul",
+    "competition": false,
+    "image": "images/1418 - Toyota RAV4.png"
+  },
+  {
+    "id": 1419,
+    "brand": "Toyota",
+    "model": "RAV4 TRD",
+    "manufacturer": "Matchbox",
+    "year": 2023,
+    "color": "Verde",
+    "competition": false,
+    "image": "images/1419 - Toyota RAV4 TRD.png"
+  },
+  {
+    "id": 1420,
+    "brand": "Ford",
+    "model": "Galaxie",
+    "manufacturer": "Hot Wheels",
+    "year": 1965,
+    "color": "Rojo",
+    "competition": true,
+    "image": "images/1420 - Ford Galaxie.png"
+  },
+  {
+    "id": 1421,
+    "brand": "Ford",
+    "model": "Torino Talladega",
+    "manufacturer": "Hot Wheels Premium",
+    "year": 1969,
+    "color": "Azul",
+    "competition": true,
+    "image": "images/1421 - Ford Torino Talladega.png"
+  },
+  {
+    "id": 1422,
+    "brand": "Sauber",
+    "model": "C44",
+    "manufacturer": "Hot Wheels Premium",
+    "year": 2025,
+    "color": "Verde",
+    "competition": true,
+    "image": "images/1422 - Sauber C44.png"
+  },
+  {
+    "id": 1423,
+    "brand": "Alpine",
+    "model": "A525",
+    "manufacturer": "Hot Wheels Premium",
+    "year": 2025,
+    "color": "Azul",
+    "competition": true,
+    "image": "images/1423 - Alpine A525.png"
+  },
+  {
+    "id": 1424,
+    "brand": "Williams",
+    "model": "FW46",
+    "manufacturer": "Hot Wheels Premium",
+    "year": 2025,
+    "color": "Azul",
+    "competition": true,
+    "image": "images/1424 - Williams FW46.png"
+  },
+  {
+    "id": 1425,
+    "brand": "Volkswagen",
+    "model": "Golf R32",
+    "manufacturer": "Hot Wheels Premium",
+    "year": 2004,
+    "color": "Azul",
+    "competition": false,
+    "image": "images/1425 - Volkswagen Golf R32.png"
+  },
+  {
+    "id": 1426,
+    "brand": "Aston Martin",
+    "model": "Vantage GT3",
+    "manufacturer": "Hot Wheels",
+    "year": 2024,
+    "color": "Verde",
+    "competition": true,
+    "image": "images/1426 - Aston Martin Vantage GT3.png"
+  },
+  {
+    "id": 1427,
+    "brand": "Ford",
+    "model": "Lo Boy",
+    "manufacturer": "Hot Wheels",
+    "year": 1933,
+    "color": "Azul",
+    "competition": true,
+    "image": "images/1427 - Ford Lo Boy.png"
+  },
+  {
+    "id": 1428,
+    "brand": "Fiat",
+    "model": "S76 Beast of Turin",
+    "manufacturer": "Hot Wheels",
+    "year": 1910,
+    "color": "Rojo",
+    "competition": true,
+    "image": "images/1428 - Fiat S76 Beast of Turin.png"
+  },
+  {
+    "id": 1429,
+    "brand": "Ford",
+    "model": "F-100 Ranger",
+    "manufacturer": "Hot Wheels",
+    "year": 1974,
+    "color": "Blanco",
+    "competition": false,
+    "image": "images/1429 - Ford F-100 Ranger.png"
+  },
+  {
+    "id": 1430,
+    "brand": "Honda",
+    "model": "Odyssey",
+    "manufacturer": "Hot Wheels",
+    "year": 2014,
+    "color": "Azul",
+    "competition": true,
+    "image": "images/1430 - Honda Odyssey.png"
+  },
+  {
+    "id": 1431,
+    "brand": "Dodge",
+    "model": "Viper GTS-R",
+    "manufacturer": "Hot Wheels",
+    "year": 2000,
+    "color": "Negro",
+    "competition": true,
+    "image": "images/1431 - Dodge Viper GTS-R.png"
+  },
+  {
+    "id": 1432,
+    "brand": "Ford",
+    "model": "Galaxie 500",
+    "manufacturer": "Hot Wheels Premium",
+    "year": 1964,
+    "color": "Azul",
+    "competition": true,
+    "image": "images/1432 - Ford Galaxie 500.png"
+  },
+  {
+    "id": 1433,
+    "brand": "Ford",
+    "model": "Anglia",
+    "manufacturer": "Hot Wheels",
+    "year": 1967,
+    "color": "Verde",
+    "competition": true,
+    "image": "images/1433 - Ford Anglia.png"
+  },
+  {
+    "id": 1434,
+    "brand": "International",
+    "model": "Durastar Box Truck",
+    "manufacturer": "Matchbox",
+    "year": 2002,
+    "color": "Negro",
+    "competition": false,
+    "image": "images/1434 - International Durastar Box Truck.png"
+  },
+  {
+    "id": 1435,
+    "brand": "Piaggio",
+    "model": "Ape 50",
+    "manufacturer": "Matchbox",
+    "year": 1996,
+    "color": "Rojo",
+    "competition": false,
+    "image": "images/1435 - Piaggio Ape 50.png"
+  },
+  {
+    "id": 1436,
+    "brand": "lamborghini",
+    "model": "Miura P400SV",
+    "manufacturer": "Matchbox",
+    "year": 1968,
+    "color": "Blanco",
+    "competition": true,
+    "image": "images/1436 - Lamborghini Miura P400SV.png"
+  },
+  {
+    "id": 1437,
+    "brand": "Ford",
+    "model": "F-150 Lightning Supertruck",
+    "manufacturer": "Hot Wheels",
+    "year": 2024,
+    "color": "Azul",
+    "competition": true,
+    "image": "images/1437 - Ford F-150 Lightning Supertruck.png"
+  },
+  {
+    "id": 1438,
+    "brand": "Mercedes",
+    "model": "Unimog 406",
+    "manufacturer": "Matchbox",
+    "year": 1963,
+    "color": "Azul",
+    "competition": false,
+    "image": "images/1438 - Mercedes Unimog 406.png"
+  },
+  {
+    "id": 1439,
+    "brand": "Freightliner",
+    "model": "M2 106 Plus",
+    "manufacturer": "Matchbox",
+    "year": 2003,
+    "color": "Blanco",
+    "competition": false,
+    "image": "images/1439 - Freightliner M2 106 Plus.png"
+  },
+  {
+    "id": 1440,
+    "brand": "Dodge",
+    "model": "D-200",
+    "manufacturer": "Matchbox",
+    "year": 1968,
+    "color": "Verde",
+    "competition": false,
+    "image": "images/1440 - Dodge D-200.png"
+  },
+  {
+    "id": 1441,
+    "brand": "Nissan",
+    "model": "Silvia Nismo 270R",
+    "manufacturer": "Hot Wheels Premium",
+    "year": 1994,
+    "color": "Negro",
+    "competition": false,
+    "image": "images/1441 - Nissan Silvia Nismo 270R.png"
+  },
+  {
+    "id": 1442,
+    "brand": "Toyota",
+    "model": "Celica",
+    "manufacturer": "Hot Wheels",
+    "year": 2001,
+    "color": "Rojo",
+    "competition": false,
+    "image": "images/1442 - Toyota Celica.png"
+  },
+  {
+    "id": 1443,
+    "brand": "Cadillac",
+    "model": "Celestiq",
+    "manufacturer": "Hot Wheels",
+    "year": 2025,
+    "color": "Azul",
+    "competition": false,
+    "image": "images/1443 - Cadillac Celestiq.png"
+  },
+  {
+    "id": 1444,
+    "brand": "Mercedes",
+    "model": "CLA HW",
+    "manufacturer": "Hot Wheels",
+    "year": 2025,
+    "color": "Azul",
+    "competition": true,
+    "image": "images/1444 - Mercedes CLA HW.png"
+  },
+  {
+    "id": 1445,
+    "brand": "Ferrari",
+    "model": "12 Cilindri",
+    "manufacturer": "Hot Wheels",
+    "year": 2024,
+    "color": "Rojo",
+    "competition": false,
+    "image": "images/1445 - Ferrari 12 Cilindri.png"
+  },
+  {
+    "id": 1446,
+    "brand": "Ferrari",
+    "model": "Dino 206 GT",
+    "manufacturer": "Hot Wheels",
+    "year": 1967,
+    "color": "Rojo",
+    "competition": false,
+    "image": "images/1446 - Ferrari Dino 206 GT.png"
+  },
+  {
+    "id": 1447,
+    "brand": "Subaru",
+    "model": "BRZ Pandem & Fleet Street",
+    "manufacturer": "Hot Wheels Premium",
+    "year": 2012,
+    "color": "Azul",
+    "competition": true,
+    "image": "images/1447 - Subaru BRZ Pandem & Fleet Street.png"
+  },
+  {
+    "id": 1448,
+    "brand": "Datsun",
+    "model": "240Z Custom",
+    "manufacturer": "Hot Wheels Premium",
+    "year": 1972,
+    "color": "Blanco",
+    "competition": true,
+    "image": "images/1448 - Datsun 240Z Custom.png"
+  },
+  {
+    "id": 1449,
+    "brand": "Nissan",
+    "model": "Maxima Drift",
+    "manufacturer": "Hot Wheels Premium",
+    "year": 1981,
+    "color": "Naranja",
+    "competition": true,
+    "image": "images/1449 - Nissan Maxima Drift.png"
+  },
+  {
+    "id": 1450,
+    "brand": "BMW",
+    "model": "M3 Touring Safety Car",
+    "manufacturer": "Majorette",
+    "year": 2022,
+    "color": "Blanco",
+    "competition": true,
+    "image": "images/1450 - BMW M3 Touring Safety Car.png"
+  },
+  {
+    "id": 1451,
+    "brand": "Audi",
+    "model": "RS6 Avant",
+    "manufacturer": "Majorette",
+    "year": 2024,
+    "color": "Blanco",
+    "competition": false,
+    "image": "images/1451 - Audi RS6 Avanta.png"
+  },
+  {
+    "id": 1452,
+    "brand": "Mazda",
+    "model": "Autozam AZ-1",
+    "manufacturer": "Matchbox",
+    "year": 1992,
+    "color": "Plateado",
+    "competition": false,
+    "image": "images/1452 - Mazda Autozam AZ-1.png"
   }
 ]
