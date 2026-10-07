@@ -37,6 +37,26 @@
           </svg>
           <span>Colección</span>
         </button>
+        <button type="button" class="nav-btn" data-tab="fast-and-furious" id="nav-tab-fast-and-furious">
+          <svg class="nav-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+          </svg>
+          <span>Fast & Furious</span>
+        </button>
+        <button type="button" class="nav-btn" data-tab="cultura-pop" id="nav-tab-cultura-pop">
+          <svg class="nav-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+          </svg>
+          <span>Cultura Pop</span>
+        </button>
+        <button type="button" class="nav-btn" data-tab="motos" id="nav-tab-motos">
+          <svg class="nav-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="5.5" cy="17.5" r="3.5"></circle>
+            <circle cx="18.5" cy="17.5" r="3.5"></circle>
+            <path d="M15 6h-3l-3 6.5h6l2 5"></path>
+          </svg>
+          <span>Motos</span>
+        </button>
         <button type="button" class="nav-btn" data-tab="estadisticas" id="nav-tab-estadisticas">
           <svg class="nav-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <line x1="18" y1="20" x2="18" y2="10"></line>
@@ -250,7 +270,115 @@
 
     </section>
 
-    <!-- PESTAÑA 2: ESTADÍSTICAS -->
+    <!-- PESTAÑA: FAST & FURIOUS -->
+    <section id="tab-fast-and-furious" class="tab-pane" aria-labelledby="nav-tab-fast-and-furious" hidden>
+      <div class="special-section-container">
+        <header class="special-hero hero-ff">
+          <div class="special-hero-badge">🎬 A TODO GAS</div>
+          <h2 class="special-hero-title">Colección Fast & Furious</h2>
+          <p class="special-hero-desc">Modelos emblemáticos de la saga de películas sobre ruedas.</p>
+        </header>
+
+        <section class="special-controls-panel" aria-label="Controles de búsqueda Fast & Furious">
+          <div class="special-controls-container">
+            <div class="search-input-wrapper">
+              <svg class="search-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <input type="search" id="search-ff" class="search-input" placeholder="Buscar coche, marca, película..." autocomplete="off">
+            </div>
+            <div class="special-filter-select-wrapper">
+              <select id="filter-movie-ff" class="filter-select">
+                <option value="">Todas las películas</option>
+              </select>
+            </div>
+            <div class="special-results-count" id="count-ff">33 coches</div>
+          </div>
+        </section>
+
+        <div class="catalog-content">
+          <div id="grid-fast-and-furious" class="cars-grid" role="list"></div>
+          <div id="empty-ff" class="empty-state hidden">
+            <p>No se encontraron coches en Fast & Furious con ese filtro.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PESTAÑA: CULTURA POP -->
+    <section id="tab-cultura-pop" class="tab-pane" aria-labelledby="nav-tab-cultura-pop" hidden>
+      <div class="special-section-container">
+        <header class="special-hero hero-pop">
+          <div class="special-hero-badge">🍿 CULTURA POP</div>
+          <h2 class="special-hero-title">Colección Cultura Pop</h2>
+          <p class="special-hero-desc">Vehículos legendarios del cine, series, animación, cómics y videojuegos.</p>
+        </header>
+
+        <section class="special-controls-panel" aria-label="Controles de búsqueda Cultura Pop">
+          <div class="special-controls-container">
+            <div class="search-input-wrapper">
+              <svg class="search-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <input type="search" id="search-pop" class="search-input" placeholder="Buscar vehículo, universo, modelo..." autocomplete="off">
+            </div>
+            <div class="special-filter-select-wrapper">
+              <select id="filter-universe-pop" class="filter-select">
+                <option value="">Todos los universos</option>
+              </select>
+            </div>
+            <div class="special-results-count" id="count-pop">26 vehículos</div>
+          </div>
+        </section>
+
+        <div class="catalog-content">
+          <div id="grid-cultura-pop" class="cars-grid" role="list"></div>
+          <div id="empty-pop" class="empty-state hidden">
+            <p>No se encontraron vehículos en Cultura Pop con ese filtro.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PESTAÑA: MOTOS -->
+    <section id="tab-motos" class="tab-pane" aria-labelledby="nav-tab-motos" hidden>
+      <div class="special-section-container">
+        <header class="special-hero hero-motos">
+          <div class="special-hero-badge">🏍️ DOS RUEDAS</div>
+          <h2 class="special-hero-title">Colección de Motocicletas</h2>
+          <p class="special-hero-desc">Motos deportivas, clásicas, scooters y modelos oficiales a escala.</p>
+        </header>
+
+        <section class="special-controls-panel" aria-label="Controles de búsqueda Motos">
+          <div class="special-controls-container">
+            <div class="search-input-wrapper">
+              <svg class="search-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <input type="search" id="search-motos" class="search-input" placeholder="Buscar marca, modelo, fabricante..." autocomplete="off">
+            </div>
+            <div class="special-filter-select-wrapper">
+              <select id="filter-brand-motos" class="filter-select">
+                <option value="">Todas las marcas</option>
+              </select>
+            </div>
+            <div class="special-results-count" id="count-motos">22 motos</div>
+          </div>
+        </section>
+
+        <div class="catalog-content">
+          <div id="grid-motos" class="cars-grid" role="list"></div>
+          <div id="empty-motos" class="empty-state hidden">
+            <p>No se encontraron motocicletas con ese filtro.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PESTAÑA: ESTADÍSTICAS -->
     <section id="tab-estadisticas" class="tab-pane" aria-labelledby="nav-tab-estadisticas" hidden>
       <div class="stats-section-container">
         <header class="section-heading">
@@ -463,11 +591,15 @@
                 <span id="modal-spec-color-text">Blanco</span>
               </span>
             </div>
-            <div class="spec-row">
+            <div class="spec-row" id="modal-spec-competition-row">
               <span class="spec-label">Competición</span>
               <span class="spec-value" id="modal-spec-competition">
                 <span class="badge-competition" id="modal-spec-comp-badge">Calle</span>
               </span>
+            </div>
+            <div class="spec-row" id="modal-spec-extra-row" style="display: none;">
+              <span class="spec-label" id="modal-spec-extra-label">Detalle</span>
+              <span class="spec-value" id="modal-spec-extra-val">-</span>
             </div>
           </div>
 

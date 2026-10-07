@@ -122,9 +122,55 @@ with open(js_path, "r", encoding="utf-8") as f:
     js_content = f.read()
 
 assert "fetch('./data/cars.json')" in js_content or 'fetch("./data/cars.json")' in js_content
+assert "fetch('./data/special_collections.json')" in js_content or 'fetch("./data/special_collections.json")' in js_content
 assert "fetch('/data/" not in js_content, "Ruta absoluta en fetch de app.js"
-print("✔ Petición fetch en app.js utiliza ruta relativa './data/cars.json'")
+print("✔ Peticiones fetch en app.js utilizan rutas relativas ('./data/...')")
+
+# 10. Test de Colecciones Especiales (Fast & Furious, Cultura Pop, Motos)
+special_json_path = os.path.join(base_dir, "data", "special_collections.json")
+assert os.path.exists(special_json_path), "Falta archivo data/special_collections.json"
+
+with open(special_json_path, "r", encoding="utf-8") as f:
+    special_data = json.load(f)
+
+assert "fast_and_furious" in special_data, "Falta sección fast_and_furious"
+assert "cultura_pop" in special_data, "Falta sección cultura_pop"
+assert "motos" in special_data, "Falta sección motos"
+
+ff_items = special_data["fast_and_furious"]
+pop_items = special_data["cultura_pop"]
+motos_items = special_data["motos"]
+
+print(f"\n✔ Colección Fast & Furious: {len(ff_items)} modelos")
+print(f"✔ Colección Cultura Pop: {len(pop_items)} modelos")
+print(f"✔ Colección Motos: {len(motos_items)} modelos")
+
+assert len(ff_items) >= 30, f"Cantidad baja en Fast & Furious: {len(ff_items)}"
+assert len(pop_items) >= 20, f"Cantidad baja en Cultura Pop: {len(pop_items)}"
+assert len(motos_items) >= 20, f"Cantidad baja en Motos: {len(motos_items)}"
+
+# Verificar que todas las fotos de las colecciones especiales existen en disco
+special_missing = []
+for name, col in [("Fast & Furious", ff_items), ("Cultura Pop", pop_items), ("Motos", motos_items)]:
+    col_ids = [item["id"] for item in col]
+    assert len(col_ids) == len(set(col_ids)), f"IDs duplicados en {name}"
+    for item in col:
+        assert item.get("brand") or item.get("model"), f"Item sin marca/modelo en {name}: {item}"
+        img_rel = item.get("image", "")
+        assert img_rel, f"Item sin imagen en {name}: {item}"
+        img_full = os.path.join(base_dir, img_rel.replace("/", os.sep))
+        if not os.path.exists(img_full):
+            special_missing.append((name, item["id"], img_rel))
+
+if special_missing:
+    print(f"❌ Fotografías faltantes en colecciones especiales: {len(special_missing)}")
+    for m in special_missing:
+        print(f"   [{m[0]} #{m[1]}]: {m[2]}")
+    sys.exit(1)
+else:
+    total_special = len(ff_items) + len(pop_items) + len(motos_items)
+    print(f"✔ 100% de las {total_special} fotografías de colecciones especiales existen en disco")
 
 print("\n==================================================")
-print(" ¡TODAS LAS PRUEBAS AUTOMATIZADAS PASARON (10/10)!")
+print(" ¡TODAS LAS PRUEBAS AUTOMATIZADAS PASARON (11/11)!")
 print("==================================================")

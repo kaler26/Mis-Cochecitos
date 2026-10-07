@@ -11,11 +11,29 @@
   // 1. ESTADO DE LA APLICACIÓN (EN MEMORIA)
   // =========================================================================
   const state = {
-    allCars: [],            // Catálogo completo (1.165 registros cargados una sola vez)
+    allCars: [],            // Catálogo completo principal
     filteredCars: [],       // Registros que cumplen los filtros y búsqueda actuales
-    activeTab: 'coleccion', // 'coleccion' | 'estadisticas' | 'acerca-de'
+    specialCollections: {
+      fast_and_furious: [],
+      cultura_pop: [],
+      motos: []
+    },
+    filteredSpecial: {
+      fast_and_furious: [],
+      cultura_pop: [],
+      motos: []
+    },
+    specialFilters: {
+      ffSearch: '',
+      ffMovie: '',
+      popSearch: '',
+      popUniverse: '',
+      motosSearch: '',
+      motosBrand: ''
+    },
+    activeTab: 'coleccion', // 'coleccion' | 'fast-and-furious' | 'cultura-pop' | 'motos' | 'estadisticas' | 'acerca-de'
     
-    // Filtros activos
+    // Filtros activos del catálogo principal
     filters: {
       search: '',
       brand: '',
@@ -39,6 +57,7 @@
     // Modal de ficha de coche
     modal: {
       isOpen: false,
+      context: 'coleccion', // 'coleccion' | 'fast_and_furious' | 'cultura_pop' | 'motos'
       currentFilteredIndex: -1
     },
 
@@ -124,9 +143,32 @@
     modalSpecColorDot: document.getElementById('modal-spec-color-dot'),
     modalSpecColorText: document.getElementById('modal-spec-color-text'),
     modalSpecCompBadge: document.getElementById('modal-spec-comp-badge'),
+    modalSpecCompRow: document.getElementById('modal-spec-competition-row'),
+    modalSpecExtraRow: document.getElementById('modal-spec-extra-row'),
+    modalSpecExtraLabel: document.getElementById('modal-spec-extra-label'),
+    modalSpecExtraVal: document.getElementById('modal-spec-extra-val'),
     modalShareBtn: document.getElementById('modal-share-btn'),
     modalShareText: document.getElementById('modal-share-text'),
     modalFilterByBrandBtn: document.getElementById('modal-filter-by-brand-btn'),
+
+    // Colecciones Especiales
+    gridFF: document.getElementById('grid-fast-and-furious'),
+    searchFF: document.getElementById('search-ff'),
+    filterMovieFF: document.getElementById('filter-movie-ff'),
+    countFF: document.getElementById('count-ff'),
+    emptyFF: document.getElementById('empty-ff'),
+
+    gridPop: document.getElementById('grid-cultura-pop'),
+    searchPop: document.getElementById('search-pop'),
+    filterUniversePop: document.getElementById('filter-universe-pop'),
+    countPop: document.getElementById('count-pop'),
+    emptyPop: document.getElementById('empty-pop'),
+
+    gridMotos: document.getElementById('grid-motos'),
+    searchMotos: document.getElementById('search-motos'),
+    filterBrandMotos: document.getElementById('filter-brand-motos'),
+    countMotos: document.getElementById('count-motos'),
+    emptyMotos: document.getElementById('empty-motos'),
 
     // Lightbox
     lightbox: document.getElementById('lightbox'),
@@ -191,8 +233,12 @@
   // =========================================================================
   async function loadData() {
     try {
-      // Ruta relativa para máxima compatibilidad con GitHub Pages
-      const response = await fetch('./data/cars.json');
+      // Rutas relativas para máxima compatibilidad con GitHub Pages
+      const [response, specialResponse] = await Promise.all([
+        fetch('./data/cars.json'),
+        fetch('./data/special_collections.json').catch(() => null)
+      ]);
+
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -201,11 +247,23 @@
       state.allCars = data;
       state.filteredCars = [...state.allCars];
 
-      // Inicializar la interfaz y componentes
+      if (specialResponse && specialResponse.ok) {
+        try {
+          state.specialCollections = await specialResponse.json();
+        } catch (e) {
+          console.warn('Error al parsear special_collections.json:', e);
+        }
+      }
+
+      // Inicializar la interfaz y componentes del catálogo principal
       initKPIs();
       populateFilterDropdowns();
       renderStats();
       applyFiltersAndSort();
+
+      // Inicializar colecciones especiales (Fast & Furious, Cultura Pop, Motos)
+      initSpecialCollections();
+
       initRouting();
 
     } catch (error) {
@@ -533,6 +591,197 @@
   }
 
   // =========================================================================
+  // 8.1 COLECCIONES TEMÁTICAS (FAST & FURIOUS, CULTURA POP, MOTOS)
+  // =========================================================================
+  function createSpecialCard(item, collectionKey, filteredIndex) {
+    const article = document.createElement('article');
+    article.className = 'car-card';
+    article.setAttribute('role', 'listitem');
+    article.setAttribute('tabindex', '0');
+    article.setAttribute('aria-label', `${item.brand || ''} ${item.model || ''}, Nº ${item.id}`);
+
+    const formattedId = String(item.id).padStart(2, '0');
+    const colorHex = getColorHex(item.color);
+    const photoAlt = `${item.brand || ''} ${item.model || ''}`;
+
+    let tagHtml = '';
+    if (collectionKey === 'fast_and_furious' && item.movie) {
+      tagHtml = `<span class="badge-theme-tag badge-theme-movie" title="Película: ${escapeHtml(item.movie)}">🎬 ${escapeHtml(item.movie)}</span>`;
+    } else if (collectionKey === 'cultura_pop' && item.universe) {
+      tagHtml = `<span class="badge-theme-tag badge-theme-universe" title="Universo: ${escapeHtml(item.universe)}">🍿 ${escapeHtml(item.universe)}</span>`;
+    } else if (collectionKey === 'motos') {
+      tagHtml = `<span class="badge-theme-tag badge-theme-moto" title="Motocicleta">🏍️ Moto</span>`;
+    }
+
+    article.innerHTML = `
+      <div class="car-card-media">
+        <span class="car-badge-id">#${formattedId}</span>
+        <img 
+          class="car-card-img" 
+          src="./${item.image || ''}" 
+          alt="${photoAlt}" 
+          loading="lazy" 
+          decoding="async"
+          onerror="this.onerror=null; this.src='./images/logo.png'; this.style.opacity='0.4';"
+        >
+      </div>
+      <div class="car-card-body">
+        <div class="car-brand-tag">${escapeHtml(item.brand || '—')}</div>
+        <h3 class="car-model-name">${escapeHtml(item.model || '—')}</h3>
+        <div class="car-meta-line">
+          <span>${escapeHtml(item.manufacturer || '—')}</span>
+          <span class="meta-dot">·</span>
+          <span>${item.year || '—'}</span>
+        </div>
+        ${item.color ? `
+          <div class="car-color-tag">
+            <span class="color-dot" style="background-color: ${colorHex};"></span>
+            <span>${escapeHtml(item.color)}</span>
+          </div>
+        ` : ''}
+        ${tagHtml}
+      </div>
+    `;
+
+    article.addEventListener('click', () => openCarModal(filteredIndex, collectionKey));
+    article.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openCarModal(filteredIndex, collectionKey);
+      }
+    });
+
+    return article;
+  }
+
+  function initSpecialCollections() {
+    // 1. Desplegable de películas para Fast & Furious
+    if (dom.filterMovieFF && state.specialCollections.fast_and_furious) {
+      const movies = [...new Set(state.specialCollections.fast_and_furious.map(c => c.movie).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'es'));
+      dom.filterMovieFF.innerHTML = '<option value="">Todas las películas</option>' +
+        movies.map(m => `<option value="${escapeHtml(m)}">${escapeHtml(m)}</option>`).join('');
+    }
+
+    // 2. Desplegable de universos para Cultura Pop
+    if (dom.filterUniversePop && state.specialCollections.cultura_pop) {
+      const universes = [...new Set(state.specialCollections.cultura_pop.map(c => c.universe).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'es'));
+      dom.filterUniversePop.innerHTML = '<option value="">Todos los universos</option>' +
+        universes.map(u => `<option value="${escapeHtml(u)}">${escapeHtml(u)}</option>`).join('');
+    }
+
+    // 3. Desplegable de marcas para Motos
+    if (dom.filterBrandMotos && state.specialCollections.motos) {
+      const brands = [...new Set(state.specialCollections.motos.map(c => c.brand).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'es'));
+      dom.filterBrandMotos.innerHTML = '<option value="">Todas las marcas</option>' +
+        brands.map(b => `<option value="${escapeHtml(b)}">${escapeHtml(b)}</option>`).join('');
+    }
+
+    // Renderizar colecciones
+    renderSpecialCollection('fast_and_furious');
+    renderSpecialCollection('cultura_pop');
+    renderSpecialCollection('motos');
+  }
+
+  function renderSpecialCollection(collectionKey) {
+    const rawItems = state.specialCollections[collectionKey] || [];
+    let filtered = [...rawItems];
+
+    if (collectionKey === 'fast_and_furious') {
+      const search = normalizeText(state.specialFilters.ffSearch);
+      const movie = state.specialFilters.ffMovie;
+
+      if (search) {
+        filtered = filtered.filter(item => {
+          const text = normalizeText(`${item.brand || ''} ${item.model || ''} ${item.manufacturer || ''} ${item.movie || ''} ${item.color || ''}`);
+          return text.includes(search);
+        });
+      }
+      if (movie) {
+        filtered = filtered.filter(item => item.movie === movie);
+      }
+
+      state.filteredSpecial.fast_and_furious = filtered;
+
+      if (dom.countFF) dom.countFF.textContent = `${filtered.length} ${filtered.length === 1 ? 'coche' : 'coches'}`;
+      if (dom.gridFF) {
+        dom.gridFF.innerHTML = '';
+        if (filtered.length === 0) {
+          if (dom.emptyFF) dom.emptyFF.classList.remove('hidden');
+        } else {
+          if (dom.emptyFF) dom.emptyFF.classList.add('hidden');
+          const fragment = document.createDocumentFragment();
+          filtered.forEach((item, idx) => {
+            fragment.appendChild(createSpecialCard(item, 'fast_and_furious', idx));
+          });
+          dom.gridFF.appendChild(fragment);
+        }
+      }
+
+    } else if (collectionKey === 'cultura_pop') {
+      const search = normalizeText(state.specialFilters.popSearch);
+      const universe = state.specialFilters.popUniverse;
+
+      if (search) {
+        filtered = filtered.filter(item => {
+          const text = normalizeText(`${item.brand || ''} ${item.model || ''} ${item.manufacturer || ''} ${item.universe || ''}`);
+          return text.includes(search);
+        });
+      }
+      if (universe) {
+        filtered = filtered.filter(item => item.universe === universe);
+      }
+
+      state.filteredSpecial.cultura_pop = filtered;
+
+      if (dom.countPop) dom.countPop.textContent = `${filtered.length} ${filtered.length === 1 ? 'vehículo' : 'vehículos'}`;
+      if (dom.gridPop) {
+        dom.gridPop.innerHTML = '';
+        if (filtered.length === 0) {
+          if (dom.emptyPop) dom.emptyPop.classList.remove('hidden');
+        } else {
+          if (dom.emptyPop) dom.emptyPop.classList.add('hidden');
+          const fragment = document.createDocumentFragment();
+          filtered.forEach((item, idx) => {
+            fragment.appendChild(createSpecialCard(item, 'cultura_pop', idx));
+          });
+          dom.gridPop.appendChild(fragment);
+        }
+      }
+
+    } else if (collectionKey === 'motos') {
+      const search = normalizeText(state.specialFilters.motosSearch);
+      const brand = state.specialFilters.motosBrand;
+
+      if (search) {
+        filtered = filtered.filter(item => {
+          const text = normalizeText(`${item.brand || ''} ${item.model || ''} ${item.manufacturer || ''} ${item.color || ''}`);
+          return text.includes(search);
+        });
+      }
+      if (brand) {
+        filtered = filtered.filter(item => item.brand === brand);
+      }
+
+      state.filteredSpecial.motos = filtered;
+
+      if (dom.countMotos) dom.countMotos.textContent = `${filtered.length} ${filtered.length === 1 ? 'moto' : 'motos'}`;
+      if (dom.gridMotos) {
+        dom.gridMotos.innerHTML = '';
+        if (filtered.length === 0) {
+          if (dom.emptyMotos) dom.emptyMotos.classList.remove('hidden');
+        } else {
+          if (dom.emptyMotos) dom.emptyMotos.classList.add('hidden');
+          const fragment = document.createDocumentFragment();
+          filtered.forEach((item, idx) => {
+            fragment.appendChild(createSpecialCard(item, 'motos', idx));
+          });
+          dom.gridMotos.appendChild(fragment);
+        }
+      }
+    }
+  }
+
+  // =========================================================================
   // 9. CONTADOR DE RESULTADOS Y CHIPS ACTIVOS
   // =========================================================================
   function renderResultsBar() {
@@ -750,8 +999,26 @@
   // =========================================================================
   // 11. FICHA DETALLADA DEL COCHE (MODAL CON ANTERIOR / SIGUIENTE FILTRADO)
   // =========================================================================
-  function openCarModal(filteredIndex) {
-    if (filteredIndex < 0 || filteredIndex >= state.filteredCars.length) return;
+  function getCurrentModalList() {
+    if (state.modal.context === 'fast_and_furious') {
+      return state.filteredSpecial.fast_and_furious;
+    } else if (state.modal.context === 'cultura_pop') {
+      return state.filteredSpecial.cultura_pop;
+    } else if (state.modal.context === 'motos') {
+      return state.filteredSpecial.motos;
+    }
+    return state.filteredCars;
+  }
+
+  function getCurrentModalCar() {
+    const list = getCurrentModalList();
+    return list[state.modal.currentFilteredIndex];
+  }
+
+  function openCarModal(filteredIndex, context = 'coleccion') {
+    state.modal.context = context;
+    const list = getCurrentModalList();
+    if (filteredIndex < 0 || filteredIndex >= list.length) return;
 
     state.modal.isOpen = true;
     state.modal.currentFilteredIndex = filteredIndex;
@@ -763,16 +1030,25 @@
     document.body.style.overflow = 'hidden';
 
     // Sincronizar hash URL para poder compartir el enlace individual
-    const car = state.filteredCars[filteredIndex];
+    const car = list[filteredIndex];
     if (car && car.id) {
-      history.replaceState(null, '', `#coche-${car.id}`);
+      if (context === 'fast_and_furious') {
+        history.replaceState(null, '', `#ff-${car.id}`);
+      } else if (context === 'cultura_pop') {
+        history.replaceState(null, '', `#pop-${car.id}`);
+      } else if (context === 'motos') {
+        history.replaceState(null, '', `#moto-${car.id}`);
+      } else {
+        history.replaceState(null, '', `#coche-${car.id}`);
+      }
     }
   }
 
   function updateModalContent() {
+    const list = getCurrentModalList();
     const index = state.modal.currentFilteredIndex;
-    const totalFiltered = state.filteredCars.length;
-    const car = state.filteredCars[index];
+    const totalFiltered = list.length;
+    const car = list[index];
     if (!car) return;
 
     // Actualizar indicador de posición respetando los filtros activos (formato compacto para móvil y desktop)
@@ -785,7 +1061,8 @@
     // Fotografía
     dom.modalCarImg.src = `./${car.image || ''}`;
     dom.modalCarImg.alt = `${car.brand || ''} ${car.model || ''}`;
-    dom.modalCarNumber.textContent = `#${String(car.id).padStart(4, '0')}`;
+    const padLen = (state.modal.context === 'coleccion') ? 4 : 2;
+    dom.modalCarNumber.textContent = `#${String(car.id).padStart(padLen, '0')}`;
 
     // Datos principales
     dom.modalCarBrand.textContent = car.brand || '—';
@@ -799,24 +1076,54 @@
     dom.modalSpecColorDot.style.backgroundColor = colorHex;
     dom.modalSpecColorText.textContent = car.color || 'No especificado';
 
-    // Competición
-    if (car.competition) {
-      dom.modalSpecCompBadge.className = 'badge-competition competition-yes';
-      dom.modalSpecCompBadge.innerHTML = '<span>🏁</span><span>Competición</span>';
+    // Adaptación según colección
+    if (state.modal.context === 'fast_and_furious') {
+      if (dom.modalSpecCompRow) dom.modalSpecCompRow.style.display = 'none';
+      if (dom.modalSpecExtraRow) {
+        dom.modalSpecExtraRow.style.display = 'flex';
+        dom.modalSpecExtraLabel.textContent = 'Película';
+        dom.modalSpecExtraVal.textContent = car.movie || '—';
+      }
+    } else if (state.modal.context === 'cultura_pop') {
+      if (dom.modalSpecCompRow) dom.modalSpecCompRow.style.display = 'none';
+      if (dom.modalSpecExtraRow) {
+        dom.modalSpecExtraRow.style.display = 'flex';
+        dom.modalSpecExtraLabel.textContent = 'Universo';
+        dom.modalSpecExtraVal.textContent = car.universe || '—';
+      }
+    } else if (state.modal.context === 'motos') {
+      if (dom.modalSpecCompRow) dom.modalSpecCompRow.style.display = 'none';
+      if (dom.modalSpecExtraRow) dom.modalSpecExtraRow.style.display = 'none';
     } else {
-      dom.modalSpecCompBadge.className = 'badge-competition competition-no';
-      dom.modalSpecCompBadge.innerHTML = `
-        <svg class="modal-badge-road-icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M4 19L8 5"></path><path d="M20 19L16 5"></path>
-          <line x1="12" y1="6" x2="12" y2="8.5"></line><line x1="12" y1="11.5" x2="12" y2="14"></line><line x1="12" y1="17" x2="12" y2="19.5"></line>
-        </svg>
-        <span>Calle / Carretera</span>
-      `;
+      if (dom.modalSpecExtraRow) dom.modalSpecExtraRow.style.display = 'none';
+      if (dom.modalSpecCompRow) {
+        dom.modalSpecCompRow.style.display = 'flex';
+        if (car.competition) {
+          dom.modalSpecCompBadge.className = 'badge-competition competition-yes';
+          dom.modalSpecCompBadge.innerHTML = '<span>🏁</span><span>Competición</span>';
+        } else {
+          dom.modalSpecCompBadge.className = 'badge-competition competition-no';
+          dom.modalSpecCompBadge.innerHTML = `
+            <svg class="modal-badge-road-icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M4 19L8 5"></path><path d="M20 19L16 5"></path>
+              <line x1="12" y1="6" x2="12" y2="8.5"></line><line x1="12" y1="11.5" x2="12" y2="14"></line><line x1="12" y1="17" x2="12" y2="19.5"></line>
+            </svg>
+            <span>Calle / Carretera</span>
+          `;
+        }
+      }
     }
 
     // Configurar acción "Ver más de esta marca"
     dom.modalFilterByBrandBtn.onclick = () => {
       closeCarModal();
+      if (state.modal.context === 'motos') {
+        switchTab('motos');
+        state.specialFilters.motosBrand = car.brand || '';
+        if (dom.filterBrandMotos) dom.filterBrandMotos.value = car.brand || '';
+        renderSpecialCollection('motos');
+        return;
+      }
       switchTab('coleccion');
       resetAllFilters(false);
       state.filters.brand = car.brand || '';
@@ -828,7 +1135,11 @@
     // Compartir enlace
     dom.modalShareText.textContent = 'Copiar enlace';
     dom.modalShareBtn.onclick = async () => {
-      const url = `${window.location.origin}${window.location.pathname}#coche-${car.id}`;
+      let hashPrefix = '#coche-';
+      if (state.modal.context === 'fast_and_furious') hashPrefix = '#ff-';
+      else if (state.modal.context === 'cultura_pop') hashPrefix = '#pop-';
+      else if (state.modal.context === 'motos') hashPrefix = '#moto-';
+      const url = `${window.location.origin}${window.location.pathname}${hashPrefix}${car.id}`;
       try {
         await navigator.clipboard.writeText(url);
         dom.modalShareText.textContent = '¡Enlace copiado!';
@@ -841,13 +1152,18 @@
   }
 
   function navigateModal(direction) {
+    const list = getCurrentModalList();
     const newIndex = state.modal.currentFilteredIndex + direction;
-    if (newIndex >= 0 && newIndex < state.filteredCars.length) {
+    if (newIndex >= 0 && newIndex < list.length) {
       state.modal.currentFilteredIndex = newIndex;
       updateModalContent();
-      const car = state.filteredCars[newIndex];
+      const car = list[newIndex];
       if (car && car.id) {
-        history.replaceState(null, '', `#coche-${car.id}`);
+        let hashPrefix = '#coche-';
+        if (state.modal.context === 'fast_and_furious') hashPrefix = '#ff-';
+        else if (state.modal.context === 'cultura_pop') hashPrefix = '#pop-';
+        else if (state.modal.context === 'motos') hashPrefix = '#moto-';
+        history.replaceState(null, '', `${hashPrefix}${car.id}`);
       }
     }
   }
@@ -860,7 +1176,10 @@
     document.body.style.overflow = '';
 
     // Restaurar URL sin el coche individual
-    if (window.location.hash.startsWith('#coche-')) {
+    if (window.location.hash.startsWith('#coche-') ||
+        window.location.hash.startsWith('#ff-') ||
+        window.location.hash.startsWith('#pop-') ||
+        window.location.hash.startsWith('#moto-')) {
       history.replaceState(null, '', `#${state.activeTab}`);
     }
   }
@@ -869,7 +1188,7 @@
   // 12. LIGHTBOX A PANTALLA COMPLETA
   // =========================================================================
   function openLightbox() {
-    const car = state.filteredCars[state.modal.currentFilteredIndex];
+    const car = getCurrentModalCar();
     if (!car) return;
 
     state.lightbox.isOpen = true;
@@ -1134,13 +1453,82 @@
           }
           if (idx !== -1) {
             switchTab('coleccion');
-            openCarModal(idx);
+            openCarModal(idx, 'coleccion');
             return;
           }
         }
       }
 
-      if (hash === '#estadisticas') {
+      if (hash.startsWith('#ff-')) {
+        const id = parseInt(hash.replace('#ff-', ''), 10);
+        if (!isNaN(id)) {
+          switchTab('fast-and-furious');
+          const list = state.filteredSpecial.fast_and_furious || [];
+          let idx = list.findIndex(c => c.id === id);
+          if (idx === -1 && state.specialCollections.fast_and_furious) {
+            state.specialFilters.ffSearch = '';
+            state.specialFilters.ffMovie = '';
+            if (dom.searchFF) dom.searchFF.value = '';
+            if (dom.filterMovieFF) dom.filterMovieFF.value = '';
+            renderSpecialCollection('fast_and_furious');
+            idx = state.filteredSpecial.fast_and_furious.findIndex(c => c.id === id);
+          }
+          if (idx !== -1) {
+            openCarModal(idx, 'fast_and_furious');
+            return;
+          }
+        }
+      }
+
+      if (hash.startsWith('#pop-')) {
+        const id = parseInt(hash.replace('#pop-', ''), 10);
+        if (!isNaN(id)) {
+          switchTab('cultura-pop');
+          const list = state.filteredSpecial.cultura_pop || [];
+          let idx = list.findIndex(c => c.id === id);
+          if (idx === -1 && state.specialCollections.cultura_pop) {
+            state.specialFilters.popSearch = '';
+            state.specialFilters.popUniverse = '';
+            if (dom.searchPop) dom.searchPop.value = '';
+            if (dom.filterUniversePop) dom.filterUniversePop.value = '';
+            renderSpecialCollection('cultura_pop');
+            idx = state.filteredSpecial.cultura_pop.findIndex(c => c.id === id);
+          }
+          if (idx !== -1) {
+            openCarModal(idx, 'cultura_pop');
+            return;
+          }
+        }
+      }
+
+      if (hash.startsWith('#moto-')) {
+        const id = parseInt(hash.replace('#moto-', ''), 10);
+        if (!isNaN(id)) {
+          switchTab('motos');
+          const list = state.filteredSpecial.motos || [];
+          let idx = list.findIndex(c => c.id === id);
+          if (idx === -1 && state.specialCollections.motos) {
+            state.specialFilters.motosSearch = '';
+            state.specialFilters.motosBrand = '';
+            if (dom.searchMotos) dom.searchMotos.value = '';
+            if (dom.filterBrandMotos) dom.filterBrandMotos.value = '';
+            renderSpecialCollection('motos');
+            idx = state.filteredSpecial.motos.findIndex(c => c.id === id);
+          }
+          if (idx !== -1) {
+            openCarModal(idx, 'motos');
+            return;
+          }
+        }
+      }
+
+      if (hash === '#fast-and-furious') {
+        switchTab('fast-and-furious');
+      } else if (hash === '#cultura-pop') {
+        switchTab('cultura-pop');
+      } else if (hash === '#motos') {
+        switchTab('motos');
+      } else if (hash === '#estadisticas') {
         switchTab('estadisticas');
       } else if (hash === '#acerca-de') {
         switchTab('acerca-de');
@@ -1278,6 +1666,46 @@
       state.pagination.currentPage = 1;
       applyFiltersAndSort();
     });
+
+    // 6.1 Controles de Colecciones Especiales (Fast & Furious, Cultura Pop, Motos)
+    if (dom.searchFF) {
+      dom.searchFF.addEventListener('input', debounce(() => {
+        state.specialFilters.ffSearch = dom.searchFF.value.trim();
+        renderSpecialCollection('fast_and_furious');
+      }, 200));
+    }
+    if (dom.filterMovieFF) {
+      dom.filterMovieFF.addEventListener('change', () => {
+        state.specialFilters.ffMovie = dom.filterMovieFF.value;
+        renderSpecialCollection('fast_and_furious');
+      });
+    }
+
+    if (dom.searchPop) {
+      dom.searchPop.addEventListener('input', debounce(() => {
+        state.specialFilters.popSearch = dom.searchPop.value.trim();
+        renderSpecialCollection('cultura_pop');
+      }, 200));
+    }
+    if (dom.filterUniversePop) {
+      dom.filterUniversePop.addEventListener('change', () => {
+        state.specialFilters.popUniverse = dom.filterUniversePop.value;
+        renderSpecialCollection('cultura_pop');
+      });
+    }
+
+    if (dom.searchMotos) {
+      dom.searchMotos.addEventListener('input', debounce(() => {
+        state.specialFilters.motosSearch = dom.searchMotos.value.trim();
+        renderSpecialCollection('motos');
+      }, 200));
+    }
+    if (dom.filterBrandMotos) {
+      dom.filterBrandMotos.addEventListener('change', () => {
+        state.specialFilters.motosBrand = dom.filterBrandMotos.value;
+        renderSpecialCollection('motos');
+      });
+    }
 
     // 7. Navegación y cierre de Modal
     dom.modalPrevBtn.addEventListener('click', () => navigateModal(-1));

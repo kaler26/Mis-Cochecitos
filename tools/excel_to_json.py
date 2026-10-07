@@ -12,6 +12,7 @@ import argparse
 import urllib.parse
 import json
 import shutil
+import unicodedata
 
 # Asegurar codificación UTF-8 en salida de consola en Windows
 if sys.platform == "win32":
@@ -28,6 +29,15 @@ except ImportError:
     sys.exit(1)
 
 
+def normalize_text(text):
+    if not text:
+        return ""
+    return "".join(
+        c for c in unicodedata.normalize("NFD", str(text))
+        if unicodedata.category(c) != "Mn"
+    ).lower().strip()
+
+
 def parse_arguments():
     # Rutas por defecto relativas al script y a la máquina del usuario
     script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -42,6 +52,7 @@ def parse_arguments():
     default_excel = next((p for p in default_excel_candidates if os.path.exists(p)), default_excel_candidates[1])
     
     default_output = os.path.join(project_dir, "data", "cars.json")
+    default_output_special = os.path.join(project_dir, "data", "special_collections.json")
     
     # Buscar posible carpeta de fotos de origen (priorizando SinFondo con fotos transparentes)
     default_photos_candidates = [
@@ -56,12 +67,22 @@ def parse_arguments():
     ]
     default_photos = next((p for p in default_photos_candidates if os.path.exists(p)), default_photos_candidates[2])
 
+    default_fallback_photos_candidates = [
+        os.path.join(project_dir, "Fotos"),
+        os.path.join(os.path.dirname(default_excel), "Fotos"),
+        os.path.join(r"C:\Users\dani\Desktop\1 64", "Fotos"),
+        os.path.join(os.path.expanduser("~"), "Desktop", "1 64", "Fotos"),
+    ]
+    default_fallback_photos = next((p for p in default_fallback_photos_candidates if os.path.exists(p)), default_fallback_photos_candidates[1])
+
     default_dest_images = os.path.join(project_dir, "images")
 
-    parser = argparse.ArgumentParser(description="Convierte el catálogo Excel a cars.json")
+    parser = argparse.ArgumentParser(description="Convierte el catálogo Excel a cars.json y special_collections.json")
     parser.add_argument("--excel", "-e", default=default_excel, help="Ruta al archivo Excel (.xlsx)")
-    parser.add_argument("--output", "-o", default=default_output, help="Ruta del archivo JSON de salida")
-    parser.add_argument("--photos-dir", "-p", default=default_photos, help="Carpeta de fotos original")
+    parser.add_argument("--output", "-o", default=default_output, help="Ruta del archivo JSON del catálogo principal")
+    parser.add_argument("--output-special", "-s", default=default_output_special, help="Ruta del archivo JSON de colecciones especiales")
+    parser.add_argument("--photos-dir", "-p", default=default_photos, help="Carpeta de fotos original (SinFondo)")
+    parser.add_argument("--fallback-photos-dir", "-f", default=default_fallback_photos, help="Carpeta secundaria de fotos (Fotos)")
     parser.add_argument("--copy-images", "-c", action="store_true", help="Copiar automáticamente las fotos a la carpeta images/")
     parser.add_argument("--dest-images", "-d", default=default_dest_images, help="Carpeta destino de imágenes del proyecto")
     return parser.parse_args()
@@ -256,15 +277,21 @@ def main():
     with open(args.output, "w", encoding="utf-8") as f:
         json.dump(cars, f, ensure_ascii=False, indent=2)
 
+    # 11. Extraer dinámicamente las colecciones temáticas (Fast & Furious, Cultura Pop, Motos...)
+    special_collections, special_copied = extract_special_collections(ws, args, warnings)
+
     print("--------------------------------------------------")
     print(f" PROCESO COMPLETADO")
-    print(f" Coches procesados con éxito: {len(cars)}")
+    print(f" Catálogo principal (coches): {len(cars)}")
+    for sec_k, sec_items in special_collections.items():
+        print(f" • {sec_k}: {len(sec_items)} modelos")
     if args.copy_images:
-        print(f" Imágenes copiadas a 'images/': {copied_count}")
+        print(f" Total imágenes copiadas a 'images/': {copied_count + special_copied}")
     if missing_photos_count > 0:
-        print(f" [AVISO] Fotografías no encontradas: {missing_photos_count}")
+        print(f" [AVISO] Fotografías no encontradas en catálogo principal: {missing_photos_count}")
     print(f" Total advertencias/avisos: {len(warnings)}")
-    print(f" Archivo guardado en: {args.output}")
+    print(f" Archivo principal: {args.output}")
+    print(f" Archivo colecciones: {args.output_special}")
     print("--------------------------------------------------")
 
     if warnings:
@@ -274,7 +301,223 @@ def main():
         if len(warnings) > 20:
             print(f"  ... y {len(warnings) - 20} advertencias adicionales.")
 
-    print("\n¡cars.json generado correctamente!")
+    print("\n¡cars.json y special_collections.json generados correctamente!")
+
+
+def extract_special_collections(ws, args, warnings):
+    """
+    Busca dinámicamente las secciones de colecciones especiales por nombre
+    en la hoja de cálculo (Fast & Furious, Cultura Pop, Motos...)
+    para que el script funcione de forma robusta sin importar en qué fila o columna se ubiquen.
+    """
+    special_sections_def = [
+        {
+            "key": "fast_and_furious",
+            "search_names": ["fast and furious", "fast & furious", "a todo gas", "fast and furious:"],
+            "title": "Fast & Furious",
+            "prefix_tags": ["fast and furious", "fast & furious", "fast"]
+        },
+        {
+            "key": "cultura_pop",
+            "search_names": ["cultura pop", "culturapop", "cultura pop:", "pop"],
+            "title": "Cultura Pop",
+            "prefix_tags": ["cultura pop", "cultura"]
+        },
+        {
+            "key": "motos",
+            "search_names": ["motos", "moto", "motocicletas", "motos:"],
+            "title": "Motos",
+            "prefix_tags": ["motos", "moto"]
+        }
+    ]
+
+    # Indexar fotos disponibles en SinFondo (primaria) y Fotos (secundaria)
+    sinfondo_files = {}
+    if os.path.exists(args.photos_dir):
+        for f in os.listdir(args.photos_dir):
+            if f.lower().endswith((".jpg", ".jpeg", ".png", ".webp")):
+                sinfondo_files[normalize_text(f)] = f
+
+    fotos_files = {}
+    if os.path.exists(args.fallback_photos_dir):
+        for f in os.listdir(args.fallback_photos_dir):
+            if f.lower().endswith((".jpg", ".jpeg", ".png", ".webp")):
+                fotos_files[normalize_text(f)] = f
+
+    def resolve_special_image(prefix_tags, item_id, hl_target, brand, model):
+        # 1. Por hipervínculo
+        if hl_target:
+            decoded = urllib.parse.unquote(hl_target)
+            raw_fname = os.path.basename(decoded.replace("\\\\", "/").replace("\\", "/"))
+            base, _ = os.path.splitext(raw_fname)
+            for ext in [".png", ".jpg", ".jpeg", ".webp"]:
+                cand = normalize_text(base + ext)
+                if cand in sinfondo_files:
+                    return sinfondo_files[cand], os.path.join(args.photos_dir, sinfondo_files[cand])
+                if cand in fotos_files:
+                    return fotos_files[cand], os.path.join(args.fallback_photos_dir, fotos_files[cand])
+            raw_norm = normalize_text(raw_fname)
+            if raw_norm in sinfondo_files:
+                return sinfondo_files[raw_norm], os.path.join(args.photos_dir, sinfondo_files[raw_norm])
+            if raw_norm in fotos_files:
+                return fotos_files[raw_norm], os.path.join(args.fallback_photos_dir, fotos_files[raw_norm])
+
+        # 2. Por prefijo y número de ID (ej. "fast and furious 01", "cultura pop 01", "motos 01")
+        for p in prefix_tags:
+            for fmt in [f"{p} {item_id:02d}", f"{p} {item_id}", f"{p}{item_id:02d}", f"{p}{item_id}"]:
+                norm_p = normalize_text(fmt)
+                for cand_norm, orig_name in sinfondo_files.items():
+                    if cand_norm.startswith(norm_p):
+                        return orig_name, os.path.join(args.photos_dir, orig_name)
+                for cand_norm, orig_name in fotos_files.items():
+                    if cand_norm.startswith(norm_p):
+                        return orig_name, os.path.join(args.fallback_photos_dir, orig_name)
+
+        # 3. Por modelo si coincide con el prefijo
+        if model:
+            norm_model = normalize_text(model)
+            for p in prefix_tags:
+                for cand_norm, orig_name in sinfondo_files.items():
+                    if normalize_text(p) in cand_norm and norm_model in cand_norm:
+                        return orig_name, os.path.join(args.photos_dir, orig_name)
+                for cand_norm, orig_name in fotos_files.items():
+                    if normalize_text(p) in cand_norm and norm_model in cand_norm:
+                        return orig_name, os.path.join(args.fallback_photos_dir, orig_name)
+
+        return None, None
+
+    special_collections = {}
+    copied_count = 0
+
+    print("\n==================================================")
+    print(" PROCESANDO COLECCIONES ESPECIALES (BÚSQUEDA DINÁMICA)")
+    print("==================================================")
+
+    for sdef in special_sections_def:
+        sec_key = sdef["key"]
+        sec_title = sdef["title"]
+
+        # 1. Búsqueda dinámica en cualquier fila/columna por coincidencia de nombre
+        found_r, found_c = None, None
+        for r in range(1, ws.max_row + 1):
+            for c in range(1, ws.max_column + 1):
+                cell_v = ws.cell(row=r, column=c).value
+                if cell_v and isinstance(cell_v, str):
+                    v_clean = normalize_text(cell_v).rstrip(":").strip()
+                    if any(v_clean == normalize_text(sn).rstrip(":").strip() for sn in sdef["search_names"]):
+                        found_r, found_c = r, c
+                        break
+            if found_r:
+                break
+
+        if not found_r:
+            warnings.append(f"Colección especial '{sec_title}' no encontrada dinámicamente en el Excel.")
+            continue
+
+        print(f"[INFO] Sección '{sec_title}' encontrada en Fila {found_r}, Columna {found_c}.")
+
+        # 2. Mapeo dinámico de cabeceras en la misma fila
+        header_map = {}
+        header_row = found_r
+        for offset in range(1, 10):
+            h_val = ws.cell(row=header_row, column=found_c + offset).value
+            if h_val:
+                h_norm = normalize_text(h_val)
+                if "marca" in h_norm: header_map["brand"] = offset
+                elif "modelo" in h_norm: header_map["model"] = offset
+                elif "fabricante" in h_norm: header_map["manufacturer"] = offset
+                elif "ano" in h_norm or "año" in h_norm: header_map["year"] = offset
+                elif "color" in h_norm: header_map["color"] = offset
+                elif "pelicula" in h_norm: header_map["movie"] = offset
+                elif "universo" in h_norm: header_map["universe"] = offset
+
+        # 3. Iteración de filas hasta fin de bloque
+        items = []
+        curr_r = header_row + 1
+        consecutive_empty = 0
+
+        while curr_r <= ws.max_row:
+            cell_id = ws.cell(row=curr_r, column=found_c)
+            v = cell_id.value
+            if v is None or str(v).strip() == "":
+                consecutive_empty += 1
+                if consecutive_empty >= 3:
+                    break
+                curr_r += 1
+                continue
+            consecutive_empty = 0
+
+            try:
+                it_id = int(float(v))
+            except (ValueError, TypeError):
+                # Si es un texto reconocible como otra sección o cabecera
+                v_norm = normalize_text(v)
+                if any(k in v_norm for k in ["fast", "cultura", "motos", "gastos", "tops", "trabajo", "total"]):
+                    break
+                curr_r += 1
+                continue
+
+            def get_val(field_key):
+                if field_key in header_map:
+                    val = ws.cell(row=curr_r, column=found_c + header_map[field_key]).value
+                    if val is not None:
+                        s = str(val).strip()
+                        return s if s else None
+                return None
+
+            brand = get_val("brand")
+            model = get_val("model")
+            manufacturer = get_val("manufacturer")
+            color = get_val("color")
+            movie = get_val("movie")
+            universe = get_val("universe")
+            year_raw = get_val("year")
+            year = None
+            if year_raw:
+                try:
+                    year = int(float(year_raw))
+                except (ValueError, TypeError):
+                    year = year_raw
+
+            hl = cell_id.hyperlink.target if cell_id.hyperlink else None
+            img_name, img_path = resolve_special_image(sdef["prefix_tags"], it_id, hl, brand, model)
+
+            if not img_name:
+                warnings.append(f"{sec_title} #{it_id} ({brand} {model}): No se encontró fotografía en SinFondo ni Fotos.")
+
+            # Copiar imagen si se solicitó
+            if args.copy_images and img_name and img_path and os.path.exists(img_path):
+                dst_img = os.path.join(args.dest_images, img_name)
+                if not os.path.exists(dst_img) or os.path.getsize(img_path) != os.path.getsize(dst_img):
+                    shutil.copy2(img_path, dst_img)
+                    copied_count += 1
+
+            item_obj = {
+                "id": it_id,
+                "brand": brand,
+                "model": model,
+                "manufacturer": manufacturer,
+                "year": year,
+                "color": color,
+                "movie": movie,
+                "universe": universe,
+                "image": f"images/{img_name}" if img_name else None
+            }
+            # Limpiar campos nulos
+            item_obj = {k: v for k, v in item_obj.items() if v is not None}
+            items.append(item_obj)
+            curr_r += 1
+
+        special_collections[sec_key] = items
+        print(f"  ✔ {sec_title}: {len(items)} items procesados (imágenes encontradas: {sum(1 for i in items if 'image' in i)}/{len(items)})")
+
+    # Guardar special_collections.json
+    os.makedirs(os.path.dirname(os.path.abspath(args.output_special)), exist_ok=True)
+    with open(args.output_special, "w", encoding="utf-8") as f:
+        json.dump(special_collections, f, ensure_ascii=False, indent=2)
+
+    print(f"[INFO] Colecciones especiales guardadas en: {args.output_special}")
+    return special_collections, copied_count
 
 
 if __name__ == "__main__":

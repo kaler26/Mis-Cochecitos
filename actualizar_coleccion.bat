@@ -1,4 +1,4 @@
-﻿@echo off
+@echo off
 setlocal enabledelayedexpansion
 chcp 65001 > nul
 
@@ -54,9 +54,10 @@ echo.
 echo =======================================================
 echo   ¡COLECCION ACTUALIZADA CON EXITO!
 echo =======================================================
-echo   - cars.json ha sido actualizado con los nuevos datos.
+echo   - cars.json y special_collections.json han sido actualizados.
+echo   - Catalogo principal y pestañas (Fast & Furious, Cultura Pop, Motos) listos.
 echo   - Las fotos corregidas han sido sincronizadas en images/.
-echo   - Abre GitHub Desktop para hacer "Commit to main" y "Push".
+echo   - Abre GitHub Desktop para hacer "Commit to main" y "Push origin".
 echo =======================================================
 echo.
 pause
