@@ -36,5 +36,5 @@ Catálogo web moderno, 100% estático, responsive y de alto rendimiento para col
 - `data/special_collections.json` y `data/special_collections.js`: Base de datos de Fast & Furious, Cultura Pop y Motos.
 - `images/`: Fotos transparentes de los modelos (`.png`) e icono general `logo.png`.
 - `tools/excel_to_json.py`: Script extractor dinámico de Excel a JSON con sincronización inteligente de fotos.
-- `tools/test_catalog.py`: Suite de 13 pruebas automatizadas para verificar integridad de datos, rutas, imágenes, modo feria y gestos móviles.
+- `tools/test_catalog.py`: Suite de 14 pruebas automatizadas para verificar integridad de datos, rutas, imágenes, modo feria, gestos móviles y safe-area.
 - `actualizar_coleccion.bat`: Lanzador de actualización en 1 clic para Windows con detección inteligente de Python.

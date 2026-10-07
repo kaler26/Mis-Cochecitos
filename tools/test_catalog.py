@@ -199,7 +199,14 @@ assert ".compact-list-mode" in css_content
 assert ".hero-feria" in css_content
 print("✔ Gestos táctiles de deslizamiento (swipe) y modos de vista verificados")
 
+# 13. Test Protección de Barra de Navegación de Modal contra la barra de URL móvil
+assert "viewport-fit=cover" in html_content, "Falta viewport-fit=cover en index.html"
+assert "safe-area-inset-top" in css_content, "Falta soporte safe-area-inset-top en style.css"
+assert "100dvh" in css_content, "Falta altura dinámica 100dvh para móviles en style.css"
+assert "position: sticky" in css_content, "Falta position sticky en cabecera de modal"
+print("✔ Protección contra solapamiento de barra de URL en móviles y safe-area verificados")
+
 print("\n==================================================")
-print(" ¡TODAS LAS PRUEBAS AUTOMATIZADAS PASARON (13/13)!")
+print(" ¡TODAS LAS PRUEBAS AUTOMATIZADAS PASARON (14/14)!")
 print("==================================================")
 

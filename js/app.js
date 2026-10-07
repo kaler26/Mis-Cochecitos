@@ -1308,6 +1308,11 @@
     dom.carModal.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
 
+    // Asegurar que la ficha comience siempre desde arriba
+    if (dom.modalDialog) {
+      dom.modalDialog.scrollTop = 0;
+    }
+
     // Sincronizar hash URL para poder compartir el enlace individual
     const car = list[filteredIndex];
     if (car && car.id) {
@@ -1439,6 +1444,9 @@
     if (newIndex >= 0 && newIndex < list.length) {
       state.modal.currentFilteredIndex = newIndex;
       updateModalContent();
+      if (dom.modalDialog) {
+        dom.modalDialog.scrollTop = 0;
+      }
       const car = list[newIndex];
       if (car && car.id) {
         let hashPrefix = '#coche-';
