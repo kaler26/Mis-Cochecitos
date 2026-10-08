@@ -205,7 +205,26 @@ assert "100dvh" in css_content, "Falta altura dinámica 100dvh para móviles en 
 assert "position: sticky" in css_content, "Falta position sticky en cabecera de modal"
 print("✔ Protección contra solapamiento de barra de URL en móviles y safe-area verificados")
 
+# 14. Test Botón Flotante y Filtros Rápidos por Décadas
+assert 'id="floating-back-to-top"' in html_content
+assert '.floating-back-to-top' in css_content
+assert 'decades-chips-bar' in html_content
+assert 'selectDecadeFilter' in js_content
+assert 'syncDecadeChips' in js_content
+print("✔ Botón flotante volver arriba y filtros de décadas verificados en HTML, CSS y JS")
+
+# 15. Test Pestaña de Pruebas Vitrina (Demo)
+assert 'id="nav-tab-vitrina"' in html_content
+assert 'id="tab-vitrina-demo"' in html_content
+assert 'vitrina-grid' in html_content
+assert '.vitrina-card' in css_content
+assert '.vitrina-floor-shadow' in css_content
+assert 'renderVitrinaDemo' in js_content
+assert 'initVitrinaDemo' in js_content
+print("✔ Zona de pruebas de Vitrina (Demo) verificada en HTML, CSS y JS")
+
 print("\n==================================================")
-print(" ¡TODAS LAS PRUEBAS AUTOMATIZADAS PASARON (14/14)!")
+print(" ¡TODAS LAS PRUEBAS AUTOMATIZADAS PASARON (16/16)!")
 print("==================================================")
+
 

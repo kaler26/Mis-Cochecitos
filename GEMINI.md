@@ -23,7 +23,12 @@ Catálogo web moderno, 100% estático, responsive y de alto rendimiento para col
    - Incluye selector de ámbito, vista compacta de alta densidad y exportación/impresión de checklist.
 6. **Modos de Vista**:
    - Alternador de visualización en catálogo principal: vista de cuadrícula fotográfica clásica o lista compacta optimizada.
-7. **Flujo de Actualización**:
+7. **Filtros Rápidos por Décadas y Botón Flotante**:
+   - Barra de chips horizontal con filtrado por épocas (`Clásicos <60s`, `60s`, `70s`, `80s`, `90s`, `2000s`, `2010s`, `Modernos 2020+`).
+   - Botón flotante circular permanente `floating-back-to-top` que aparece suavemente con scroll para regresar al inicio.
+8. **Zona de Pruebas: Vitrina de Exposición (Demo)**:
+   - Pestaña `#vitrina-demo` para comparar efectos visuales de vitrina (peana 3D con sombra elíptica bajo las ruedas, iluminación LED, suelo pulido de showroom con reflejo especular) y modo comparativo "Normal vs Vitrina".
+9. **Flujo de Actualización**:
    - El usuario actualiza datos en su Excel (`F:\Mis Cochecitos\1 64\1 64.xlsx` o en Escritorio) o renombra/añade fotos en su carpeta (`F:\Mis Cochecitos\1 64\SinFondo`).
    - Para aplicar los cambios a la web, ejecuta con doble clic el script: `actualizar_coleccion.bat`.
    - Luego abre **GitHub Desktop**, escribe un resumen de los cambios, y pulsa `Commit to main` y `Push origin`.

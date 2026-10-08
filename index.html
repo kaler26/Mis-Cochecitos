@@ -8,7 +8,7 @@
   <title>MIS COCHECITOS · Coches a Escala</title>
   
   <link rel="icon" type="image/png" href="./images/logo.png">
-  <link rel="stylesheet" href="./css/style.css?v=2.5">
+  <link rel="stylesheet" href="./css/style.css?v=2.6">
 </head>
 <body>
   <!-- CABECERA PRINCIPAL -->
@@ -72,6 +72,14 @@
             <line x1="6" y1="20" x2="6" y2="14"></line>
           </svg>
           <span>Estadísticas</span>
+        </button>
+        <button type="button" class="nav-btn" data-tab="vitrina-demo" id="nav-tab-vitrina">
+          <svg class="nav-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+            <polyline points="2 17 12 22 22 17"></polyline>
+            <polyline points="2 12 12 17 22 12"></polyline>
+          </svg>
+          <span>Vitrina (Demo)</span>
         </button>
         <button type="button" class="nav-btn" data-tab="acerca-de" id="nav-tab-acerca">
           <svg class="nav-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -140,6 +148,22 @@
               <span>Filtros</span>
               <span id="active-filters-count" class="badge-count hidden">0</span>
             </button>
+          </div>
+
+          <!-- FILTROS RÁPIDOS POR DÉCADAS / ÉPOCAS -->
+          <div class="decades-chips-bar" aria-label="Filtro rápido por época">
+            <span class="decades-label">Época:</span>
+            <div class="decades-chips-scroll" id="decades-chips-container" role="group" aria-label="Seleccionar época">
+              <button type="button" class="decade-chip active" data-decade="" aria-pressed="true">Todas</button>
+              <button type="button" class="decade-chip" data-decade="pre-60s" aria-pressed="false">Clásicos (&lt;60s)</button>
+              <button type="button" class="decade-chip" data-decade="60s" aria-pressed="false">60s</button>
+              <button type="button" class="decade-chip" data-decade="70s" aria-pressed="false">70s</button>
+              <button type="button" class="decade-chip" data-decade="80s" aria-pressed="false">80s</button>
+              <button type="button" class="decade-chip" data-decade="90s" aria-pressed="false">90s</button>
+              <button type="button" class="decade-chip" data-decade="2000s" aria-pressed="false">2000s</button>
+              <button type="button" class="decade-chip" data-decade="2010s" aria-pressed="false">2010s</button>
+              <button type="button" class="decade-chip" data-decade="2020s" aria-pressed="false">Modernos (2020+)</button>
+            </div>
           </div>
 
           <!-- CUADRÍCULA DE FILTROS (Colapsable en móviles) -->
@@ -566,6 +590,73 @@
       </div>
     </section>
 
+    <!-- PESTAÑA: VITRINA DE EXPOSICIÓN (DEMO) -->
+    <section id="tab-vitrina-demo" class="tab-pane" aria-labelledby="nav-tab-vitrina" hidden>
+      <div class="special-section-container vitrina-demo-container">
+        
+        <!-- CABECERA DE LA ZONA DE PRUEBAS -->
+        <header class="special-hero hero-vitrina">
+          <div class="special-hero-badge">🔬 LABORATORIO VISUAL &amp; SHOWROOM</div>
+          <h2 class="special-hero-title">Vitrina de Exposición (Demo de Efectos)</h2>
+          <p class="special-hero-desc">Espacio interactivo de pruebas para previsualizar y comparar el efecto vitrina, peana 3D y reflejo de showroom antes de aplicarlo al catálogo principal.</p>
+        </header>
+
+        <!-- PANEL DE CONTROL DE LA DEMO -->
+        <section class="vitrina-controls-panel" aria-label="Controles de la vitrina de pruebas">
+          <div class="vitrina-controls-box">
+            
+            <div class="vitrina-control-row">
+              <span class="vitrina-control-title">Estilo de Vitrina:</span>
+              <div class="vitrina-style-buttons" role="group" aria-label="Seleccionar estilo de vitrina">
+                <button type="button" class="btn btn-secondary btn-sm vitrina-style-btn active" data-style="pedestal" id="vitrina-style-pedestal">
+                  <span>🏛️ Peana 3D + Sombra</span>
+                </button>
+                <button type="button" class="btn btn-secondary btn-sm vitrina-style-btn" data-style="led" id="vitrina-style-led">
+                  <span>💡 Iluminación LED</span>
+                </button>
+                <button type="button" class="btn btn-secondary btn-sm vitrina-style-btn" data-style="reflection" id="vitrina-style-reflection">
+                  <span>✨ Suelo Pulido Showroom</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="vitrina-control-row vitrina-control-row-secondary">
+              <div class="vitrina-toggle-compare-wrap">
+                <label class="vitrina-switch-label">
+                  <input type="checkbox" id="vitrina-compare-toggle" class="vitrina-checkbox">
+                  <span class="vitrina-switch-slider"></span>
+                  <span class="vitrina-switch-text">Modo Comparativo (Normal vs Vitrina)</span>
+                </label>
+              </div>
+
+              <div class="vitrina-car-selector-wrap">
+                <label for="vitrina-car-select" class="vitrina-select-label">Probar con otro coche:</label>
+                <div class="select-wrapper">
+                  <select id="vitrina-car-select" class="filter-select vitrina-car-select">
+                    <option value="samples">Selección Variada de Modelos</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- EXPLICACIÓN DEL ESTILO ACTIVO -->
+            <div id="vitrina-style-explanation" class="vitrina-explanation">
+              <strong>Estilo Peana 3D:</strong> Proyecta una sombra elíptica de contacto bajo los neumáticos sobre una base de exposición biselada en perspectiva, dando sensación de miniatura real posada sobre una peana física.
+            </div>
+
+          </div>
+        </section>
+
+        <!-- ÁREA DE MUESTRAS DE LA VITRINA -->
+        <section class="vitrina-showroom-section" aria-label="Coches en vitrina">
+          <div id="vitrina-grid" class="cars-grid vitrina-grid vitrina-mode-pedestal" role="list">
+            <!-- Renderizado dinámicamente por JavaScript -->
+          </div>
+        </section>
+
+      </div>
+    </section>
+
     <!-- PESTAÑA 3: ACERCA DE -->
     <section id="tab-acerca-de" class="tab-pane" aria-labelledby="nav-tab-acerca" hidden>
       <div class="about-container">
@@ -776,11 +867,18 @@
     </div>
   </footer>
 
+  <!-- BOTÓN FLOTANTE VOLVER ARRIBA -->
+  <button type="button" id="floating-back-to-top" class="floating-back-to-top" aria-label="Volver arriba" title="Volver al inicio de la página">
+    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="18 15 12 9 6 15"></polyline>
+    </svg>
+  </button>
+
   <!-- DATOS DE LA COLECCIÓN (Permite funcionamiento local directo con doble clic sin servidor) -->
   <script src="./data/cars.js"></script>
   <script src="./data/special_collections.js"></script>
 
-  <!-- SCRIPT PRINCIPAL (v=2.2 para evitar que el navegador use caché antigua) -->
-  <script src="./js/app.js?v=2.2"></script>
+  <!-- SCRIPT PRINCIPAL (v=2.3 para evitar que el navegador use caché antigua) -->
+  <script src="./js/app.js?v=2.3"></script>
 </body>
 </html>
