@@ -26,8 +26,9 @@ Catálogo web moderno, 100% estático, responsive y de alto rendimiento para col
 7. **Filtros Rápidos por Décadas y Botón Flotante**:
    - Barra de chips horizontal con filtrado por épocas (`Clásicos <60s`, `60s`, `70s`, `80s`, `90s`, `2000s`, `2010s`, `Modernos 2020+`).
    - Botón flotante circular permanente `floating-back-to-top` que aparece suavemente con scroll para regresar al inicio.
-8. **Encuadre y Zoom Óptimo de Miniaturas**:
-   - Ajuste fotográfico general en todas las fichas (catálogo principal, colecciones temáticas y modal de detalle): escala optimizada (`scale(1.15)` en cuadrícula, `scale(1.08)` en modal) y padding ajustado para que los vehículos sin fondo aprovechen todo el ancho sin bordes vacíos excesivos ni recortes indeseados.
+8. **Formato Cuadrado (1:1) Adaptado a las Fotos**:
+   - El marco fotográfico de todas las tarjetas (`.car-card-media`) está fijado en formato cuadrado 1:1 (`aspect-ratio: 1 / 1`), coincidiendo exactamente con la relación de aspecto de las imágenes cuadradas del catálogo (con vehículo centrado y sombra inferior).
+   - Elimina zooms artificiales que recortaban el coche o su sombra por arriba/abajo, logrando que las miniaturas encajen de borde a borde de forma limpia y proporcional sin márgenes vacíos.
 9. **Flujo de Actualización**:
    - El usuario actualiza datos en su Excel (`F:\Mis Cochecitos\1 64\1 64.xlsx` o en Escritorio) o renombra/añade fotos en su carpeta (`F:\Mis Cochecitos\1 64\SinFondo`).
    - Para aplicar los cambios a la web, ejecuta con doble clic el script: `actualizar_coleccion.bat`.

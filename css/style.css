@@ -668,32 +668,32 @@ a {
   border-color: var(--border-highlight);
 }
 
-/* Contenedor de la fotografía (16:9, contain, sin recortes, optimizado para fotos sin fondo) */
+/* Contenedor de la fotografía (1:1 cuadrado, adaptado a fotos cuadradas con sombra) */
 .car-card-media {
   position: relative;
   width: 100%;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 1 / 1;
   background: radial-gradient(ellipse at 50% 65%, #1d222b 0%, #080a0d 80%);
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
   border-bottom: 1px solid var(--border-subtle);
-  padding: 0.25rem 0.45rem;
+  padding: 0.35rem;
 }
 
 .car-card-img {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  transform: scale(1.15);
+  transform: none;
   filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.65));
   transition: transform 0.35s ease, filter 0.35s ease;
   user-select: none;
 }
 
 .car-card:hover .car-card-img {
-  transform: scale(1.22) translateY(-2px);
+  transform: scale(1.05) translateY(-3px);
   filter: drop-shadow(0 12px 20px rgba(0, 0, 0, 0.85)) drop-shadow(0 0 10px var(--accent-glow));
 }
 
@@ -1100,14 +1100,14 @@ a {
   max-width: 100%;
   max-height: 480px;
   object-fit: contain;
-  transform: scale(1.08);
+  transform: none;
   border-radius: var(--radius-sm);
   filter: drop-shadow(0 14px 28px rgba(0, 0, 0, 0.75));
   transition: transform var(--transition-fast), filter var(--transition-fast);
 }
 
 .modal-image-wrapper:hover .modal-car-img {
-  transform: scale(1.12);
+  transform: scale(1.04);
   filter: drop-shadow(0 18px 36px rgba(0, 0, 0, 0.9));
 }
 
@@ -2022,10 +2022,10 @@ a {
   }
 
   .modal-car-img {
-    max-height: 200px;
+    max-height: 220px;
     width: auto;
     max-width: 100%;
-    transform: scale(1.08);
+    transform: none;
   }
 
   .modal-info-col {
@@ -2339,17 +2339,18 @@ a {
 }
 
 .cars-grid.compact-list-mode .car-card-media {
-  width: 68px;
-  height: 48px;
-  min-height: 48px;
+  width: 52px;
+  height: 52px;
+  min-height: 52px;
+  aspect-ratio: 1 / 1;
   flex-shrink: 0;
   border-radius: var(--radius-sm);
   padding: 2px;
 }
 
 .cars-grid.compact-list-mode .car-card-img {
-  max-height: 44px;
-  transform: scale(1.10);
+  max-height: 48px;
+  transform: none;
 }
 
 .cars-grid.compact-list-mode .car-badge-id {

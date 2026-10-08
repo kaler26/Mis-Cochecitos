@@ -213,11 +213,10 @@ assert 'selectDecadeFilter' in js_content
 assert 'syncDecadeChips' in js_content
 print("✔ Botón flotante volver arriba y filtros de décadas verificados en HTML, CSS y JS")
 
-# 15. Test Ajuste y Encuadre Óptimo de Fotos (Escala y Zoom General)
-assert 'scale(1.15)' in css_content, "Falta transform scale(1.15) en car-card-img"
-assert 'scale(1.08)' in css_content, "Falta transform scale(1.08) en modal-car-img"
-assert 'padding: 0.25rem 0.45rem' in css_content, "Falta padding compacto en car-card-media"
-print("✔ Ajuste de encuadre y zoom óptimo de imágenes verificado en CSS")
+# 15. Test Ajuste Cuadrado 1:1 de Tarjetas para Fotos Cuadradas
+assert 'aspect-ratio: 1 / 1;' in css_content, "Falta aspect-ratio: 1 / 1 en car-card-media"
+assert 'object-fit: contain' in css_content, "Falta object-fit: contain en car-card-img"
+print("✔ Ajuste de marco cuadrado (1:1) para fotos cuadradas verificado en CSS")
 
 print("\n==================================================")
 print(" ¡TODAS LAS PRUEBAS AUTOMATIZADAS PASARON (15/15)!")
