@@ -16,7 +16,7 @@ Catálogo web moderno, 100% estático, responsive y de alto rendimiento para col
 4. **Diseño Móvil y Gestos**:
    - Totalmente adaptable a móviles con navegación por pestañas con scroll horizontal suave sin barras molestas.
    - La ficha modal de detalle se presenta en formato tarjeta adaptable (o bottom-sheet) con indicador de posición contextual (`1 / 33`, etc.).
-   - **Gestos Táctiles (Swipe)**: Deslizamiento horizontal natural en la pantalla de detalle para cambiar de coche sin pulsar flechas, con animación fluida y pista visual animada.
+   - **Gestos Táctiles (Swipe)**: Deslizamiento horizontal natural en la pantalla de detalle para cambiar de coche sin pulsar flechas, con animación fluida.
 5. **Modo Feria & Antirrepeticiones**:
    - Pestaña especializada ultra-rápida pensada para mercadillos, tiendas y ferias.
    - Comprobador instantáneo sobre los 1.533 vehículos (colección principal + temáticas) que indica al coleccionista en tiempo real si un coche ya lo tiene o si no lo tiene (para comprarlo sin riesgo de repetir).
@@ -24,7 +24,7 @@ Catálogo web moderno, 100% estático, responsive y de alto rendimiento para col
 6. **Modos de Vista**:
    - Alternador de visualización en catálogo principal: vista de cuadrícula fotográfica clásica o lista compacta optimizada.
 7. **Flujo de Actualización**:
-   - El usuario actualiza datos en su Excel (`C:\Users\dani\Desktop\1 64\1 64.xlsx`) o renombra/añade fotos en su carpeta de Escritorio (`C:\Users\dani\Desktop\1 64\SinFondo`).
+   - El usuario actualiza datos en su Excel (`F:\Mis Cochecitos\1 64\1 64.xlsx` o en Escritorio) o renombra/añade fotos en su carpeta (`F:\Mis Cochecitos\1 64\SinFondo`).
    - Para aplicar los cambios a la web, ejecuta con doble clic el script: `actualizar_coleccion.bat`.
    - Luego abre **GitHub Desktop**, escribe un resumen de los cambios, y pulsa `Commit to main` y `Push origin`.
 

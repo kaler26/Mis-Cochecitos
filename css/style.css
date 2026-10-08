@@ -2392,39 +2392,6 @@ a {
 /* ==========================================================================
    16. GESTOS TÁCTILES Y SWIPE EN MODAL
    ========================================================================== */
-.modal-swipe-tip {
-  display: none;
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  z-index: 5;
-  font-size: 0.74rem;
-  font-weight: 600;
-  color: #ffffff;
-  background-color: rgba(12, 14, 18, 0.88);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  border: 1px solid rgba(230, 57, 70, 0.5);
-  padding: 0.25rem 0.6rem;
-  border-radius: var(--radius-full);
-  animation: pulse-tip 2.5s infinite;
-  white-space: nowrap;
-  pointer-events: none;
-}
-
-@keyframes pulse-tip {
-  0%, 100% { opacity: 0.8; transform: scale(0.98); }
-  50% { opacity: 1; transform: scale(1.02); }
-}
-
-@media (max-width: 768px) {
-  .modal-swipe-tip {
-    display: inline-flex;
-    align-items: center;
-    top: 0.75rem;
-    right: 0.75rem;
-  }
-}
 
 .modal-content-grid {
   transition: transform 0.22s cubic-bezier(0.2, 0, 0.2, 1), opacity 0.22s ease;

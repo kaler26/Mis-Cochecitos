@@ -43,9 +43,12 @@ def parse_arguments():
     script_dir = os.path.dirname(os.path.abspath(__file__))
     project_dir = os.path.dirname(script_dir)
     
+    parent_dir = os.path.dirname(project_dir)
+    
     # Buscar posible ubicación del Excel
     default_excel_candidates = [
         os.path.join(project_dir, "1 64.xlsx"),
+        os.path.join(parent_dir, "1 64", "1 64.xlsx"),
         os.path.join(r"C:\Users\dani\Desktop\1 64", "1 64.xlsx"),
         os.path.join(os.path.expanduser("~"), "Desktop", "1 64", "1 64.xlsx"),
     ]
