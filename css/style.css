@@ -679,20 +679,21 @@ a {
   align-items: center;
   justify-content: center;
   border-bottom: 1px solid var(--border-subtle);
-  padding: 0.6rem 0.75rem;
+  padding: 0.25rem 0.45rem;
 }
 
 .car-card-img {
   width: 100%;
   height: 100%;
   object-fit: contain;
+  transform: scale(1.15);
   filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.65));
   transition: transform 0.35s ease, filter 0.35s ease;
   user-select: none;
 }
 
 .car-card:hover .car-card-img {
-  transform: scale(1.05) translateY(-2px);
+  transform: scale(1.22) translateY(-2px);
   filter: drop-shadow(0 12px 20px rgba(0, 0, 0, 0.85)) drop-shadow(0 0 10px var(--accent-glow));
 }
 
@@ -1099,13 +1100,14 @@ a {
   max-width: 100%;
   max-height: 480px;
   object-fit: contain;
+  transform: scale(1.08);
   border-radius: var(--radius-sm);
   filter: drop-shadow(0 14px 28px rgba(0, 0, 0, 0.75));
   transition: transform var(--transition-fast), filter var(--transition-fast);
 }
 
 .modal-image-wrapper:hover .modal-car-img {
-  transform: scale(1.02);
+  transform: scale(1.12);
   filter: drop-shadow(0 18px 36px rgba(0, 0, 0, 0.9));
 }
 
@@ -2023,6 +2025,7 @@ a {
     max-height: 200px;
     width: auto;
     max-width: 100%;
+    transform: scale(1.08);
   }
 
   .modal-info-col {
@@ -2346,6 +2349,7 @@ a {
 
 .cars-grid.compact-list-mode .car-card-img {
   max-height: 44px;
+  transform: scale(1.10);
 }
 
 .cars-grid.compact-list-mode .car-badge-id {
@@ -2899,310 +2903,6 @@ a {
   border-color: var(--accent);
   box-shadow: 0 0 10px rgba(230, 57, 70, 0.25);
   font-weight: 700;
-}
-
-/* ==========================================================================
-   23. LABORATORIO VISUAL - VITRINA DE EXPOSICIÓN (DEMO)
-   ========================================================================== */
-.hero-vitrina {
-  background: radial-gradient(circle at 50% 30%, rgba(230, 57, 70, 0.12) 0%, rgba(13, 15, 18, 0) 70%),
-              linear-gradient(180deg, #161922 0%, #0d0f12 100%);
-  border-bottom: 1px solid rgba(230, 57, 70, 0.25);
-}
-
-.vitrina-controls-panel {
-  margin-bottom: 2rem;
-}
-
-.vitrina-controls-box {
-  background-color: var(--bg-surface);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-lg);
-  padding: 1.25rem 1.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  box-shadow: var(--shadow-card);
-}
-
-.vitrina-control-row {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-
-.vitrina-control-title {
-  font-size: 0.88rem;
-  font-weight: 700;
-  color: var(--text-primary);
-  flex-shrink: 0;
-}
-
-.vitrina-style-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-
-.vitrina-style-btn {
-  padding: 0.45rem 0.85rem;
-  font-size: 0.82rem;
-  font-weight: 600;
-  border-radius: var(--radius-full);
-}
-
-.vitrina-style-btn.active {
-  background-color: var(--accent);
-  border-color: var(--accent);
-  color: #ffffff;
-  box-shadow: 0 0 12px rgba(230, 57, 70, 0.4);
-}
-
-.vitrina-control-row-secondary {
-  justify-content: space-between;
-  border-top: 1px solid var(--border-subtle);
-  padding-top: 0.85rem;
-}
-
-.vitrina-switch-label {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.65rem;
-  cursor: pointer;
-  user-select: none;
-}
-
-.vitrina-checkbox {
-  position: absolute;
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-.vitrina-switch-slider {
-  width: 38px;
-  height: 22px;
-  background-color: rgba(255, 255, 255, 0.15);
-  border-radius: 20px;
-  position: relative;
-  transition: background-color 0.25s ease;
-  flex-shrink: 0;
-}
-
-.vitrina-switch-slider::before {
-  content: "";
-  position: absolute;
-  top: 3px;
-  left: 3px;
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background-color: #ffffff;
-  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.vitrina-checkbox:checked + .vitrina-switch-slider {
-  background-color: var(--accent);
-}
-
-.vitrina-checkbox:checked + .vitrina-switch-slider::before {
-  transform: translateX(16px);
-}
-
-.vitrina-switch-text {
-  font-size: 0.84rem;
-  font-weight: 600;
-  color: var(--text-primary);
-}
-
-.vitrina-car-selector-wrap {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-}
-
-.vitrina-select-label {
-  font-size: 0.82rem;
-  color: var(--text-muted);
-}
-
-.vitrina-car-select {
-  padding: 0.4rem 1.8rem 0.4rem 0.75rem;
-  font-size: 0.82rem;
-  width: auto;
-  max-width: 280px;
-}
-
-.vitrina-explanation {
-  font-size: 0.84rem;
-  color: var(--text-secondary);
-  background: rgba(255, 255, 255, 0.03);
-  border-left: 3px solid var(--accent);
-  padding: 0.6rem 0.9rem;
-  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-  line-height: 1.45;
-}
-
-/* Efectos visuales de Vitrina sobre las tarjetas */
-
-.vitrina-card .car-card-media {
-  position: relative;
-  background: radial-gradient(ellipse at 50% 18%, rgba(255, 255, 255, 0.08) 0%, rgba(20, 24, 32, 0) 70%),
-              radial-gradient(ellipse at 50% 88%, #202632 0%, #090b0e 90%);
-  overflow: visible;
-}
-
-/* Sombra de suelo elíptica 3D para neumáticos */
-.vitrina-floor-shadow {
-  position: absolute;
-  bottom: 15%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 78%;
-  height: 16px;
-  background: radial-gradient(ellipse at 50% 50%, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.45) 50%, rgba(0, 0, 0, 0) 80%);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 1;
-  filter: blur(2.5px);
-  transition: transform 0.35s ease, opacity 0.35s ease, width 0.35s ease;
-}
-
-.vitrina-card:hover .vitrina-floor-shadow {
-  transform: translateX(-50%) scale(0.96);
-  opacity: 0.7;
-}
-
-/* Base de peana física en perspectiva */
-.vitrina-pedestal-plinth {
-  position: absolute;
-  bottom: 8%;
-  left: 6%;
-  right: 6%;
-  height: 6px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.18) 0%, rgba(20, 25, 34, 0.9) 100%);
-  border-radius: 3px;
-  border-top: 1px solid rgba(255, 255, 255, 0.28);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
-  pointer-events: none;
-  z-index: 1;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-/* Variante 1: Peana 3D activa */
-.vitrina-grid.vitrina-mode-pedestal .vitrina-pedestal-plinth {
-  opacity: 1;
-}
-
-.vitrina-grid.vitrina-mode-pedestal .car-card-media {
-  background: radial-gradient(ellipse at 50% 20%, rgba(255, 255, 255, 0.09) 0%, rgba(18, 22, 29, 0) 65%),
-              radial-gradient(ellipse at 50% 92%, #262e3d 0%, #0a0c10 88%);
-}
-
-/* Variante 2: Iluminación LED activa */
-.vitrina-led-glow {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--accent) 30%, #ff7b88 50%, var(--accent) 70%, transparent);
-  box-shadow: 0 0 16px var(--accent), 0 0 30px var(--accent-glow);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-  z-index: 2;
-}
-
-.vitrina-spotlight-top {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 60%;
-  height: 45%;
-  background: radial-gradient(ellipse at 50% 0%, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0) 75%);
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  z-index: 1;
-}
-
-.vitrina-grid.vitrina-mode-led .vitrina-led-glow,
-.vitrina-grid.vitrina-mode-led .vitrina-spotlight-top {
-  opacity: 1;
-}
-
-.vitrina-grid.vitrina-mode-led .car-card:hover .vitrina-led-glow {
-  box-shadow: 0 0 22px var(--accent), 0 0 45px var(--accent);
-}
-
-/* Variante 3: Suelo pulido showroom con reflejo especular */
-.vitrina-reflection-wrap {
-  position: absolute;
-  bottom: 2%;
-  left: 0;
-  right: 0;
-  height: 32%;
-  overflow: hidden;
-  opacity: 0;
-  pointer-events: none;
-  transform: scaleY(-1);
-  mask-image: linear-gradient(to top, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0) 75%);
-  -webkit-mask-image: linear-gradient(to top, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0) 75%);
-  filter: blur(1.5px);
-  transition: opacity 0.3s ease;
-  z-index: 1;
-}
-
-.vitrina-grid.vitrina-mode-reflection .vitrina-reflection-wrap {
-  opacity: 0.65;
-}
-
-.vitrina-grid.vitrina-mode-reflection .vitrina-floor-shadow {
-  opacity: 0.55;
-  bottom: 12%;
-}
-
-.vitrina-reflection-img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-/* Estilos para el Modo Comparativo (Normal vs Vitrina) */
-.vitrina-compare-pair {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px dashed var(--border-subtle);
-  border-radius: var(--radius-md);
-  padding: 0.6rem;
-}
-
-.vitrina-compare-tag {
-  font-size: 0.72rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  padding: 0.2rem 0.5rem;
-  border-radius: var(--radius-sm);
-  display: inline-block;
-  align-self: flex-start;
-}
-
-.vitrina-compare-tag.tag-normal {
-  background-color: var(--bg-surface-hover);
-  color: var(--text-muted);
-}
-
-.vitrina-compare-tag.tag-vitrina {
-  background-color: rgba(230, 57, 70, 0.18);
-  color: #ff5263;
-  border: 1px solid rgba(230, 57, 70, 0.35);
 }
 
 /* Estilos de Impresión */

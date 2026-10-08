@@ -26,8 +26,8 @@ Catálogo web moderno, 100% estático, responsive y de alto rendimiento para col
 7. **Filtros Rápidos por Décadas y Botón Flotante**:
    - Barra de chips horizontal con filtrado por épocas (`Clásicos <60s`, `60s`, `70s`, `80s`, `90s`, `2000s`, `2010s`, `Modernos 2020+`).
    - Botón flotante circular permanente `floating-back-to-top` que aparece suavemente con scroll para regresar al inicio.
-8. **Zona de Pruebas: Vitrina de Exposición (Demo)**:
-   - Pestaña `#vitrina-demo` para comparar efectos visuales de vitrina (peana 3D con sombra elíptica bajo las ruedas, iluminación LED, suelo pulido de showroom con reflejo especular) y modo comparativo "Normal vs Vitrina".
+8. **Encuadre y Zoom Óptimo de Miniaturas**:
+   - Ajuste fotográfico general en todas las fichas (catálogo principal, colecciones temáticas y modal de detalle): escala optimizada (`scale(1.15)` en cuadrícula, `scale(1.08)` en modal) y padding ajustado para que los vehículos sin fondo aprovechen todo el ancho sin bordes vacíos excesivos ni recortes indeseados.
 9. **Flujo de Actualización**:
    - El usuario actualiza datos en su Excel (`F:\Mis Cochecitos\1 64\1 64.xlsx` o en Escritorio) o renombra/añade fotos en su carpeta (`F:\Mis Cochecitos\1 64\SinFondo`).
    - Para aplicar los cambios a la web, ejecuta con doble clic el script: `actualizar_coleccion.bat`.
@@ -41,5 +41,5 @@ Catálogo web moderno, 100% estático, responsive y de alto rendimiento para col
 - `data/special_collections.json` y `data/special_collections.js`: Base de datos de Fast & Furious, Cultura Pop y Motos.
 - `images/`: Fotos transparentes de los modelos (`.png`) e icono general `logo.png`.
 - `tools/excel_to_json.py`: Script extractor dinámico de Excel a JSON con sincronización inteligente de fotos.
-- `tools/test_catalog.py`: Suite de 14 pruebas automatizadas para verificar integridad de datos, rutas, imágenes, modo feria, gestos móviles y safe-area.
+- `tools/test_catalog.py`: Suite de 15 pruebas automatizadas para verificar integridad de datos, rutas, imágenes, modo feria, gestos móviles, safe-area y ajuste visual.
 - `actualizar_coleccion.bat`: Lanzador de actualización en 1 clic para Windows con detección inteligente de Python.

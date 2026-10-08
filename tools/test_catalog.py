@@ -213,18 +213,14 @@ assert 'selectDecadeFilter' in js_content
 assert 'syncDecadeChips' in js_content
 print("✔ Botón flotante volver arriba y filtros de décadas verificados en HTML, CSS y JS")
 
-# 15. Test Pestaña de Pruebas Vitrina (Demo)
-assert 'id="nav-tab-vitrina"' in html_content
-assert 'id="tab-vitrina-demo"' in html_content
-assert 'vitrina-grid' in html_content
-assert '.vitrina-card' in css_content
-assert '.vitrina-floor-shadow' in css_content
-assert 'renderVitrinaDemo' in js_content
-assert 'initVitrinaDemo' in js_content
-print("✔ Zona de pruebas de Vitrina (Demo) verificada en HTML, CSS y JS")
+# 15. Test Ajuste y Encuadre Óptimo de Fotos (Escala y Zoom General)
+assert 'scale(1.15)' in css_content, "Falta transform scale(1.15) en car-card-img"
+assert 'scale(1.08)' in css_content, "Falta transform scale(1.08) en modal-car-img"
+assert 'padding: 0.25rem 0.45rem' in css_content, "Falta padding compacto en car-card-media"
+print("✔ Ajuste de encuadre y zoom óptimo de imágenes verificado en CSS")
 
 print("\n==================================================")
-print(" ¡TODAS LAS PRUEBAS AUTOMATIZADAS PASARON (16/16)!")
+print(" ¡TODAS LAS PRUEBAS AUTOMATIZADAS PASARON (15/15)!")
 print("==================================================")
 
 

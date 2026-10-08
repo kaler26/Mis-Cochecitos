@@ -37,15 +37,8 @@
     },
     filteredFeria: [],
     viewMode: localStorage.getItem('cochecitos_view_mode') || 'grid', // 'grid' | 'compact'
-    activeTab: 'coleccion', // 'coleccion' | 'fast-and-furious' | 'cultura-pop' | 'motos' | 'feria' | 'estadisticas' | 'vitrina-demo' | 'acerca-de'
+    activeTab: 'coleccion', // 'coleccion' | 'fast-and-furious' | 'cultura-pop' | 'motos' | 'feria' | 'estadisticas' | 'acerca-de'
     
-    // Laboratorio de pruebas de vitrina
-    vitrina: {
-      style: 'pedestal', // 'pedestal' | 'led' | 'reflection'
-      compareMode: false,
-      selectedCarId: 'samples'
-    },
-
     // Filtros activos del catálogo principal
     filters: {
       search: '',
@@ -231,14 +224,7 @@
 
     // Filtros por décadas
     decadesChipsContainer: document.getElementById('decades-chips-container'),
-    decadeChips: document.querySelectorAll('.decade-chip'),
-
-    // Vitrina Demo
-    vitrinaGrid: document.getElementById('vitrina-grid'),
-    vitrinaStyleButtons: document.querySelectorAll('.vitrina-style-btn'),
-    vitrinaCompareToggle: document.getElementById('vitrina-compare-toggle'),
-    vitrinaCarSelect: document.getElementById('vitrina-car-select'),
-    vitrinaExplanation: document.getElementById('vitrina-style-explanation')
+    decadeChips: document.querySelectorAll('.decade-chip')
   };
 
   // =========================================================================
@@ -323,9 +309,6 @@
 
       // Inicializar gestos táctiles de deslizamiento (swipe) en modal
       initTouchSwipe();
-
-      // Inicializar Laboratorio de Vitrina de pruebas
-      initVitrinaDemo();
 
       initRouting();
 
@@ -1183,211 +1166,6 @@
   }
 
   // =========================================================================
-  // 8.4 LABORATORIO VISUAL - VITRINA DE EXPOSICIÓN (DEMO)
-  // =========================================================================
-  const VITRINA_SAMPLE_IDS = [1, 7, 47, 2, 8, 77, 118, 209];
-
-  function initVitrinaDemo() {
-    // Inicializar controles interactivos de la vitrina
-    if (dom.vitrinaStyleButtons) {
-      dom.vitrinaStyleButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-          const style = btn.getAttribute('data-style');
-          if (style) {
-            setVitrinaStyle(style);
-          }
-        });
-      });
-    }
-
-    if (dom.vitrinaCompareToggle) {
-      dom.vitrinaCompareToggle.addEventListener('change', (e) => {
-        state.vitrina.compareMode = e.target.checked;
-        renderVitrinaDemo();
-      });
-    }
-
-    if (dom.vitrinaCarSelect) {
-      dom.vitrinaCarSelect.addEventListener('change', (e) => {
-        state.vitrina.selectedCarId = e.target.value;
-        renderVitrinaDemo();
-      });
-    }
-  }
-
-  function setVitrinaStyle(style) {
-    state.vitrina.style = style;
-
-    if (dom.vitrinaStyleButtons) {
-      dom.vitrinaStyleButtons.forEach(btn => {
-        btn.classList.toggle('active', btn.getAttribute('data-style') === style);
-      });
-    }
-
-    if (dom.vitrinaGrid) {
-      dom.vitrinaGrid.className = 'cars-grid vitrina-grid vitrina-mode-' + style;
-    }
-
-    if (dom.vitrinaExplanation) {
-      const texts = {
-        pedestal: '<strong>Estilo Peana 3D:</strong> Proyecta una sombra elíptica de contacto bajo los neumáticos sobre una base de exposición biselada en perspectiva, dando sensación de miniatura real posada sobre una peana física.',
-        led: '<strong>Estilo Iluminación LED:</strong> Añade un foco cenital superior suave y una línea de iluminación LED en la base con resplandor en hover, simulando una vitrina técnica iluminada.',
-        reflection: '<strong>Estilo Suelo Pulido Showroom:</strong> Incorpora un reflejo especular en perspectiva degradada hacia abajo, como si el coche estuviera expuesto sobre mármol o superficie pulida de concesionario/museo.'
-      };
-      dom.vitrinaExplanation.innerHTML = texts[style] || '';
-    }
-
-    if (state.vitrina.compareMode) {
-      renderVitrinaDemo();
-    }
-  }
-
-  function renderVitrinaDemo() {
-    if (!dom.vitrinaGrid || !state.allCars || state.allCars.length === 0) return;
-
-    // Poblar dropdown de selección con coches si aún no se ha hecho
-    if (dom.vitrinaCarSelect && dom.vitrinaCarSelect.options.length <= 1) {
-      const optGroup = document.createElement('optgroup');
-      optGroup.label = 'Coches de la Colección';
-      state.allCars.slice(0, 120).forEach(car => {
-        const opt = document.createElement('option');
-        opt.value = String(car.id);
-        opt.textContent = `#${String(car.id).padStart(4, '0')} - ${car.brand} ${car.model} (${car.year || ''})`;
-        optGroup.appendChild(opt);
-      });
-      dom.vitrinaCarSelect.appendChild(optGroup);
-    }
-
-    let carsToShow = [];
-    if (state.vitrina.selectedCarId === 'samples') {
-      carsToShow = state.allCars.filter(c => VITRINA_SAMPLE_IDS.includes(c.id));
-      if (carsToShow.length === 0) {
-        carsToShow = state.allCars.slice(0, 8);
-      }
-    } else {
-      const targetId = parseInt(state.vitrina.selectedCarId, 10);
-      const found = state.allCars.find(c => c.id === targetId);
-      if (found) {
-        carsToShow = [found];
-      } else {
-        carsToShow = state.allCars.slice(0, 8);
-      }
-    }
-
-    dom.vitrinaGrid.innerHTML = '';
-    dom.vitrinaGrid.className = 'cars-grid vitrina-grid vitrina-mode-' + state.vitrina.style;
-
-    carsToShow.forEach(car => {
-      const globalIdx = state.allCars.findIndex(c => c.id === car.id);
-
-      if (!state.vitrina.compareMode) {
-        // Tarjeta con efecto vitrina
-        const card = createVitrinaCard(car, globalIdx);
-        dom.vitrinaGrid.appendChild(card);
-      } else {
-        // Modo comparativo: normal vs vitrina lado a lado
-        const pair = document.createElement('div');
-        pair.className = 'vitrina-compare-pair';
-
-        const tagNormal = document.createElement('span');
-        tagNormal.className = 'vitrina-compare-tag tag-normal';
-        tagNormal.textContent = 'Modo Clásico (Actual)';
-        pair.appendChild(tagNormal);
-
-        const normalCard = createCarCard(car, globalIdx);
-        pair.appendChild(normalCard);
-
-        const tagVitrina = document.createElement('span');
-        tagVitrina.className = 'vitrina-compare-tag tag-vitrina';
-        tagVitrina.textContent = `Efecto Vitrina (${state.vitrina.style})`;
-        pair.appendChild(tagVitrina);
-
-        const vitrinaCard = createVitrinaCard(car, globalIdx);
-        pair.appendChild(vitrinaCard);
-
-        dom.vitrinaGrid.appendChild(pair);
-      }
-    });
-  }
-
-  function createVitrinaCard(car, globalIndex) {
-    const article = document.createElement('article');
-    article.className = 'car-card vitrina-card';
-    article.setAttribute('role', 'listitem');
-    article.setAttribute('tabindex', '0');
-    article.setAttribute('aria-label', `${car.brand || ''} ${car.model || ''}, Nº ${car.id}`);
-
-    const formattedId = String(car.id).padStart(4, '0');
-    const colorHex = getColorHex(car.color);
-    const photoAlt = `${car.brand || ''} ${car.model || ''}`;
-
-    article.innerHTML = `
-      <div class="car-card-media">
-        <span class="car-badge-id">#${formattedId}</span>
-        ${car.competition ? `
-          <span class="car-badge-type badge-type-competition" title="Competición / Carreras" aria-label="Competición">🏁</span>
-        ` : `
-          <span class="car-badge-type badge-type-street" title="Vehículo de calle / carretera" aria-label="De calle">
-            <svg class="badge-road-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M4 19L8 5"></path>
-              <path d="M20 19L16 5"></path>
-              <line x1="12" y1="6" x2="12" y2="8.5"></line>
-              <line x1="12" y1="11.5" x2="12" y2="14"></line>
-              <line x1="12" y1="17" x2="12" y2="19.5"></line>
-            </svg>
-          </span>
-        `}
-        <div class="vitrina-spotlight-top"></div>
-        <div class="vitrina-pedestal-plinth"></div>
-        <div class="vitrina-floor-shadow"></div>
-        <div class="vitrina-reflection-wrap">
-          <img class="vitrina-reflection-img" src="./${car.image || ''}" alt="" aria-hidden="true">
-        </div>
-        <div class="vitrina-led-glow"></div>
-        <img 
-          class="car-card-img" 
-          src="./${car.image || ''}" 
-          alt="${photoAlt}" 
-          loading="lazy" 
-          decoding="async"
-          onerror="this.onerror=null; this.src='./images/logo.png'; this.style.opacity='0.4';"
-        >
-      </div>
-      <div class="car-card-body">
-        <div class="car-brand-tag">${escapeHtml(car.brand || '—')}</div>
-        <h3 class="car-model-name">${escapeHtml(car.model || '—')}</h3>
-        <div class="car-meta-line">
-          <span>${escapeHtml(car.manufacturer || '—')}</span>
-          <span class="meta-dot">·</span>
-          <span>${car.year || '—'}</span>
-        </div>
-        ${car.color ? `
-          <div class="car-color-tag">
-            <span class="color-dot" style="background-color: ${colorHex};"></span>
-            <span>${escapeHtml(car.color)}</span>
-          </div>
-        ` : ''}
-      </div>
-    `;
-
-    article.addEventListener('click', () => {
-      if (globalIndex !== -1) {
-        openCarModal(globalIndex, 'coleccion');
-      }
-    });
-    article.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        if (globalIndex !== -1) {
-          openCarModal(globalIndex, 'coleccion');
-        }
-      }
-    });
-
-    return article;
-  }
-
-  // =========================================================================
   // 9. CONTADOR DE RESULTADOS Y CHIPS ACTIVOS
   // =========================================================================
   function renderResultsBar() {
@@ -2103,10 +1881,6 @@
       pane.hidden = !isActive;
     });
 
-    if (tabId === 'vitrina-demo') {
-      renderVitrinaDemo();
-    }
-
     // Actualizar hash sólo si no hay un modal abierto
     if (!state.modal.isOpen) {
       history.replaceState(null, '', `#${tabId}`);
@@ -2208,8 +1982,6 @@
         switchTab('feria');
       } else if (hash === '#estadisticas') {
         switchTab('estadisticas');
-      } else if (hash === '#vitrina-demo') {
-        switchTab('vitrina-demo');
       } else if (hash === '#acerca-de') {
         switchTab('acerca-de');
       } else {
