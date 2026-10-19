@@ -30,7 +30,7 @@ Catálogo web moderno, 100% estático, responsive y de alto rendimiento para col
    - El marco fotográfico de todas las tarjetas (`.car-card-media`) está fijado en formato cuadrado 1:1 (`aspect-ratio: 1 / 1`), coincidiendo exactamente con la relación de aspecto de las imágenes cuadradas del catálogo (con vehículo centrado y sombra inferior).
    - Elimina zooms artificiales que recortaban el coche o su sombra por arriba/abajo, logrando que las miniaturas encajen de borde a borde de forma limpia y proporcional sin márgenes vacíos.
 9. **Ordenación por Marca y Fecha (Cronológica) y Lista Completa**:
-   - Selector de ordenación multinivel (`Marca A-Z → Año cronológico` y `Marca A-Z → Año más reciente`): agrupa primero por marcas alfabéticamente (Acura, Alfa Romeo...) y dentro de cada marca los ordena por año de fabricación del más antiguo al más nuevo.
+   - Selector de ordenación multinivel (`Marca A-Z → Año cronológico`): agrupa primero por marcas alfabéticamente (Acura, Alfa Romeo...) y dentro de cada marca los ordena por año de fabricación del más antiguo al más nuevo.
    - Selector de paginación con opción `Todos (Lista completa)` para explorar los 1.452 modelos de un tirón tanto en cuadrícula como en lista compacta.
    - En el **Modo Feria**, la lista completa y el checklist exportado quedan también estructurados por marca y año.
 10. **Flujo de Actualización**:

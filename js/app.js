@@ -594,16 +594,6 @@
           const mRes = (a.model || '').localeCompare(b.model || '', 'es');
           return mRes !== 0 ? mRes : (a.id || 0) - (b.id || 0);
         }
-        case 'brand_year_desc': {
-          const res = (a.brand || '').localeCompare(b.brand || '', 'es');
-          if (res !== 0) return res;
-          // Si la marca es idéntica, ordenar de más moderno a más antiguo
-          const yA = a.year != null ? a.year : -1;
-          const yB = b.year != null ? b.year : -1;
-          if (yA !== yB) return yB - yA;
-          const mRes = (a.model || '').localeCompare(b.model || '', 'es');
-          return mRes !== 0 ? mRes : (a.id || 0) - (b.id || 0);
-        }
         case 'brand_desc': {
           const res = (b.brand || '').localeCompare(a.brand || '', 'es');
           if (res !== 0) return res;

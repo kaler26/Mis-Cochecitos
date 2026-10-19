@@ -219,9 +219,10 @@ assert 'object-fit: contain' in css_content, "Falta object-fit: contain en car-c
 print("✔ Ajuste de marco cuadrado (1:1) para fotos cuadradas verificado en CSS")
 
 # 16. Test Ordenación por Marca y Fecha (Cronológica) y Lista Completa
-assert 'value="brand_year_desc"' in html_content
+assert 'value="brand_asc"' in html_content
 assert 'value="9999"' in html_content
-assert 'brand_year_desc' in js_content
+assert 'brand_asc' in js_content
+assert 'value="brand_year_desc"' not in html_content
 # Verificar simulación de ordenación Marca + Año
 sorted_test = sorted(cars, key=lambda c: (c.get('brand') or '', c.get('year') or 9999, c.get('model') or ''))
 assert sorted_test[0]['brand'] == 'AMC'
