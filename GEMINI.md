@@ -29,7 +29,11 @@ Catálogo web moderno, 100% estático, responsive y de alto rendimiento para col
 8. **Formato Cuadrado (1:1) Adaptado a las Fotos**:
    - El marco fotográfico de todas las tarjetas (`.car-card-media`) está fijado en formato cuadrado 1:1 (`aspect-ratio: 1 / 1`), coincidiendo exactamente con la relación de aspecto de las imágenes cuadradas del catálogo (con vehículo centrado y sombra inferior).
    - Elimina zooms artificiales que recortaban el coche o su sombra por arriba/abajo, logrando que las miniaturas encajen de borde a borde de forma limpia y proporcional sin márgenes vacíos.
-9. **Flujo de Actualización**:
+9. **Ordenación por Marca y Fecha (Cronológica) y Lista Completa**:
+   - Selector de ordenación multinivel (`Marca A-Z → Año cronológico` y `Marca A-Z → Año más reciente`): agrupa primero por marcas alfabéticamente (Acura, Alfa Romeo...) y dentro de cada marca los ordena por año de fabricación del más antiguo al más nuevo.
+   - Selector de paginación con opción `Todos (Lista completa)` para explorar los 1.452 modelos de un tirón tanto en cuadrícula como en lista compacta.
+   - En el **Modo Feria**, la lista completa y el checklist exportado quedan también estructurados por marca y año.
+10. **Flujo de Actualización**:
    - El usuario actualiza datos en su Excel (`F:\Mis Cochecitos\1 64\1 64.xlsx` o en Escritorio) o renombra/añade fotos en su carpeta (`F:\Mis Cochecitos\1 64\SinFondo`).
    - Para aplicar los cambios a la web, ejecuta con doble clic el script: `actualizar_coleccion.bat`.
    - Luego abre **GitHub Desktop**, escribe un resumen de los cambios, y pulsa `Commit to main` y `Push origin`.
@@ -42,5 +46,5 @@ Catálogo web moderno, 100% estático, responsive y de alto rendimiento para col
 - `data/special_collections.json` y `data/special_collections.js`: Base de datos de Fast & Furious, Cultura Pop y Motos.
 - `images/`: Fotos transparentes de los modelos (`.png`) e icono general `logo.png`.
 - `tools/excel_to_json.py`: Script extractor dinámico de Excel a JSON con sincronización inteligente de fotos.
-- `tools/test_catalog.py`: Suite de 15 pruebas automatizadas para verificar integridad de datos, rutas, imágenes, modo feria, gestos móviles, safe-area y ajuste visual.
+- `tools/test_catalog.py`: Suite de 16 pruebas automatizadas para verificar integridad de datos, rutas, imágenes, modo feria, gestos móviles, safe-area, ajuste visual y ordenación marca-año.
 - `actualizar_coleccion.bat`: Lanzador de actualización en 1 clic para Windows con detección inteligente de Python.

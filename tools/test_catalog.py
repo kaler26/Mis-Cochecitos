@@ -218,8 +218,21 @@ assert 'aspect-ratio: 1 / 1;' in css_content, "Falta aspect-ratio: 1 / 1 en car-
 assert 'object-fit: contain' in css_content, "Falta object-fit: contain en car-card-img"
 print("✔ Ajuste de marco cuadrado (1:1) para fotos cuadradas verificado en CSS")
 
+# 16. Test Ordenación por Marca y Fecha (Cronológica) y Lista Completa
+assert 'value="brand_year_desc"' in html_content
+assert 'value="9999"' in html_content
+assert 'brand_year_desc' in js_content
+# Verificar simulación de ordenación Marca + Año
+sorted_test = sorted(cars, key=lambda c: (c.get('brand') or '', c.get('year') or 9999, c.get('model') or ''))
+assert sorted_test[0]['brand'] == 'AMC'
+acura_cars = [c for c in sorted_test if c.get('brand') == 'Acura']
+assert len(acura_cars) >= 9
+assert acura_cars[0]['year'] == 1990 and acura_cars[0]['model'] == 'NSX Type R'
+assert acura_cars[-1]['year'] == 2024
+print("✔ Ordenación por Marca y Año cronológico y opción Lista Completa verificados")
+
 print("\n==================================================")
-print(" ¡TODAS LAS PRUEBAS AUTOMATIZADAS PASARON (15/15)!")
+print(" ¡TODAS LAS PRUEBAS AUTOMATIZADAS PASARON (16/16)!")
 print("==================================================")
 
 
