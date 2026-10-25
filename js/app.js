@@ -582,13 +582,26 @@
         case 'id_desc':
           return (b.id || 0) - (a.id || 0);
 
-        case 'brand_asc': {
+        case 'brand_asc':
+        case 'brand_year_asc': {
           const res = (a.brand || '').localeCompare(b.brand || '', 'es');
-          return res !== 0 ? res : (a.id || 0) - (b.id || 0);
+          if (res !== 0) return res;
+          // Si la marca es idéntica, ordenar cronológicamente por año (antiguo -> moderno)
+          const yA = a.year != null ? a.year : 9999;
+          const yB = b.year != null ? b.year : 9999;
+          if (yA !== yB) return yA - yB;
+          // Si el año coincide, ordenar alfabéticamente por modelo
+          const mRes = (a.model || '').localeCompare(b.model || '', 'es');
+          return mRes !== 0 ? mRes : (a.id || 0) - (b.id || 0);
         }
         case 'brand_desc': {
           const res = (b.brand || '').localeCompare(a.brand || '', 'es');
-          return res !== 0 ? res : (a.id || 0) - (b.id || 0);
+          if (res !== 0) return res;
+          const yA = a.year != null ? a.year : 9999;
+          const yB = b.year != null ? b.year : 9999;
+          if (yA !== yB) return yA - yB;
+          const mRes = (a.model || '').localeCompare(b.model || '', 'es');
+          return mRes !== 0 ? mRes : (a.id || 0) - (b.id || 0);
         }
 
         case 'model_asc': {
@@ -984,6 +997,17 @@
       list.push({ ...c, _collection: 'motos', _collectionName: 'Moto' });
     });
 
+    // Ordenar primero por marca y luego cronológicamente por año
+    list.sort((a, b) => {
+      const bRes = (a.brand || '').localeCompare(b.brand || '', 'es');
+      if (bRes !== 0) return bRes;
+      const yA = a.year != null ? a.year : 9999;
+      const yB = b.year != null ? b.year : 9999;
+      if (yA !== yB) return yA - yB;
+      const mRes = (a.model || '').localeCompare(b.model || '', 'es');
+      return mRes !== 0 ? mRes : (a.id || 0) - (b.id || 0);
+    });
+
     return list;
   }
 
@@ -1086,8 +1110,8 @@
       }
 
       const fragment = document.createDocumentFragment();
-      // Renderizamos hasta 200 filas para rendimiento instantáneo
-      const displayItems = filtered.slice(0, 200);
+      // Renderizamos hasta 400 filas ordenadas alfabéticamente y cronológicamente para rendimiento instantáneo
+      const displayItems = filtered.slice(0, 400);
 
       displayItems.forEach((car, idx) => {
         const row = document.createElement('article');
@@ -1147,10 +1171,10 @@
         fragment.appendChild(row);
       });
 
-      if (filtered.length > 200) {
+      if (filtered.length > displayItems.length) {
         const moreNotice = document.createElement('div');
         moreNotice.style.cssText = 'text-align: center; padding: 1rem; color: var(--text-muted); font-size: 0.85rem;';
-        moreNotice.textContent = `Mostrando los primeros 200 de ${formatNumber(filtered.length)} modelos coincidentes. Escribe más letras para afinar la búsqueda.`;
+        moreNotice.textContent = `Mostrando los primeros ${formatNumber(displayItems.length)} de ${formatNumber(filtered.length)} modelos ordenados por marca y fecha. Escribe en el buscador para afinar.`;
         fragment.appendChild(moreNotice);
       }
 
@@ -1196,6 +1220,9 @@
 
     if (count === 0) {
       dom.resultsCounter.textContent = `0 de ${formatNumber(total)} coches`;
+    } else if (pageSize >= count) {
+      dom.resultsCounter.textContent = `Mostrando los ${formatNumber(count)} coches (Lista completa)` +
+        (count < total ? ` (filtrados de ${formatNumber(total)})` : '');
     } else {
       const from = (currentPage - 1) * pageSize + 1;
       const to = Math.min(currentPage * pageSize, count);
