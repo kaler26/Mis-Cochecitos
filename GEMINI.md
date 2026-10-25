@@ -1,7 +1,7 @@
 # PROYECTO: MIS COCHECITOS (Colección de Coches a Escala 1:64)
 
 ## Descripción General
-Catálogo web moderno, 100% estático, responsive y de alto rendimiento para coleccionistas de coches a escala (~1.452 modelos principales más colecciones temáticas de Fast & Furious, Cultura Pop y Motos). Está desplegado y alojado en **GitHub Pages** sin backend, bases de datos ni frameworks externos (HTML5 semántico, CSS3 moderno y Vanilla JavaScript ES6+).
+Catálogo web moderno, 100% estático, responsive y de alto rendimiento para coleccionistas de coches a escala (~1.522 modelos principales más colecciones temáticas de Fast & Furious, Cultura Pop y Motos). Está desplegado y alojado en **GitHub Pages** sin backend, bases de datos ni frameworks externos (HTML5 semántico, CSS3 moderno y Vanilla JavaScript ES6+).
 
 ## Reglas y Decisiones Clave de Diseño
 1. **Arquitectura Estática y Privacidad**:
@@ -19,7 +19,7 @@ Catálogo web moderno, 100% estático, responsive y de alto rendimiento para col
    - **Gestos Táctiles (Swipe)**: Deslizamiento horizontal natural en la pantalla de detalle para cambiar de coche sin pulsar flechas, con animación fluida.
 5. **Modo Feria & Antirrepeticiones**:
    - Pestaña especializada ultra-rápida pensada para mercadillos, tiendas y ferias.
-   - Comprobador instantáneo sobre los 1.533 vehículos (colección principal + temáticas) que indica al coleccionista en tiempo real si un coche ya lo tiene o si no lo tiene (para comprarlo sin riesgo de repetir).
+   - Comprobador instantáneo sobre los 1.605 vehículos (colección principal + temáticas) que indica al coleccionista en tiempo real si un coche ya lo tiene o si no lo tiene (para comprarlo sin riesgo de repetir).
    - Incluye selector de ámbito, vista compacta de alta densidad y exportación/impresión de checklist.
 6. **Modos de Vista**:
    - Alternador de visualización en catálogo principal: vista de cuadrícula fotográfica clásica o lista compacta optimizada.
@@ -38,7 +38,7 @@ Catálogo web moderno, 100% estático, responsive y de alto rendimiento para col
 - `index.html`: Estructura principal con catálogo general, pestañas temáticas (Fast & Furious, Cultura Pop, Motos), Modo Feria & Antirrepeticiones, buscador instantáneo, modal y estadísticas.
 - `css/style.css`: Estilos visuales en tema oscuro automovilístico (dark theme), tarjetas, cabeceras temáticas, estilos de impresión y animaciones táctiles.
 - `js/app.js`: Lógica de filtrado dinámico, enrutamiento por hash (`#ff-1`, `#pop-1`, `#moto-1`, `#feria`), modal navegable con swipe táctil, checklist y estadísticas.
-- `data/cars.json` y `data/cars.js`: Base de datos estática de la colección principal (~1.452 modelos) con soporte dual online/offline.
+- `data/cars.json` y `data/cars.js`: Base de datos estática de la colección principal (~1.522 modelos) con soporte dual online/offline.
 - `data/special_collections.json` y `data/special_collections.js`: Base de datos de Fast & Furious, Cultura Pop y Motos.
 - `images/`: Fotos transparentes de los modelos (`.png`) e icono general `logo.png`.
 - `tools/excel_to_json.py`: Script extractor dinámico de Excel a JSON con sincronización inteligente de fotos.

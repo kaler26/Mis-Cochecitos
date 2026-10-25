@@ -1,4 +1,4 @@
-@echo off
+﻿@echo off
 setlocal enabledelayedexpansion
 chcp 65001 > nul
 
@@ -22,27 +22,52 @@ if exist "%LOCALAPPDATA%\Programs\Python\Python312\python.exe" (
     )
 )
 
-if "%PY_EXE%"=="" (
-    echo [ERROR] No se encontro instalacion de Python en el equipo.
-    echo Por favor asegurese de tener Python instalado.
-    pause
-    exit /b 1
+if not "%PY_EXE%"=="" (
+    "%PY_EXE%" -c "import sys" >nul 2>nul
+    if !ERRORLEVEL! NEQ 0 (
+        set "PY_EXE="
+    )
 )
 
-echo [1/2] Procesando archivo Excel y sincronizando fotos de SinFondo...
+if "%PY_EXE%"=="" (
+    echo [INFO] Utilizando motor nativo PowerShell de Windows...
+    goto :USE_POWERSHELL
+)
+
+echo [1/2] Procesando archivo Excel y sincronizando fotos de SinFondo con Python...
 "%PY_EXE%" tools\excel_to_json.py --copy-images
 
 if !ERRORLEVEL! NEQ 0 (
+    echo [AVISO] Fallo Python o faltan dependencias. Intentando con motor PowerShell...
+    goto :USE_POWERSHELL
+)
+
+echo.
+echo [2/2] Validando catalogo e imagenes con Python...
+"%PY_EXE%" tools\test_catalog.py
+
+if !ERRORLEVEL! NEQ 0 (
     echo.
-    echo [ERROR] Hubo un problema al procesar el Excel. Revisa los mensajes anteriores.
+    echo [AVISO] Se detecto alguna inconsistencia en las pruebas con Python.
+    pause
+    exit /b !ERRORLEVEL!
+)
+goto :SUCCESS
+
+:USE_POWERSHELL
+echo.
+echo [1/2] Procesando archivo Excel y sincronizando fotos con PowerShell...
+powershell -NoProfile -ExecutionPolicy Bypass -File tools\export_catalog.ps1
+if !ERRORLEVEL! NEQ 0 (
+    echo.
+    echo [ERROR] Hubo un problema al procesar el Excel con PowerShell.
     pause
     exit /b !ERRORLEVEL!
 )
 
 echo.
-echo [2/2] Validando catalogo e imagenes...
-"%PY_EXE%" tools\test_catalog.py
-
+echo [2/2] Validando catalogo e imagenes con PowerShell...
+powershell -NoProfile -ExecutionPolicy Bypass -File tools\test_catalog.ps1
 if !ERRORLEVEL! NEQ 0 (
     echo.
     echo [AVISO] Se detecto alguna inconsistencia en las pruebas.
@@ -50,12 +75,13 @@ if !ERRORLEVEL! NEQ 0 (
     exit /b !ERRORLEVEL!
 )
 
+:SUCCESS
 echo.
 echo =======================================================
-echo   ¡COLECCION ACTUALIZADA CON EXITO!
+echo   COLECCION ACTUALIZADA CON EXITO
 echo =======================================================
 echo   - cars.json y special_collections.json han sido actualizados.
-echo   - Catalogo principal y pestañas (Fast & Furious, Cultura Pop, Motos) listos.
+echo   - Catalogo principal y pestanas (Fast ^& Furious, Cultura Pop, Motos) listos.
 echo   - Las fotos corregidas han sido sincronizadas en images/.
 echo   - Abre GitHub Desktop para hacer "Commit to main" y "Push origin".
 echo =======================================================

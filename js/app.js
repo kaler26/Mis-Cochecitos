@@ -988,7 +988,28 @@
   }
 
   function initFeria() {
+    updateFeriaScopeLabels();
     renderFeria();
+  }
+
+  function updateFeriaScopeLabels() {
+    if (!dom.feriaScopeFilter) return;
+    const mainCount = state.cars.length;
+    const ffCount = (state.specialCollections.fast_and_furious || []).length;
+    const popCount = (state.specialCollections.cultura_pop || []).length;
+    const motoCount = (state.specialCollections.motos || []).length;
+    const totalCount = mainCount + ffCount + popCount + motoCount;
+
+    const optAll = dom.feriaScopeFilter.querySelector('option[value="all"]');
+    if (optAll) optAll.textContent = `Todas las colecciones (${formatNumber(totalCount)} piezas)`;
+    const optMain = dom.feriaScopeFilter.querySelector('option[value="coleccion"]');
+    if (optMain) optMain.textContent = `Catálogo Principal (${formatNumber(mainCount)})`;
+    const optFF = dom.feriaScopeFilter.querySelector('option[value="fast_and_furious"]');
+    if (optFF) optFF.textContent = `Fast & Furious (${formatNumber(ffCount)})`;
+    const optPop = dom.feriaScopeFilter.querySelector('option[value="cultura_pop"]');
+    if (optPop) optPop.textContent = `Cultura Pop (${formatNumber(popCount)})`;
+    const optMoto = dom.feriaScopeFilter.querySelector('option[value="motos"]');
+    if (optMoto) optMoto.textContent = `Motos (${formatNumber(motoCount)})`;
   }
 
   function renderFeria() {
