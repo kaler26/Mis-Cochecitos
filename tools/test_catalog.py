@@ -41,7 +41,7 @@ for path, name in [(json_path, "cars.json"), (html_path, "index.html"), (js_path
     print(f"✔ Archivo presente: {name} ({os.path.getsize(path):,} bytes)")
 
 # 2. Cargar y validar cars.json
-with open(json_path, "r", encoding="utf-8") as f:
+with open(json_path, "r", encoding="utf-8-sig") as f:
     cars = json.load(f)
 
 print(f"\n✔ Total de coches en cars.json: {len(cars):,}")
@@ -134,7 +134,7 @@ print("✔ app.js soporta doble vía: directa para file:/// y fetch relativo par
 special_json_path = os.path.join(base_dir, "data", "special_collections.json")
 assert os.path.exists(special_json_path), "Falta archivo data/special_collections.json"
 
-with open(special_json_path, "r", encoding="utf-8") as f:
+with open(special_json_path, "r", encoding="utf-8-sig") as f:
     special_data = json.load(f)
 
 assert "fast_and_furious" in special_data, "Falta sección fast_and_furious"
@@ -233,7 +233,30 @@ assert acura_cars[-1]['year'] == 2024
 print("✔ Ordenación por Marca y Año cronológico y opción Lista Completa verificados")
 
 print("\n==================================================")
-print(" ¡TODAS LAS PRUEBAS AUTOMATIZADAS PASARON (16/16)!")
+# 17. Test PWA (Progressive Web App) y Modo Offline
+manifest_path = os.path.join(base_dir, "manifest.json")
+sw_path = os.path.join(base_dir, "sw.js")
+icon192_path = os.path.join(base_dir, "images", "icon-192.png")
+icon512_path = os.path.join(base_dir, "images", "icon-512.png")
+
+assert os.path.exists(manifest_path), "Falta manifest.json"
+assert os.path.exists(sw_path), "Falta sw.js"
+assert os.path.exists(icon192_path), "Falta images/icon-192.png"
+assert os.path.exists(icon512_path), "Falta images/icon-512.png"
+
+with open(manifest_path, "r", encoding="utf-8") as f:
+    manifest_data = json.load(f)
+assert manifest_data.get("display") == "standalone"
+assert "icons" in manifest_data and len(manifest_data["icons"]) >= 2
+
+assert 'rel="manifest"' in html_content
+assert 'id="offline-modal"' in html_content
+assert 'OfflineManager' in js_content
+assert 'cochecitos-images-v1' in js_content
+print("✔ Soporte PWA, Service Worker, Manifiesto e Iconos Offline verificados")
+
+print("==================================================")
+print(" ¡TODAS LAS PRUEBAS AUTOMATIZADAS PASARON (17/17)!")
 print("==================================================")
 
 

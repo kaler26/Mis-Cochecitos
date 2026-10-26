@@ -297,6 +297,7 @@
       populateFilterDropdowns();
       renderStats();
       applyFiltersAndSort();
+      OfflineManager.updateStatus();
 
       // Inicializar colecciones especiales (Fast & Furious, Cultura Pop, Motos)
       initSpecialCollections();
@@ -1917,6 +1918,7 @@
   // 14. GESTIÓN DE PESTAÑAS Y ENRUTAMIENTO POR HASH
   // =========================================================================
   function switchTab(tabId) {
+    if (!tabId) return;
     state.activeTab = tabId;
 
     dom.navBtns.forEach(btn => {
@@ -2332,7 +2334,309 @@
         });
       });
     }
+    // 11. Modo Offline & PWA
+    OfflineManager.init();
   }
+
+  // =========================================================================
+  // 16.5 MÓDULO PWA Y GESTIÓN OFFLINE DE FOTOGRAFÍAS (CacheStorage)
+  // =========================================================================
+  const OfflineManager = (() => {
+    let deferredInstallPrompt = null;
+    let isDownloading = false;
+    let shouldCancel = false;
+
+    // Elementos del DOM del modal offline
+    const modal = document.getElementById('offline-modal');
+    const backdrop = document.getElementById('offline-modal-backdrop');
+    const closeBtn = document.getElementById('offline-modal-close-btn');
+    const openBtns = [
+      document.getElementById('nav-btn-open-offline'),
+      document.getElementById('btn-feria-open-offline'),
+      document.getElementById('feria-download-offline-btn'),
+      document.getElementById('btn-about-open-offline')
+    ].filter(Boolean);
+
+    const imagesStatus = document.getElementById('offline-images-status');
+    const imagesSub = document.getElementById('offline-images-sub');
+    const progressSection = document.getElementById('offline-progress-section');
+    const progressBar = document.getElementById('offline-progress-bar');
+    const progressText = document.getElementById('offline-progress-text');
+    const progressPercent = document.getElementById('offline-progress-percent');
+    const progressCount = document.getElementById('offline-progress-count');
+    const btnDownload = document.getElementById('btn-start-image-download');
+    const btnDownloadText = document.getElementById('btn-start-image-download-text');
+    const btnStop = document.getElementById('btn-stop-image-download');
+    const btnClear = document.getElementById('btn-clear-image-cache');
+    const installWrap = document.getElementById('offline-install-prompt-wrap');
+    const btnInstall = document.getElementById('btn-install-pwa');
+
+    function openModal() {
+      if (!modal) return;
+      modal.classList.add('active');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('modal-open');
+      updateStatus();
+    }
+
+    function closeModal() {
+      if (!modal) return;
+      modal.classList.remove('active');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('modal-open');
+    }
+
+    // Obtener lista completa de URLs de imágenes
+    function getAllImageUrls() {
+      const urls = new Set();
+
+      // Coches del catálogo principal
+      const carSource = (state.allCars && state.allCars.length) ? state.allCars : (window.CATALOGO_CARS || []);
+      carSource.forEach(c => {
+        if (c.image) urls.add(c.image);
+      });
+
+      // Colecciones especiales
+      const spec = state.specialCollections || window.SPECIAL_COLLECTIONS;
+      if (spec) {
+        ['fast_and_furious', 'cultura_pop', 'motos'].forEach(cat => {
+          if (Array.isArray(spec[cat])) {
+            spec[cat].forEach(item => {
+              if (item.image) urls.add(item.image);
+            });
+          }
+        });
+      }
+
+      // Iconos estructurales
+      urls.add('images/logo.png');
+      urls.add('images/icon-192.png');
+      urls.add('images/icon-512.png');
+
+      return Array.from(urls);
+    }
+
+    // Comprobar estado de la caché
+    async function updateStatus() {
+      if (!('caches' in window)) {
+        if (imagesStatus) imagesStatus.textContent = 'No soportado en este navegador';
+        return;
+      }
+
+      try {
+        const cache = await caches.open('cochecitos-images-v1');
+        const keys = await cache.keys();
+        const total = getAllImageUrls().length || 1608;
+        const cached = keys.length;
+
+        if (imagesStatus) {
+          if (cached >= total) {
+            imagesStatus.textContent = `✔ 100% Guardadas (${cached} fotos)`;
+            imagesStatus.style.color = '#4ade80';
+          } else if (cached > 0) {
+            const pct = Math.round((cached / total) * 100);
+            imagesStatus.textContent = `${cached} de ${total} fotos (${pct}%)`;
+            imagesStatus.style.color = '#38bdf8';
+          } else {
+            imagesStatus.textContent = `0 de ${total} fotos guardadas`;
+            imagesStatus.style.color = '';
+          }
+        }
+
+        if (imagesSub) {
+          const approxMb = Math.round((cached / (total || 1)) * 930);
+          imagesSub.textContent = `Espacio ocupado en app: ~${approxMb} MB`;
+        }
+
+        if (btnClear) {
+          btnClear.style.display = cached > 0 && !isDownloading ? 'inline-flex' : 'none';
+        }
+
+        if (btnDownload) {
+          if (cached >= total) {
+            btnDownloadText.textContent = 'Comprobar / Actualizar fotos';
+          } else if (cached > 0) {
+            btnDownloadText.textContent = `Continuar descarga (${total - cached} restantes)`;
+          } else {
+            btnDownloadText.textContent = 'Descargar todas las fotos (~930 MB)';
+          }
+        }
+      } catch (e) {
+        console.warn('Error al leer caché:', e);
+      }
+    }
+
+    // Iniciar descarga concurrente en lotes
+    async function startDownload() {
+      if (!('caches' in window)) {
+        alert('Tu navegador no soporta almacenamiento en caché local.');
+        return;
+      }
+
+      if (isDownloading) return;
+      isDownloading = true;
+      shouldCancel = false;
+
+      if (btnDownload) btnDownload.style.display = 'none';
+      if (btnStop) btnStop.style.display = 'inline-flex';
+      if (btnClear) btnClear.style.display = 'none';
+      if (progressSection) progressSection.style.display = 'flex';
+
+      const allUrls = getAllImageUrls();
+      const total = allUrls.length;
+      const cache = await caches.open('cochecitos-images-v1');
+
+      // Comprobar cuáles faltan ya en caché
+      const keys = await cache.keys();
+      const cachedUrls = new Set(keys.map(k => {
+        try {
+          const u = new URL(k.url);
+          return decodeURIComponent(u.pathname.replace(/^\//, ''));
+        } catch {
+          return k.url;
+        }
+      }));
+
+      const toDownload = allUrls.filter(url => {
+        const clean = url.replace(/^\.\//, '');
+        return !cachedUrls.has(clean) && !cachedUrls.has(url);
+      });
+
+      let completed = total - toDownload.length;
+
+      function updateProgressUI() {
+        const pct = Math.round((completed / total) * 100);
+        if (progressBar) progressBar.style.width = `${pct}%`;
+        if (progressPercent) progressPercent.textContent = `${pct}%`;
+        if (progressCount) progressCount.textContent = `${completed} / ${total} fotos`;
+        if (progressText) progressText.textContent = shouldCancel ? 'Pausando descarga...' : 'Descargando fotografías...';
+      }
+
+      updateProgressUI();
+
+      // Concurrencia controlada (4 descargas paralelas)
+      const CONCURRENCY = 4;
+      let currentIndex = 0;
+
+      async function worker() {
+        while (currentIndex < toDownload.length && !shouldCancel) {
+          const idx = currentIndex++;
+          const url = toDownload[idx];
+          try {
+            await cache.add(url);
+          } catch (err) {
+            console.warn(`No se pudo cachear ${url}:`, err);
+          }
+          completed++;
+          updateProgressUI();
+        }
+      }
+
+      const workers = [];
+      for (let i = 0; i < Math.min(CONCURRENCY, toDownload.length); i++) {
+        workers.push(worker());
+      }
+
+      await Promise.all(workers);
+
+      isDownloading = false;
+      if (btnDownload) btnDownload.style.display = 'inline-flex';
+      if (btnStop) btnStop.style.display = 'none';
+
+      await updateStatus();
+
+      if (shouldCancel) {
+        if (progressText) progressText.textContent = 'Descarga pausada';
+      } else {
+        if (progressText) progressText.textContent = '✔ Descarga completada con éxito';
+        setTimeout(() => {
+          if (progressSection && !isDownloading) progressSection.style.display = 'none';
+        }, 3500);
+      }
+    }
+
+    function stopDownload() {
+      shouldCancel = true;
+      if (btnStop) {
+        const span = btnStop.querySelector('span');
+        if (span) span.textContent = 'Pausando...';
+      }
+    }
+
+    async function clearCache() {
+      if (!confirm('¿Seguro que deseas eliminar las imágenes guardadas en el móvil para liberar espacio? (El catálogo, marcas y buscador seguirán funcionando 100%)')) {
+        return;
+      }
+      if ('caches' in window) {
+        await caches.delete('cochecitos-images-v1');
+        await updateStatus();
+        alert('Espacio de imágenes liberado correctamente.');
+      }
+    }
+
+    function init() {
+      // Registro del Service Worker para PWA Offline
+      if ('serviceWorker' in navigator && (window.location.protocol === 'https:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('./sw.js')
+            .then(reg => {
+              console.log('Service Worker registrado:', reg.scope);
+              updateStatus();
+            })
+            .catch(err => console.warn('Service Worker no registrado:', err));
+        });
+      }
+
+      // Evento de instalación nativa Android PWA (beforeinstallprompt)
+      window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredInstallPrompt = e;
+        if (installWrap) installWrap.style.display = 'flex';
+      });
+
+      if (btnInstall) {
+        btnInstall.addEventListener('click', async () => {
+          if (!deferredInstallPrompt) {
+            alert('Para instalar en Android, pulsa el menú de 3 puntos de Chrome y selecciona "Instalar aplicación".');
+            return;
+          }
+          deferredInstallPrompt.prompt();
+          const { outcome } = await deferredInstallPrompt.userChoice;
+          if (outcome === 'accepted') {
+            if (installWrap) installWrap.style.display = 'none';
+          }
+          deferredInstallPrompt = null;
+        });
+      }
+
+      // Apertura / Cierre del modal
+      openBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          openModal();
+        });
+      });
+
+      if (closeBtn) closeBtn.addEventListener('click', closeModal);
+      if (backdrop) backdrop.addEventListener('click', closeModal);
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal && modal.classList.contains('active')) {
+          closeModal();
+        }
+      });
+
+      // Botones de acción
+      if (btnDownload) btnDownload.addEventListener('click', startDownload);
+      if (btnStop) btnStop.addEventListener('click', stopDownload);
+      if (btnClear) btnClear.addEventListener('click', clearCache);
+
+      // Estado inicial
+      updateStatus();
+    }
+
+    return { init, openModal, closeModal, updateStatus };
+  })();
 
   // =========================================================================
   // 17. ARRANQUE

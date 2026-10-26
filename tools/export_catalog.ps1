@@ -372,11 +372,12 @@ Write-Host "[5/5] Escribiendo archivos data/*.json y data/*.js..."
 
 # cars.json
 $carsJsonText = ConvertTo-Json -InputObject @($carsList) -Depth 5
-[System.IO.File]::WriteAllText((Resolve-Path $CarsJsonPath).Path, $carsJsonText, [System.Text.Encoding]::UTF8)
+$utf8NoBom = [System.Text.UTF8Encoding]::new($false)
+[System.IO.File]::WriteAllText((Resolve-Path $CarsJsonPath).Path, $carsJsonText, $utf8NoBom)
 
 # cars.js
 $carsJsContent = "window.CATALOGO_CARS = " + ($carsList | ConvertTo-Json -Compress -Depth 5) + ";"
-[System.IO.File]::WriteAllText((Resolve-Path $CarsJsPath).Path, $carsJsContent, [System.Text.Encoding]::UTF8)
+[System.IO.File]::WriteAllText((Resolve-Path $CarsJsPath).Path, $carsJsContent, $utf8NoBom)
 
 # special_collections.json
 $specialObj = [ordered]@{
@@ -385,11 +386,11 @@ $specialObj = [ordered]@{
     motos = @($motoList)
 }
 $specialJsonText = ConvertTo-Json -InputObject $specialObj -Depth 5
-[System.IO.File]::WriteAllText((Resolve-Path $SpecialJsonPath).Path, $specialJsonText, [System.Text.Encoding]::UTF8)
+[System.IO.File]::WriteAllText((Resolve-Path $SpecialJsonPath).Path, $specialJsonText, $utf8NoBom)
 
 # special_collections.js
 $specialJsContent = "window.SPECIAL_COLLECTIONS = " + ($specialObj | ConvertTo-Json -Compress -Depth 5) + ";"
-[System.IO.File]::WriteAllText((Resolve-Path $SpecialJsPath).Path, $specialJsContent, [System.Text.Encoding]::UTF8)
+[System.IO.File]::WriteAllText((Resolve-Path $SpecialJsPath).Path, $specialJsContent, $utf8NoBom)
 
 Write-Host "=================================================="
 Write-Host " ACTUALIZACION COMPLETADA CON EXITO"

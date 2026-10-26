@@ -31,12 +31,17 @@ Catálogo web moderno, 100% estático, responsive y de alto rendimiento para col
    - Elimina zooms artificiales que recortaban el coche o su sombra por arriba/abajo, logrando que las miniaturas encajen de borde a borde de forma limpia y proporcional sin márgenes vacíos.
 9. **Ordenación por Marca y Fecha (Cronológica) y Lista Completa**:
    - Selector de ordenación multinivel (`Marca A-Z → Año cronológico`): agrupa primero por marcas alfabéticamente (Acura, Alfa Romeo...) y dentro de cada marca los ordena por año de fabricación del más antiguo al más nuevo.
-   - Selector de paginación con opción `Todos (Lista completa)` para explorar los 1.452 modelos de un tirón tanto en cuadrícula como en lista compacta.
+   - Selector de paginación con opción `Todos (Lista completa)` para explorar los 1.522 modelos de un tirón tanto en cuadrícula como en lista compacta.
    - En el **Modo Feria**, la lista completa y el checklist exportado quedan también estructurados por marca y año.
 10. **Flujo de Actualización**:
    - El usuario actualiza datos en su Excel (`F:\Mis Cochecitos\1 64\1 64.xlsx` o en Escritorio) o renombra/añade fotos en su carpeta (`F:\Mis Cochecitos\1 64\SinFondo`).
    - Para aplicar los cambios a la web, ejecuta con doble clic el script: `actualizar_coleccion.bat`.
    - Luego abre **GitHub Desktop**, escribe un resumen de los cambios, y pulsa `Commit to main` y `Push origin`.
+11. **Soporte PWA (Progressive Web App) y Modo 100% Offline**:
+   - Manifiesto (`manifest.json`) y Service Worker (`sw.js`) con estrategia Stale-While-Revalidate para archivos base y Cache-First para fotos.
+   - Permite instalar la web como una app nativa en Android (pantalla completa, icono en escritorio/cajón de apps).
+   - Gestor de descarga concurrente por lotes (`OfflineManager`) para precargar las 1.605 imágenes (~930 MB).
+   - **Privacidad y Galería Limpia**: Al almacenarse en la memoria interna privada del navegador (`CacheStorage`), **NUNCA aparecen en la Galería de fotos de Android ni en Google Fotos**, manteniendo la galería personal 100% limpia.
 
 ## Estructura del Repositorio
 - `index.html`: Estructura principal con catálogo general, pestañas temáticas (Fast & Furious, Cultura Pop, Motos), Modo Feria & Antirrepeticiones, buscador instantáneo, modal y estadísticas.
@@ -44,7 +49,9 @@ Catálogo web moderno, 100% estático, responsive y de alto rendimiento para col
 - `js/app.js`: Lógica de filtrado dinámico, enrutamiento por hash (`#ff-1`, `#pop-1`, `#moto-1`, `#feria`), modal navegable con swipe táctil, checklist y estadísticas.
 - `data/cars.json` y `data/cars.js`: Base de datos estática de la colección principal (~1.522 modelos) con soporte dual online/offline.
 - `data/special_collections.json` y `data/special_collections.js`: Base de datos de Fast & Furious, Cultura Pop y Motos.
-- `images/`: Fotos transparentes de los modelos (`.png`) e icono general `logo.png`.
-- `tools/excel_to_json.py`: Script extractor dinámico de Excel a JSON con sincronización inteligente de fotos.
-- `tools/test_catalog.py`: Suite de 16 pruebas automatizadas para verificar integridad de datos, rutas, imágenes, modo feria, gestos móviles, safe-area, ajuste visual y ordenación marca-año.
+- `images/`: Fotos transparentes de los modelos (`.png`), iconos PWA (`icon-192.png`, `icon-512.png`) y logo general `logo.png`.
+- `manifest.json`: Manifiesto de la aplicación web progresiva (PWA) para instalación en pantalla de inicio de Android.
+- `sw.js`: Service Worker de interceptación y almacenamiento en caché privada (CacheStorage).
+- `tools/excel_to_json.py` y `tools/export_catalog.ps1`: Extractores dinámicos de Excel a JSON (soporte Python y fallback nativo en PowerShell).
+- `tools/test_catalog.py` y `tools/test_catalog.ps1`: Suites automatizadas de verificación de datos, rutas, 100% de imágenes, modo feria, swipe y safe-area.
 - `actualizar_coleccion.bat`: Lanzador de actualización en 1 clic para Windows con detección inteligente de Python.

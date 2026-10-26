@@ -132,6 +132,22 @@ if (-not ($cssContent.Contains('aspect-ratio: 1 / 1;') -and $cssContent.Contains
 }
 Write-Host "[OK] Reglas de diseno cuadrado 1:1 y safe-area en style.css verificadas" -ForegroundColor Green
 
+# 7. Test PWA y Modo Offline
+$manifestPath = Join-Path $baseDir "manifest.json"
+$swPath = Join-Path $baseDir "sw.js"
+$icon192 = Join-Path $baseDir "images\icon-192.png"
+$icon512 = Join-Path $baseDir "images\icon-512.png"
+
+if (-not (Test-Path $manifestPath) -or -not (Test-Path $swPath) -or -not (Test-Path $icon192) -or -not (Test-Path $icon512)) {
+    Write-Host "[ERROR] Faltan archivos requeridos para PWA (manifest, sw.js o iconos)" -ForegroundColor Red
+    exit 1
+}
+if (-not ($htmlContent.Contains('rel="manifest"') -and $htmlContent.Contains('id="offline-modal"') -and $jsContent.Contains('OfflineManager'))) {
+    Write-Host "[ERROR] Falta integracion PWA en index.html o app.js" -ForegroundColor Red
+    exit 1
+}
+Write-Host "[OK] Soporte PWA, Service Worker, Manifiesto e Iconos Offline verificados" -ForegroundColor Green
+
 Write-Host "`n==================================================" -ForegroundColor Cyan
 Write-Host " TODAS LAS PRUEBAS AUTOMATIZADAS PASARON CON EXITO!" -ForegroundColor Cyan
 Write-Host "==================================================" -ForegroundColor Cyan
