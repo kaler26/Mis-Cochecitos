@@ -1,5 +1,5 @@
 // Service Worker para MIS COCHECITOS (PWA Offline)
-const CACHE_STATIC = 'cochecitos-static-v3.0';
+const CACHE_STATIC = 'cochecitos-static-v3.1';
 const CACHE_IMAGES = 'cochecitos-images-v1';
 
 const STATIC_ASSETS = [

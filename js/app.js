@@ -32,13 +32,8 @@
       motosSearch: '',
       motosBrand: ''
     },
-    feria: {
-      search: '',
-      scope: 'all'
-    },
-    filteredFeria: [],
     viewMode: localStorage.getItem('cochecitos_view_mode') || 'grid', // 'grid' | 'compact'
-    activeTab: 'coleccion', // 'coleccion' | 'fast-and-furious' | 'cultura-pop' | 'motos' | 'feria' | 'estadisticas' | 'acerca-de'
+    activeTab: 'coleccion', // 'coleccion' | 'fast-and-furious' | 'cultura-pop' | 'motos' | 'estadisticas' | 'acerca-de'
     
     // Filtros activos del catálogo principal
     filters: {
@@ -65,7 +60,7 @@
     // Modal de ficha de coche
     modal: {
       isOpen: false,
-      context: 'coleccion', // 'coleccion' | 'fast_and_furious' | 'cultura_pop' | 'motos' | 'feria'
+      context: 'coleccion', // 'coleccion' | 'fast_and_furious' | 'cultura_pop' | 'motos'
       currentFilteredIndex: -1
     },
 
@@ -202,20 +197,6 @@
     // Selector Modo de Vista (Cuadrícula / Lista compacta)
     btnViewGrid: document.getElementById('btn-view-grid'),
     btnViewCompact: document.getElementById('btn-view-compact'),
-
-    // Modo Feria & Antirrepeticiones
-    feriaSearchInput: document.getElementById('feria-search-input'),
-    feriaSearchClear: document.getElementById('feria-search-clear'),
-    feriaScopeFilter: document.getElementById('feria-scope-filter'),
-    feriaExportBtn: document.getElementById('feria-export-btn'),
-    feriaExportText: document.getElementById('feria-export-text'),
-    feriaPrintBtn: document.getElementById('feria-print-btn'),
-    feriaStatusBanner: document.getElementById('feria-status-banner'),
-    feriaStatusIcon: document.getElementById('feria-status-icon'),
-    feriaStatusTitle: document.getElementById('feria-status-title'),
-    feriaStatusDesc: document.getElementById('feria-status-desc'),
-    feriaCounter: document.getElementById('feria-counter'),
-    feriaListContainer: document.getElementById('feria-list-container'),
     modalDialog: document.querySelector('.modal-dialog'),
     modalContentGrid: document.querySelector('.modal-content-grid'),
 
@@ -305,9 +286,6 @@
 
       // Inicializar selector de modo de vista (Cuadrícula / Lista compacta)
       initViewMode();
-
-      // Inicializar Modo Feria & Antirrepeticiones
-      initFeria();
 
       // Inicializar gestos táctiles de deslizamiento (swipe) en modal
       initTouchSwipe();
@@ -976,245 +954,6 @@
   }
 
   // =========================================================================
-  // 8.3 MODO FERIA & ANTIRREPETICIONES (CHECKLIST COMPACTO)
-  // =========================================================================
-  function getAllFeriaItems() {
-    const list = [];
-
-    // 1. Colección principal
-    (state.allCars || []).forEach(c => {
-      list.push({ ...c, _collection: 'coleccion', _collectionName: 'Principal' });
-    });
-
-    // 2. Fast & Furious
-    (state.specialCollections.fast_and_furious || []).forEach(c => {
-      list.push({ ...c, _collection: 'fast_and_furious', _collectionName: 'Fast & Furious' });
-    });
-
-    // 3. Cultura Pop
-    (state.specialCollections.cultura_pop || []).forEach(c => {
-      list.push({ ...c, _collection: 'cultura_pop', _collectionName: 'Cultura Pop' });
-    });
-
-    // 4. Motos
-    (state.specialCollections.motos || []).forEach(c => {
-      list.push({ ...c, _collection: 'motos', _collectionName: 'Moto' });
-    });
-
-    // Ordenar primero por marca y luego cronológicamente por año
-    list.sort((a, b) => {
-      const bRes = (a.brand || '').localeCompare(b.brand || '', 'es');
-      if (bRes !== 0) return bRes;
-      const yA = a.year != null ? a.year : 9999;
-      const yB = b.year != null ? b.year : 9999;
-      if (yA !== yB) return yA - yB;
-      const mRes = (a.model || '').localeCompare(b.model || '', 'es');
-      return mRes !== 0 ? mRes : (a.id || 0) - (b.id || 0);
-    });
-
-    return list;
-  }
-
-  function initFeria() {
-    updateFeriaScopeLabels();
-    renderFeria();
-  }
-
-  function updateFeriaScopeLabels() {
-    if (!dom.feriaScopeFilter) return;
-    const mainCount = (state.allCars || []).length;
-    const ffCount = ((state.specialCollections && state.specialCollections.fast_and_furious) || []).length;
-    const popCount = ((state.specialCollections && state.specialCollections.cultura_pop) || []).length;
-    const motoCount = ((state.specialCollections && state.specialCollections.motos) || []).length;
-    const totalCount = mainCount + ffCount + popCount + motoCount;
-
-    const optAll = dom.feriaScopeFilter.querySelector('option[value="all"]');
-    if (optAll) optAll.textContent = `Todas las colecciones (${formatNumber(totalCount)} piezas)`;
-    const optMain = dom.feriaScopeFilter.querySelector('option[value="coleccion"]');
-    if (optMain) optMain.textContent = `Catálogo Principal (${formatNumber(mainCount)})`;
-    const optFF = dom.feriaScopeFilter.querySelector('option[value="fast_and_furious"]');
-    if (optFF) optFF.textContent = `Fast & Furious (${formatNumber(ffCount)})`;
-    const optPop = dom.feriaScopeFilter.querySelector('option[value="cultura_pop"]');
-    if (optPop) optPop.textContent = `Cultura Pop (${formatNumber(popCount)})`;
-    const optMoto = dom.feriaScopeFilter.querySelector('option[value="motos"]');
-    if (optMoto) optMoto.textContent = `Motos (${formatNumber(motoCount)})`;
-  }
-
-  function renderFeria() {
-    const allItems = getAllFeriaItems();
-    const query = normalizeText(state.feria.search);
-    const scope = state.feria.scope;
-
-    let filtered = allItems;
-    if (scope !== 'all') {
-      filtered = filtered.filter(item => item._collection === scope);
-    }
-
-    if (query) {
-      filtered = filtered.filter(item => {
-        const text = normalizeText(
-          `${item.brand || ''} ${item.model || ''} ${item.manufacturer || ''} ${item.color || ''} ${item.movie || ''} ${item.universe || ''} ${item.year || ''}`
-        );
-        return text.includes(query);
-      });
-    }
-
-    state.filteredFeria = filtered;
-
-    // Actualizar Banner Antirrepeticiones
-    if (dom.feriaStatusBanner) {
-      if (!query) {
-        dom.feriaStatusBanner.className = 'feria-status-banner state-idle';
-        if (dom.feriaStatusIcon) dom.feriaStatusIcon.textContent = '💡';
-        if (dom.feriaStatusTitle) dom.feriaStatusTitle.textContent = 'Escribe un modelo arriba para verificar';
-        if (dom.feriaStatusDesc) dom.feriaStatusDesc.textContent = `Tienes ${formatNumber(allItems.length)} vehículos en total registrados para comprobar en vivo.`;
-      } else if (filtered.length > 0) {
-        dom.feriaStatusBanner.className = 'feria-status-banner state-found';
-        if (dom.feriaStatusIcon) dom.feriaStatusIcon.textContent = '✅';
-        if (dom.feriaStatusTitle) {
-          dom.feriaStatusTitle.textContent = `¡YA LO TIENES! Tienes ${formatNumber(filtered.length)} modelo(s) coincidente(s)`;
-        }
-        if (dom.feriaStatusDesc) {
-          dom.feriaStatusDesc.textContent = `Revisa las versiones, año y color en la lista de abajo para evitar comprar repetidos.`;
-        }
-      } else {
-        dom.feriaStatusBanner.className = 'feria-status-banner state-not-found';
-        if (dom.feriaStatusIcon) dom.feriaStatusIcon.textContent = '🎉';
-        if (dom.feriaStatusTitle) {
-          dom.feriaStatusTitle.textContent = `¡NO LO TIENES EN TU COLECCIÓN! (0 coincidencias)`;
-        }
-        if (dom.feriaStatusDesc) {
-          dom.feriaStatusDesc.textContent = `No se encontró ningún vehículo con "${escapeHtml(state.feria.search)}". ¡Cómpralo sin dudar!`;
-        }
-      }
-    }
-
-    // Actualizar Contador
-    if (dom.feriaCounter) {
-      if (!query && scope === 'all') {
-        dom.feriaCounter.textContent = `${formatNumber(allItems.length)} vehículos registrados en la colección`;
-      } else {
-        dom.feriaCounter.textContent = `${formatNumber(filtered.length)} vehículos encontrados`;
-      }
-    }
-
-    // Renderizar Filas de Resultados
-    if (dom.feriaListContainer) {
-      dom.feriaListContainer.innerHTML = '';
-
-      if (filtered.length === 0) {
-        dom.feriaListContainer.innerHTML = `
-          <div style="text-align: center; padding: 3rem 1rem; color: #9ea5b3; background: var(--bg-surface); border-radius: var(--radius-md); border: 1px dashed var(--border-highlight);">
-            <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">🎉</div>
-            <strong style="color: #ffffff; font-size: 1.1rem; display: block;">¡Excelente noticia! No tienes esta pieza</strong>
-            <p style="margin-top: 0.35rem; color: #9ea5b3;">Puedes comprarla tranquilamente sin riesgo de tenerla repetida.</p>
-          </div>
-        `;
-        return;
-      }
-
-      const fragment = document.createDocumentFragment();
-      // Renderizamos hasta 400 filas ordenadas alfabéticamente y cronológicamente para rendimiento instantáneo
-      const displayItems = filtered.slice(0, 400);
-
-      displayItems.forEach((car, idx) => {
-        const row = document.createElement('article');
-        row.className = 'feria-row';
-        row.setAttribute('role', 'button');
-        row.setAttribute('tabindex', '0');
-        row.setAttribute('aria-label', `${car.brand || ''} ${car.model || ''}, Nº ${car.id}`);
-
-        let colTagClass = 'coltag-main';
-        if (car._collection === 'fast_and_furious') colTagClass = 'coltag-ff';
-        else if (car._collection === 'cultura_pop') colTagClass = 'coltag-pop';
-        else if (car._collection === 'motos') colTagClass = 'coltag-motos';
-
-        const colorDotHex = getColorHex(car.color);
-        const padLen = (car._collection === 'coleccion') ? 4 : 2;
-        const formattedId = `#${String(car.id).padStart(padLen, '0')}`;
-
-        row.innerHTML = `
-          <div class="feria-thumb-wrap">
-            <img class="feria-thumb-img" src="./${car.image || ''}" alt="" loading="lazy" decoding="async" onerror="this.onerror=null; this.src='./images/logo.png';">
-          </div>
-          <span class="feria-col-id">${formattedId}</span>
-          <div class="feria-col-brand">${escapeHtml(car.brand || '—')}</div>
-          <div class="feria-col-model">${escapeHtml(car.model || '—')}</div>
-          <div class="feria-col-man">${escapeHtml(car.manufacturer || '—')}</div>
-          <div class="feria-col-year">${car.year || '—'}</div>
-          <div class="feria-col-color">
-            <span class="color-dot" style="background-color: ${colorDotHex};"></span>
-            <span>${escapeHtml(car.color || '—')}</span>
-          </div>
-          <span class="feria-col-coltag ${colTagClass}">${car._collectionName}</span>
-          
-          <!-- Vista móvil condensada -->
-          <div class="feria-mobile-main">
-            <span class="feria-col-id">${formattedId}</span>
-            <strong style="color: #ffffff;">${escapeHtml(car.brand || '—')}</strong>
-            <span>${escapeHtml(car.model || '—')}</span>
-          </div>
-          <div class="feria-mobile-meta">
-            <span>${escapeHtml(car.manufacturer || '—')}</span>
-            <span>·</span>
-            <span>${car.year || '—'}</span>
-            ${car.color ? `<span>· ${escapeHtml(car.color)}</span>` : ''}
-          </div>
-        `;
-
-        row.addEventListener('click', () => {
-          openCarModal(idx, 'feria');
-        });
-        row.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            openCarModal(idx, 'feria');
-          }
-        });
-
-        fragment.appendChild(row);
-      });
-
-      if (filtered.length > displayItems.length) {
-        const moreNotice = document.createElement('div');
-        moreNotice.style.cssText = 'text-align: center; padding: 1rem; color: var(--text-muted); font-size: 0.85rem;';
-        moreNotice.textContent = `Mostrando los primeros ${formatNumber(displayItems.length)} de ${formatNumber(filtered.length)} modelos ordenados por marca y fecha. Escribe en el buscador para afinar.`;
-        fragment.appendChild(moreNotice);
-      }
-
-      dom.feriaListContainer.appendChild(fragment);
-    }
-  }
-
-  function exportFeriaChecklist() {
-    const items = state.filteredFeria || getAllFeriaItems();
-    if (!items.length) return;
-
-    let text = `CHECKLIST MI COLECCIÓN DE COCHES (${items.length} vehículos)\n`;
-    text += `Generado: ${new Date().toLocaleDateString('es-ES')}\n`;
-    text += `===================================================\n\n`;
-
-    items.forEach(c => {
-      const padLen = (c._collection === 'coleccion') ? 4 : 2;
-      const num = `#${String(c.id).padStart(padLen, '0')}`;
-      text += `${num} | ${c.brand || '—'} ${c.model || '—'} | ${c.manufacturer || '—'} | ${c.year || '—'} | ${c.color || '—'} | [${c._collectionName || 'Colección'}]\n`;
-    });
-
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(text).then(() => {
-        if (dom.feriaExportText) {
-          dom.feriaExportText.textContent = '¡Checklist copiado!';
-          setTimeout(() => { dom.feriaExportText.textContent = 'Copiar Checklist'; }, 2500);
-        }
-      }).catch(() => {
-        prompt('Copia tu checklist completo:', text);
-      });
-    } else {
-      prompt('Copia tu checklist completo:', text);
-    }
-  }
-
-  // =========================================================================
   // 9. CONTADOR DE RESULTADOS Y CHIPS ACTIVOS
   // =========================================================================
   function renderResultsBar() {
@@ -1442,8 +1181,6 @@
       return state.filteredSpecial.cultura_pop;
     } else if (state.modal.context === 'motos') {
       return state.filteredSpecial.motos;
-    } else if (state.modal.context === 'feria') {
-      return state.filteredFeria || [];
     }
     return state.filteredCars;
   }
@@ -2031,8 +1768,6 @@
         switchTab('cultura-pop');
       } else if (hash === '#motos') {
         switchTab('motos');
-      } else if (hash === '#feria') {
-        switchTab('feria');
       } else if (hash === '#estadisticas') {
         switchTab('estadisticas');
       } else if (hash === '#acerca-de') {
@@ -2221,46 +1956,6 @@
       dom.btnViewCompact.addEventListener('click', () => setViewMode('compact'));
     }
 
-    // 6.3 Controles de Modo Feria & Antirrepeticiones
-    if (dom.feriaSearchInput) {
-      dom.feriaSearchInput.addEventListener('input', debounce(() => {
-        state.feria.search = dom.feriaSearchInput.value.trim();
-        if (state.feria.search) {
-          if (dom.feriaSearchClear) dom.feriaSearchClear.classList.remove('hidden');
-        } else {
-          if (dom.feriaSearchClear) dom.feriaSearchClear.classList.add('hidden');
-        }
-        renderFeria();
-      }, 150));
-    }
-
-    if (dom.feriaSearchClear) {
-      dom.feriaSearchClear.addEventListener('click', () => {
-        if (dom.feriaSearchInput) dom.feriaSearchInput.value = '';
-        state.feria.search = '';
-        dom.feriaSearchClear.classList.add('hidden');
-        renderFeria();
-        if (dom.feriaSearchInput) dom.feriaSearchInput.focus();
-      });
-    }
-
-    if (dom.feriaScopeFilter) {
-      dom.feriaScopeFilter.addEventListener('change', () => {
-        state.feria.scope = dom.feriaScopeFilter.value;
-        renderFeria();
-      });
-    }
-
-    if (dom.feriaExportBtn) {
-      dom.feriaExportBtn.addEventListener('click', exportFeriaChecklist);
-    }
-
-    if (dom.feriaPrintBtn) {
-      dom.feriaPrintBtn.addEventListener('click', () => {
-        window.print();
-      });
-    }
-
     // 7. Navegación y cierre de Modal
     dom.modalPrevBtn.addEventListener('click', () => navigateModal(-1));
     dom.modalNextBtn.addEventListener('click', () => navigateModal(1));
@@ -2355,8 +2050,6 @@
     const closeBtn = document.getElementById('offline-modal-close-btn');
     const openBtns = [
       document.getElementById('nav-btn-open-offline'),
-      document.getElementById('btn-feria-open-offline'),
-      document.getElementById('feria-download-offline-btn'),
       document.getElementById('btn-about-open-offline')
     ].filter(Boolean);
 

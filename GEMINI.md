@@ -17,10 +17,8 @@ Catálogo web moderno, 100% estático, responsive y de alto rendimiento para col
    - Totalmente adaptable a móviles con navegación por pestañas con scroll horizontal suave sin barras molestas.
    - La ficha modal de detalle se presenta en formato tarjeta adaptable (o bottom-sheet) con indicador de posición contextual (`1 / 33`, etc.).
    - **Gestos Táctiles (Swipe)**: Deslizamiento horizontal natural en la pantalla de detalle para cambiar de coche sin pulsar flechas, con animación fluida.
-5. **Modo Feria & Antirrepeticiones**:
-   - Pestaña especializada ultra-rápida pensada para mercadillos, tiendas y ferias.
-   - Comprobador instantáneo sobre los 1.605 vehículos (colección principal + temáticas) que indica al coleccionista en tiempo real si un coche ya lo tiene o si no lo tiene (para comprarlo sin riesgo de repetir).
-   - Incluye selector de ámbito, vista compacta de alta densidad y exportación/impresión de checklist.
+5. **Búsqueda Instantánea Unificada**:
+   - Búsqueda en tiempo real desde la pantalla principal que filtra simultáneamente por modelo, marca, fabricante, color y año de forma ágil y directa.
 6. **Modos de Vista**:
    - Alternador de visualización en catálogo principal: vista de cuadrícula fotográfica clásica o lista compacta optimizada.
 7. **Filtros Rápidos por Décadas y Botón Flotante**:
@@ -32,7 +30,6 @@ Catálogo web moderno, 100% estático, responsive y de alto rendimiento para col
 9. **Ordenación por Marca y Fecha (Cronológica) y Lista Completa**:
    - Selector de ordenación multinivel (`Marca A-Z → Año cronológico`): agrupa primero por marcas alfabéticamente (Acura, Alfa Romeo...) y dentro de cada marca los ordena por año de fabricación del más antiguo al más nuevo.
    - Selector de paginación con opción `Todos (Lista completa)` para explorar los 1.522 modelos de un tirón tanto en cuadrícula como en lista compacta.
-   - En el **Modo Feria**, la lista completa y el checklist exportado quedan también estructurados por marca y año.
 10. **Flujo de Actualización**:
    - El usuario actualiza datos en su Excel (`F:\Mis Cochecitos\1 64\1 64.xlsx` o en Escritorio) o renombra/añade fotos en su carpeta (`F:\Mis Cochecitos\1 64\SinFondo`).
    - Para aplicar los cambios a la web, ejecuta con doble clic el script: `actualizar_coleccion.bat`.
@@ -44,7 +41,7 @@ Catálogo web moderno, 100% estático, responsive y de alto rendimiento para col
    - **Privacidad y Galería Limpia**: Al almacenarse en la memoria interna privada del navegador (`CacheStorage`), **NUNCA aparecen en la Galería de fotos de Android ni en Google Fotos**, manteniendo la galería personal 100% limpia.
 
 ## Estructura del Repositorio
-- `index.html`: Estructura principal con catálogo general, pestañas temáticas (Fast & Furious, Cultura Pop, Motos), Modo Feria & Antirrepeticiones, buscador instantáneo, modal y estadísticas.
+- `index.html`: Estructura principal con catálogo general, pestañas temáticas (Fast & Furious, Cultura Pop, Motos), buscador instantáneo, modal y estadísticas.
 - `css/style.css`: Estilos visuales en tema oscuro automovilístico (dark theme), tarjetas, cabeceras temáticas, estilos de impresión y animaciones táctiles.
 - `js/app.js`: Lógica de filtrado dinámico, enrutamiento por hash (`#ff-1`, `#pop-1`, `#moto-1`, `#feria`), modal navegable con swipe táctil, checklist y estadísticas.
 - `data/cars.json` y `data/cars.js`: Base de datos estática de la colección principal (~1.522 modelos) con soporte dual online/offline.
@@ -53,5 +50,5 @@ Catálogo web moderno, 100% estático, responsive y de alto rendimiento para col
 - `manifest.json`: Manifiesto de la aplicación web progresiva (PWA) para instalación en pantalla de inicio de Android.
 - `sw.js`: Service Worker de interceptación y almacenamiento en caché privada (CacheStorage).
 - `tools/excel_to_json.py` y `tools/export_catalog.ps1`: Extractores dinámicos de Excel a JSON (soporte Python y fallback nativo en PowerShell).
-- `tools/test_catalog.py` y `tools/test_catalog.ps1`: Suites automatizadas de verificación de datos, rutas, 100% de imágenes, modo feria, swipe y safe-area.
+- `tools/test_catalog.py` y `tools/test_catalog.ps1`: Suites automatizadas de verificación de datos, rutas, 100% de imágenes, swipe y safe-area.
 - `actualizar_coleccion.bat`: Lanzador de actualización en 1 clic para Windows con detección inteligente de Python.

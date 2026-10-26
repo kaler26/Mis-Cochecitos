@@ -8,7 +8,7 @@
   <title>MIS COCHECITOS · Coches a Escala</title>
   
   <link rel="icon" type="image/png" href="./images/logo.png">
-  <link rel="stylesheet" href="./css/style.css?v=3.0">
+  <link rel="stylesheet" href="./css/style.css?v=3.1">
   <!-- Soporte PWA (Progressive Web App) y Modo Offline -->
   <link rel="manifest" href="./manifest.json">
   <meta name="mobile-web-app-capable" content="yes">
@@ -63,14 +63,6 @@
             <path d="M15 6h-3l-3 6.5h6l2 5"></path>
           </svg>
           <span>Motos</span>
-        </button>
-        <button type="button" class="nav-btn" data-tab="feria" id="nav-tab-feria">
-          <svg class="nav-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
-            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
-            <polyline points="9 10 11 12 15 8"></polyline>
-          </svg>
-          <span>Modo Feria</span>
         </button>
         <button type="button" class="nav-btn" data-tab="estadisticas" id="nav-tab-estadisticas">
           <svg class="nav-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -440,92 +432,6 @@
       </div>
     </section>
 
-    <!-- PESTAÑA: MODO FERIA & ANTIRREPETICIONES -->
-    <section id="tab-feria" class="tab-pane" aria-labelledby="nav-tab-feria" hidden>
-      <div class="special-section-container feria-container">
-        
-        <!-- CABECERA TEMÁTICA MODO FERIA -->
-        <header class="special-hero hero-feria">
-          <div class="special-hero-badge">🎪 MODO FERIA & ANTIRREPETICIONES</div>
-          <h2 class="special-hero-title">Verificador Rápido para Compras</h2>
-          <p class="special-hero-desc">Consulta en 2 segundos si ya tienes un coche o moto cuando estés en tiendas, mercadillos o ferias para no comprar piezas repetidas.</p>
-        </header>
-
-        <!-- PANEL DE BÚSQUEDA RÁPIDA -->
-        <section class="feria-controls-panel" aria-label="Buscador rápido antirrepeticiones">
-          <div class="feria-search-box">
-            <div class="feria-input-wrapper">
-              <svg class="search-icon" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="11" cy="11" r="8"></circle>
-                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-              </svg>
-              <input type="search" id="feria-search-input" class="feria-search-input" placeholder="Escribe modelo, marca o fabricante (ej: Skyline, Supra, Batmobile, CBR)..." autocomplete="off">
-              <button type="button" id="feria-search-clear" class="search-clear-btn hidden" aria-label="Limpiar búsqueda">✕</button>
-            </div>
-
-            <div class="feria-options-row">
-              <div class="feria-scope-select-wrap">
-                <label for="feria-scope-filter" class="feria-label">Buscar en:</label>
-                <div class="select-wrapper">
-                  <select id="feria-scope-filter" class="filter-select">
-                    <option value="all">Todas las colecciones (1.605 piezas)</option>
-                    <option value="coleccion">Catálogo Principal (1.522)</option>
-                    <option value="fast_and_furious">Fast & Furious (33)</option>
-                    <option value="cultura_pop">Cultura Pop (28)</option>
-                    <option value="motos">Motos (22)</option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="feria-actions-wrap">
-                <button type="button" id="feria-export-btn" class="btn btn-secondary btn-sm" title="Copiar lista de coches para llevar en el bloc de notas">
-                  <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                  </svg>
-                  <span id="feria-export-text">Copiar Checklist</span>
-                </button>
-                <button type="button" id="feria-print-btn" class="btn btn-secondary btn-sm" title="Imprimir checklist para llevar en papel">
-                  <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="6 9 6 2 18 2 18 9"></polyline>
-                    <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
-                    <rect x="6" y="14" width="12" height="8"></rect>
-                  </svg>
-                  <span>Imprimir</span>
-                </button>
-                <button type="button" id="feria-download-offline-btn" class="btn btn-secondary btn-sm" title="Descargar fotos para consultar sin conexión en el móvil">
-                  <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                    <polyline points="7 10 12 15 17 10"></polyline>
-                    <line x1="12" y1="15" x2="12" y2="3"></line>
-                  </svg>
-                  <span>Fotos Offline</span>
-                </button>
-              </div>
-            </div>
-
-            <!-- CARTEL DE RESULTADO ANTIRREPETICIONES -->
-            <div id="feria-status-banner" class="feria-status-banner state-idle">
-              <span class="feria-status-icon" id="feria-status-icon">🔍</span>
-              <div class="feria-status-text-wrap">
-                <div class="feria-status-title" id="feria-status-title">Escribe un modelo arriba para verificar</div>
-                <div class="feria-status-desc" id="feria-status-desc">Busca al instante entre todos los modelos de tu colección completa.</div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- LISTA COMPACTA DE RESULTADOS / CHECKLIST -->
-        <section class="feria-results-section" aria-label="Resultados modo feria">
-          <div class="feria-results-header">
-            <span id="feria-counter" class="feria-counter">1.605 vehículos disponibles</span>
-            <span class="feria-counter-hint">Toca cualquier fila para ver foto y detalles</span>
-          </div>
-          <div id="feria-list-container" class="feria-list-container">
-            <!-- Renderizado dinámico de tarjetas compactas -->
-          </div>
-        </section>
-
       </div>
     </section>
 
@@ -671,7 +577,7 @@
               Instala esta web en tu móvil Android como una app nativa desde Google Chrome pulsando en <strong>"Instalar aplicación"</strong>.
             </p>
             <p>
-              Toda la base de datos (1.605 modelos), buscador y Modo Feria funcionan 100% offline. Puedes descargar además las fotografías a la memoria privada de la aplicación para usarlas sin cobertura.
+              Toda la base de datos (1.605 modelos), buscador y filtros funcionan 100% offline. Puedes descargar además las fotografías a la memoria privada de la aplicación para usarlas sin cobertura.
             </p>
             <div style="margin-top: 1rem;">
               <button type="button" class="btn btn-primary btn-sm" id="btn-about-open-offline">
@@ -839,117 +745,223 @@
     </svg>
   </button>
 
-  <!-- MODAL DE GESTIÓN OFFLINE Y DESCARGA -->
-  <div id="offline-modal" class="modal-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="offline-modal-title">
-    <div class="modal-backdrop" id="offline-modal-backdrop"></div>
-    <div class="modal-dialog modal-dialog-offline">
-      <div class="modal-navigation-bar">
-        <div class="modal-nav-group">
-          <span class="modal-position-indicator">📱 MODO OFFLINE & APP</span>
-        </div>
-        <button type="button" class="modal-close-btn" id="offline-modal-close-btn" aria-label="Cerrar modal (Escape)">✕</button>
-      </div>
-
-      <div class="offline-modal-body">
-        <div class="offline-header-info">
-          <div class="offline-badge-pill">PWA · Modo Sin Conexión</div>
-          <h2 class="offline-modal-title" id="offline-modal-title">Catálogo Offline y Descarga de Fotos</h2>
-          <p class="offline-modal-desc">
-            Instala la app en tu móvil y descarga las fotografías para consultar tu colección y evitar repetir compras en ferias o mercadillos sin cobertura.
-          </p>
-        </div>
-
-        <!-- Tarjetas de estado -->
-        <div class="offline-status-grid">
-          <div class="offline-status-card">
-            <div class="offline-card-icon">⚡</div>
-            <div class="offline-card-details">
-              <span class="offline-card-title">Catálogo & Antirrepeticiones</span>
-              <span class="offline-card-status" id="offline-catalog-status">✔ Disponible 100% Offline</span>
-              <span class="offline-card-sub">1.605 modelos, marcas, buscador y Modo Feria</span>
-            </div>
-          </div>
-
-          <div class="offline-status-card">
-            <div class="offline-card-icon">🖼️</div>
-            <div class="offline-card-details">
-              <span class="offline-card-title">Fotografías en Memoria</span>
-              <span class="offline-card-status" id="offline-images-status">Comprobando...</span>
-              <span class="offline-card-sub" id="offline-images-sub">Espacio estimado: ~930 MB</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Aviso de Privacidad y Galería -->
-        <div class="offline-privacy-box">
-          <div class="offline-privacy-icon">🔒</div>
-          <div class="offline-privacy-text">
-            <strong>Tu galería de fotos se mantiene 100% limpia:</strong> Las imágenes se guardan exclusivamente en el almacenamiento privado de la app (<em>CacheStorage</em>). <strong>NO se mezclarán ni aparecerán en tu galería de Android ni en Google Fotos</strong>.
-          </div>
-        </div>
-
-        <!-- Zona de Progreso de Descarga -->
-        <div id="offline-progress-section" class="offline-progress-section" style="display: none;">
-          <div class="offline-progress-header">
-            <span id="offline-progress-text">Descargando fotografías...</span>
-            <span id="offline-progress-percent">0%</span>
-          </div>
-          <div class="offline-progress-bar-wrap">
-            <div id="offline-progress-bar" class="offline-progress-bar" style="width: 0%;"></div>
-          </div>
-          <div class="offline-progress-footer">
-            <span id="offline-progress-count">0 / 1605 fotos</span>
-            <span id="offline-progress-eta">Recomendado con conexión Wi-Fi</span>
-          </div>
-        </div>
-
-        <!-- Botones de Acción -->
-        <div class="offline-actions-group">
-          <button type="button" id="btn-start-image-download" class="btn btn-primary btn-offline-main">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-              <polyline points="7 10 12 15 17 10"></polyline>
-              <line x1="12" y1="15" x2="12" y2="3"></line>
-            </svg>
-            <span id="btn-start-image-download-text">Descargar todas las fotos (~930 MB)</span>
-          </button>
-
-          <button type="button" id="btn-stop-image-download" class="btn btn-secondary" style="display: none;">
-            <span>Pausar / Detener</span>
-          </button>
-
-          <button type="button" id="btn-clear-image-cache" class="btn btn-secondary" style="display: none;">
-            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="3 6 5 6 21 6"></polyline>
-              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-            </svg>
-            <span>Liberar espacio de fotos</span>
-          </button>
-        </div>
-
-        <!-- Sección de Instalación PWA (Android / Chrome) -->
-        <div id="offline-install-prompt-wrap" class="offline-install-prompt-wrap">
-          <div class="offline-install-content">
-            <span class="offline-install-icon">📲</span>
-            <div class="offline-install-info">
-              <strong>Instalar en tu pantalla de inicio</strong>
-              <span>Ábrela como una app nativa a pantalla completa y sin barras de navegación.</span>
-            </div>
-          </div>
-          <button type="button" id="btn-install-pwa" class="btn btn-accent btn-sm">
-            <span>Instalar App</span>
-          </button>
-        </div>
-
-      </div>
-    </div>
-  </div>
-
+  <!-- MODAL DE GESTIÓN OFFLINE Y DESCARGA -->
+
+  <div id="offline-modal" class="modal-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="offline-modal-title">
+
+    <div class="modal-backdrop" id="offline-modal-backdrop"></div>
+
+    <div class="modal-dialog modal-dialog-offline">
+
+      <div class="modal-navigation-bar">
+
+        <div class="modal-nav-group">
+
+          <span class="modal-position-indicator">📱 MODO OFFLINE & APP</span>
+
+        </div>
+
+        <button type="button" class="modal-close-btn" id="offline-modal-close-btn" aria-label="Cerrar modal (Escape)">✕</button>
+
+      </div>
+
+
+
+      <div class="offline-modal-body">
+
+        <div class="offline-header-info">
+
+          <div class="offline-badge-pill">PWA · Modo Sin Conexión</div>
+
+          <h2 class="offline-modal-title" id="offline-modal-title">Catálogo Offline y Descarga de Fotos</h2>
+
+          <p class="offline-modal-desc">
+
+            Instala la app en tu móvil y descarga las fotografías para consultar tu colección y consultar tu colección en cualquier lugar sin cobertura.
+
+          </p>
+
+        </div>
+
+
+
+        <!-- Tarjetas de estado -->
+
+        <div class="offline-status-grid">
+
+          <div class="offline-status-card">
+
+            <div class="offline-card-icon">⚡</div>
+
+            <div class="offline-card-details">
+
+              <span class="offline-card-title">Catálogo & Antirrepeticiones</span>
+
+              <span class="offline-card-status" id="offline-catalog-status">✔ Disponible 100% Offline</span>
+
+              <span class="offline-card-sub">1.605 modelos, marcas, buscador y filtros</span>
+
+            </div>
+
+          </div>
+
+
+
+          <div class="offline-status-card">
+
+            <div class="offline-card-icon">🖼️</div>
+
+            <div class="offline-card-details">
+
+              <span class="offline-card-title">Fotografías en Memoria</span>
+
+              <span class="offline-card-status" id="offline-images-status">Comprobando...</span>
+
+              <span class="offline-card-sub" id="offline-images-sub">Espacio estimado: ~930 MB</span>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- Aviso de Privacidad y Galería -->
+
+        <div class="offline-privacy-box">
+
+          <div class="offline-privacy-icon">🔒</div>
+
+          <div class="offline-privacy-text">
+
+            <strong>Tu galería de fotos se mantiene 100% limpia:</strong> Las imágenes se guardan exclusivamente en el almacenamiento privado de la app (<em>CacheStorage</em>). <strong>NO se mezclarán ni aparecerán en tu galería de Android ni en Google Fotos</strong>.
+
+          </div>
+
+        </div>
+
+
+
+        <!-- Zona de Progreso de Descarga -->
+
+        <div id="offline-progress-section" class="offline-progress-section" style="display: none;">
+
+          <div class="offline-progress-header">
+
+            <span id="offline-progress-text">Descargando fotografías...</span>
+
+            <span id="offline-progress-percent">0%</span>
+
+          </div>
+
+          <div class="offline-progress-bar-wrap">
+
+            <div id="offline-progress-bar" class="offline-progress-bar" style="width: 0%;"></div>
+
+          </div>
+
+          <div class="offline-progress-footer">
+
+            <span id="offline-progress-count">0 / 1605 fotos</span>
+
+            <span id="offline-progress-eta">Recomendado con conexión Wi-Fi</span>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- Botones de Acción -->
+
+        <div class="offline-actions-group">
+
+          <button type="button" id="btn-start-image-download" class="btn btn-primary btn-offline-main">
+
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+
+              <polyline points="7 10 12 15 17 10"></polyline>
+
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+
+            </svg>
+
+            <span id="btn-start-image-download-text">Descargar todas las fotos (~930 MB)</span>
+
+          </button>
+
+
+
+          <button type="button" id="btn-stop-image-download" class="btn btn-secondary" style="display: none;">
+
+            <span>Pausar / Detener</span>
+
+          </button>
+
+
+
+          <button type="button" id="btn-clear-image-cache" class="btn btn-secondary" style="display: none;">
+
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+
+              <polyline points="3 6 5 6 21 6"></polyline>
+
+              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+
+            </svg>
+
+            <span>Liberar espacio de fotos</span>
+
+          </button>
+
+        </div>
+
+
+
+        <!-- Sección de Instalación PWA (Android / Chrome) -->
+
+        <div id="offline-install-prompt-wrap" class="offline-install-prompt-wrap">
+
+          <div class="offline-install-content">
+
+            <span class="offline-install-icon">📲</span>
+
+            <div class="offline-install-info">
+
+              <strong>Instalar en tu pantalla de inicio</strong>
+
+              <span>Ábrela como una app nativa a pantalla completa y sin barras de navegación.</span>
+
+            </div>
+
+          </div>
+
+          <button type="button" id="btn-install-pwa" class="btn btn-accent btn-sm">
+
+            <span>Instalar App</span>
+
+          </button>
+
+        </div>
+
+
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+
   <!-- DATOS DE LA COLECCIÓN (Permite funcionamiento local directo con doble clic sin servidor) -->
   <script src="./data/cars.js"></script>
   <script src="./data/special_collections.js"></script>
 
   <!-- SCRIPT PRINCIPAL (v=2.4 para evitar que el navegador use caché antigua) -->
-  <script src="./js/app.js?v=3.0"></script>
+  <script src="./js/app.js?v=3.1"></script>
 </body>
 </html>

@@ -120,11 +120,11 @@ if (-not ($htmlContent.Contains('href="./css/style.css') -and $htmlContent.Conta
 }
 Write-Host "`n[OK] Rutas relativas en index.html verificadas" -ForegroundColor Green
 
-if (-not ($htmlContent.Contains('id="floating-back-to-top"') -and $htmlContent.Contains('id="nav-tab-feria"'))) {
+if (-not ($htmlContent.Contains('id="floating-back-to-top"') -and $htmlContent.Contains('id="nav-tab-coleccion"'))) {
     Write-Host "Faltan elementos clave en index.html" -ForegroundColor Red
     exit 1
 }
-Write-Host "[OK] Componentes Modo Feria y Boton Flotante en index.html verificados" -ForegroundColor Green
+Write-Host "[OK] Componentes de Navegacion y Boton Flotante en index.html verificados" -ForegroundColor Green
 
 if (-not ($cssContent.Contains('aspect-ratio: 1 / 1;') -and $cssContent.Contains('safe-area-inset-top'))) {
     Write-Host "Faltan reglas clave en style.css" -ForegroundColor Red
