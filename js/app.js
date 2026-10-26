@@ -12,6 +12,7 @@
   // =========================================================================
   const state = {
     allCars: [],            // Catálogo completo principal
+    get cars() { return this.allCars; },
     filteredCars: [],       // Registros que cumplen los filtros y búsqueda actuales
     specialCollections: {
       fast_and_furious: [],
@@ -315,13 +316,15 @@
 
     } catch (error) {
       console.error('Error cargando el catálogo:', error);
-      dom.resultsCounter.textContent = 'Error al cargar los datos de la colección.';
-      dom.carsGrid.innerHTML = `
-        <div style="grid-column: 1 / -1; text-align: center; padding: 3rem 1rem; color: #ff5263;">
-          <h3>No se pudo cargar el catálogo de coches</h3>
-          <p style="margin-top: 0.5rem; color: #9ea5b3;">Asegúrate de que los archivos de datos existen y son accesibles.</p>
-        </div>
-      `;
+      if (!state.allCars || state.allCars.length === 0) {
+        dom.resultsCounter.textContent = 'Error al cargar los datos de la colección.';
+        dom.carsGrid.innerHTML = `
+          <div style="grid-column: 1 / -1; text-align: center; padding: 3rem 1rem; color: #ff5263;">
+            <h3>No se pudo cargar el catálogo de coches</h3>
+            <p style="margin-top: 0.5rem; color: #9ea5b3;">Asegúrate de que los archivos de datos existen y son accesibles.</p>
+          </div>
+        `;
+      }
     }
   }
 
@@ -1019,10 +1022,10 @@
 
   function updateFeriaScopeLabels() {
     if (!dom.feriaScopeFilter) return;
-    const mainCount = state.cars.length;
-    const ffCount = (state.specialCollections.fast_and_furious || []).length;
-    const popCount = (state.specialCollections.cultura_pop || []).length;
-    const motoCount = (state.specialCollections.motos || []).length;
+    const mainCount = (state.allCars || []).length;
+    const ffCount = ((state.specialCollections && state.specialCollections.fast_and_furious) || []).length;
+    const popCount = ((state.specialCollections && state.specialCollections.cultura_pop) || []).length;
+    const motoCount = ((state.specialCollections && state.specialCollections.motos) || []).length;
     const totalCount = mainCount + ffCount + popCount + motoCount;
 
     const optAll = dom.feriaScopeFilter.querySelector('option[value="all"]');
