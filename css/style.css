@@ -2921,35 +2921,18 @@ a {
   transform: scale(1.06);
 }
 
-.inicio-block-badge {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  background: rgba(12, 14, 18, 0.85);
-  backdrop-filter: blur(6px);
-  color: var(--text-secondary);
-  font-size: 0.72rem;
-  font-weight: 800;
-  padding: 3px 8px;
-  border-radius: var(--radius-sm);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  letter-spacing: 0.3px;
-}
-
 .inicio-block-info {
-  padding: 0.95rem 1rem 1.1rem;
+  padding: 0.85rem 1rem;
   display: flex;
-  flex-direction: column;
   align-items: center;
+  justify-content: center;
   text-align: center;
   border-top: 1px solid var(--border-subtle);
-  background: rgba(12, 14, 18, 0.35);
-  flex-grow: 1;
-  justify-content: center;
+  background: rgba(12, 14, 18, 0.45);
 }
 
 .inicio-block-range {
-  font-size: 1.35rem;
+  font-size: 1.25rem;
   font-weight: 900;
   color: var(--text-primary);
   letter-spacing: 0.5px;
@@ -2959,23 +2942,6 @@ a {
 .inicio-block-card:hover .inicio-block-range,
 .inicio-block-card:focus-visible .inicio-block-range {
   color: var(--accent);
-}
-
-.inicio-block-count {
-  font-size: 0.78rem;
-  color: var(--text-muted);
-  font-weight: 600;
-  margin-top: 2px;
-}
-
-.inicio-block-car-model {
-  font-size: 0.74rem;
-  color: var(--text-secondary);
-  margin-top: 5px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 100%;
 }
 
 /* Banner de Navegación de Bloque en Catálogo */

@@ -1920,12 +1920,9 @@
       card.innerHTML = `
         <div class="inicio-block-media">
           <img src="./${escapeHtml(block.image)}" alt="Coches ${block.label}" class="inicio-block-img">
-          <span class="inicio-block-badge">#${idx + 1}</span>
         </div>
         <div class="inicio-block-info">
           <span class="inicio-block-range">${block.label}</span>
-          <span class="inicio-block-count">${block.count} coches</span>
-          <span class="inicio-block-car-model">${escapeHtml(block.model)}</span>
         </div>
       `;
 
