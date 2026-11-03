@@ -1883,8 +1883,30 @@
   // =========================================================================
   // GESTIÓN DE BLOQUES DE LA PANTALLA PRINCIPAL (1-100, 101-200, ETC.)
   // =========================================================================
+  function initInicioBlocks() {
+    renderInicioBlocks();
+  }
+
   function renderInicioBlocks() {
     if (!dom.inicioBlocksGrid) return;
+
+    // Si las tarjetas ya existen estáticamente en el HTML, conectar eventos
+    const existingCards = dom.inicioBlocksGrid.querySelectorAll('.inicio-block-card');
+    if (existingCards.length > 0) {
+      existingCards.forEach((card, idx) => {
+        const triggerOpen = () => openBlock(idx);
+        card.onclick = triggerOpen;
+        card.onkeydown = (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            triggerOpen();
+          }
+        };
+      });
+      return;
+    }
+
+    // Renderizado dinámico si el contenedor está vacío
     const fragment = document.createDocumentFragment();
 
     BLOCKS_DATA.forEach((block, idx) => {
