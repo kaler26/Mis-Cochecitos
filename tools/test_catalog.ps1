@@ -148,6 +148,21 @@ if (-not ($htmlContent.Contains('rel="manifest"') -and $htmlContent.Contains('id
 }
 Write-Host "[OK] Soporte PWA, Service Worker, Manifiesto e Iconos Offline verificados" -ForegroundColor Green
 
+# 8. Test Pantalla Principal e Indice de Bloques (1-100, 101-200, etc.)
+if (-not ($htmlContent.Contains('id="nav-tab-inicio"') -and $htmlContent.Contains('id="tab-inicio"') -and $htmlContent.Contains('id="block-nav-banner"'))) {
+    Write-Host "[ERROR] Faltan componentes de pantalla de Inicio en index.html" -ForegroundColor Red
+    exit 1
+}
+if (-not ($jsContent.Contains('BLOCKS_DATA') -and $jsContent.Contains('renderInicioBlocks') -and $jsContent.Contains('openBlock'))) {
+    Write-Host "[ERROR] Falta logica de bloques en app.js" -ForegroundColor Red
+    exit 1
+}
+if (-not ($cssContent.Contains('.inicio-blocks-grid') -and $cssContent.Contains('.inicio-block-card'))) {
+    Write-Host "[ERROR] Faltan estilos de bloques en style.css" -ForegroundColor Red
+    exit 1
+}
+Write-Host "[OK] Pantalla principal con indice de 16 bloques y navegacion verificados" -ForegroundColor Green
+
 Write-Host "`n==================================================" -ForegroundColor Cyan
 Write-Host " TODAS LAS PRUEBAS AUTOMATIZADAS PASARON CON EXITO!" -ForegroundColor Cyan
 Write-Host "==================================================" -ForegroundColor Cyan

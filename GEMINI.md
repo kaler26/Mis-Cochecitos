@@ -39,6 +39,10 @@ Catálogo web moderno, 100% estático, responsive y de alto rendimiento para col
    - Permite instalar la web como una app nativa en Android (pantalla completa, icono en escritorio/cajón de apps).
    - Gestor de descarga concurrente por lotes (`OfflineManager`) para precargar las 1.605 imágenes (~930 MB).
    - **Privacidad y Galería Limpia**: Al almacenarse en la memoria interna privada del navegador (`CacheStorage`), **NUNCA aparecen en la Galería de fotos de Android ni en Google Fotos**, manteniendo la galería personal 100% limpia.
+12. **Pantalla Principal e Índice Visual por Bloques de 100**:
+   - Portada de bienvenida (`#inicio`) con cuadrícula de 16 bloques visuales en formato cuadrado 1:1 que agrupan los 1.522 coches de 100 en 100 (`1-100`, `101-200`, ..., `1501-1522`).
+   - Cada bloque muestra su rango y la foto del modelo elegido por el usuario (#1, #101, #218, #356, #425, #523, #637, #743, #840, #1000, #1002, #1148, #1203, #1301, #1425, #1522).
+   - Al pulsar cualquier bloque, traslada directamente al catálogo filtrando a ese tramo con barra de navegación rápida contextual (`← Anterior`, `Siguiente →`, `Volver a Inicio`, `Ver todos`).
 
 ## Estructura del Repositorio
 - `index.html`: Estructura principal con catálogo general, pestañas temáticas (Fast & Furious, Cultura Pop, Motos), buscador instantáneo, modal y estadísticas.

@@ -33,7 +33,7 @@
       motosBrand: ''
     },
     viewMode: localStorage.getItem('cochecitos_view_mode') || 'grid', // 'grid' | 'compact'
-    activeTab: 'coleccion', // 'coleccion' | 'fast-and-furious' | 'cultura-pop' | 'motos' | 'estadisticas' | 'acerca-de'
+    activeTab: 'inicio', // 'inicio' | 'coleccion' | 'fast-and-furious' | 'cultura-pop' | 'motos' | 'estadisticas' | 'acerca-de'
     
     // Filtros activos del catálogo principal
     filters: {
@@ -44,7 +44,10 @@
       competition: '',      // '' | 'true' | 'false'
       yearFrom: null,
       yearTo: null,
-      decade: ''            // '' | 'pre-60s' | '60s' | ... | '2020s'
+      decade: '',           // '' | 'pre-60s' | '60s' | ... | '2020s'
+      idFrom: null,
+      idTo: null,
+      activeBlockIndex: -1
     },
 
     // Ordenación
@@ -71,6 +74,26 @@
     }
   };
 
+  // Mapeo de los 16 bloques de la colección (100 en 100)
+  const BLOCKS_DATA = [
+    { from: 1, to: 100, label: '1-100', count: 100, carId: 1, image: 'images/0001 - Toyota AE86 Sprinter Trueno.png', model: 'Toyota AE86 Sprinter Trueno' },
+    { from: 101, to: 200, label: '101-200', count: 100, carId: 101, image: 'images/0101 - Toyota TS050 Hybrid.png', model: 'Toyota TS050 Hybrid' },
+    { from: 201, to: 300, label: '201-300', count: 100, carId: 218, image: 'images/0218 - Bugatti EB110 SS.png', model: 'Bugatti EB110 SS' },
+    { from: 301, to: 400, label: '301-400', count: 100, carId: 356, image: 'images/0356 - Lancia 037 Rally.png', model: 'Lancia 037 Rally' },
+    { from: 401, to: 500, label: '401-500', count: 100, carId: 425, image: 'images/0425 - Porsche 917.png', model: 'Porsche 917' },
+    { from: 501, to: 600, label: '501-600', count: 100, carId: 523, image: 'images/0523 - Aston Martin Vantage GT8.png', model: 'Aston Martin Vantage GT8' },
+    { from: 601, to: 700, label: '601-700', count: 100, carId: 637, image: 'images/0637 - Alfa Romeo GTV6 3.0.png', model: 'Alfa Romeo GTV6 3.0' },
+    { from: 701, to: 800, label: '701-800', count: 100, carId: 743, image: 'images/0743 - BMW 3.0 CSL.png', model: 'BMW 3.0 CSL' },
+    { from: 801, to: 900, label: '801-900', count: 100, carId: 840, image: 'images/0840 - Super Aguri SA06.png', model: 'Super Aguri SA06' },
+    { from: 901, to: 1000, label: '901-1000', count: 100, carId: 1000, image: 'images/1000 - Porsche 911 RSR.png', model: 'Porsche 911 RSR' },
+    { from: 1001, to: 1100, label: '1001-1100', count: 100, carId: 1002, image: 'images/1002 - Mercedes Blaues Wonder & SL300.png', model: 'Mercedes Blaues Wonder & SL300' },
+    { from: 1101, to: 1200, label: '1101-1200', count: 100, carId: 1148, image: 'images/1148 - Renault Espace F1.png', model: 'Renault Espace F1' },
+    { from: 1201, to: 1300, label: '1201-1300', count: 100, carId: 1203, image: 'images/1203 - Honda Civic STH.png', model: 'Honda Civic STH' },
+    { from: 1301, to: 1400, label: '1301-1400', count: 100, carId: 1301, image: 'images/1301 - Ferrari 250 GTO & Fiat 642 RN2 Bartoletti.png', model: 'Ferrari 250 GTO & Fiat 642 RN2 Bartoletti' },
+    { from: 1401, to: 1500, label: '1401-1500', count: 100, carId: 1425, image: 'images/1425 - Volkswagen Golf R32.png', model: 'Volkswagen Golf R32' },
+    { from: 1501, to: 1522, label: '1501-1522', count: 22, carId: 1522, image: 'images/1522 - BMW M3 GTR.png', model: 'BMW M3 GTR' }
+  ];
+
   // Mapeo visual de los 14 colores de la colección para los indicadores
   const COLOR_PALETTE = {
     'Blanco': '#ffffff',
@@ -96,6 +119,17 @@
     // Pestañas y Navegación
     navBtns: document.querySelectorAll('.nav-btn'),
     tabPanes: document.querySelectorAll('.tab-pane'),
+
+    // Pantalla de Inicio y Bloques de 100
+    inicioBlocksGrid: document.getElementById('inicio-blocks-grid'),
+    btnInicioVerTodos: document.getElementById('btn-inicio-ver-todos'),
+    blockNavBanner: document.getElementById('block-nav-banner'),
+    btnBlockBackInicio: document.getElementById('btn-block-back-inicio'),
+    blockNavTitle: document.getElementById('block-nav-title'),
+    blockNavMeta: document.getElementById('block-nav-meta'),
+    btnBlockPrev: document.getElementById('btn-block-prev'),
+    btnBlockNext: document.getElementById('btn-block-next'),
+    btnBlockClear: document.getElementById('btn-block-clear'),
 
     // Hero KPIs
     statTotalCars: document.getElementById('stat-total-cars'),
@@ -280,6 +314,10 @@
       renderStats();
       applyFiltersAndSort();
       OfflineManager.updateStatus();
+
+      // Inicializar bloques de la pantalla de Inicio
+      initInicioBlocks();
+      initBlockNavEvents();
 
       // Inicializar colecciones especiales (Fast & Furious, Cultura Pop, Motos)
       initSpecialCollections();
@@ -537,6 +575,14 @@
         return false;
       }
 
+      // 7. Filtro por Bloque de coches (1-100, 101-200, etc.)
+      if (state.filters.idFrom !== null && (car.id === null || car.id < state.filters.idFrom)) {
+        return false;
+      }
+      if (state.filters.idTo !== null && (car.id === null || car.id > state.filters.idTo)) {
+        return false;
+      }
+
       return true;
     });
 
@@ -553,6 +599,7 @@
     renderResultsBar();
     renderCatalog();
     renderPagination();
+    updateBlockNavBanner();
     updateFilterBadges();
     syncDecadeChips();
   }
@@ -991,6 +1038,9 @@
       const yTo = f.yearTo || 'Max';
       chips.push({ key: 'year', label: `Años: ${yFrom} - ${yTo}` });
     }
+    if (f.idFrom !== null && f.idTo !== null) {
+      chips.push({ key: 'block', label: `Bloque: ${f.idFrom}-${f.idTo}` });
+    }
 
     chips.forEach(chip => {
       const chipEl = document.createElement('span');
@@ -1036,6 +1086,11 @@
         dom.filterYearFrom.value = '';
         dom.filterYearTo.value = '';
         break;
+      case 'block':
+        state.filters.idFrom = null;
+        state.filters.idTo = null;
+        state.filters.activeBlockIndex = -1;
+        break;
     }
     state.pagination.currentPage = 1;
     applyFiltersAndSort();
@@ -1050,6 +1105,7 @@
     if (f.color) activeCount++;
     if (f.competition !== '') activeCount++;
     if (f.yearFrom || f.yearTo) activeCount++;
+    if (f.idFrom !== null || f.idTo !== null) activeCount++;
 
     if (activeCount > 0) {
       dom.activeFiltersCount.textContent = activeCount;
@@ -1772,8 +1828,17 @@
         switchTab('estadisticas');
       } else if (hash === '#acerca-de') {
         switchTab('acerca-de');
-      } else {
+      } else if (hash === '#coleccion') {
         switchTab('coleccion');
+      } else if (hash.startsWith('#bloque-')) {
+        const bNum = parseInt(hash.replace('#bloque-', ''), 10);
+        if (bNum >= 1 && bNum <= BLOCKS_DATA.length) {
+          openBlock(bNum - 1);
+          return;
+        }
+        switchTab('inicio');
+      } else {
+        switchTab('inicio');
       }
     }
 
@@ -1793,7 +1858,10 @@
       competition: '',
       yearFrom: null,
       yearTo: null,
-      decade: ''
+      decade: '',
+      idFrom: null,
+      idTo: null,
+      activeBlockIndex: -1
     };
 
     dom.searchInput.value = '';
@@ -1813,6 +1881,144 @@
   }
 
   // =========================================================================
+  // GESTIÓN DE BLOQUES DE LA PANTALLA PRINCIPAL (1-100, 101-200, ETC.)
+  // =========================================================================
+  function renderInicioBlocks() {
+    if (!dom.inicioBlocksGrid) return;
+    const fragment = document.createDocumentFragment();
+
+    BLOCKS_DATA.forEach((block, idx) => {
+      const card = document.createElement('article');
+      card.className = 'inicio-block-card';
+      card.setAttribute('role', 'button');
+      card.setAttribute('tabindex', '0');
+      card.setAttribute('aria-label', `Ver coches del bloque ${block.label}`);
+      card.dataset.blockIndex = idx;
+
+      card.innerHTML = `
+        <div class="inicio-block-media">
+          <img src="./${escapeHtml(block.image)}" alt="Coches ${block.label}" class="inicio-block-img" loading="lazy">
+          <span class="inicio-block-badge">#${idx + 1}</span>
+        </div>
+        <div class="inicio-block-info">
+          <span class="inicio-block-range">${block.label}</span>
+          <span class="inicio-block-count">${block.count} coches</span>
+          <span class="inicio-block-car-model">${escapeHtml(block.model)}</span>
+        </div>
+      `;
+
+      const triggerOpen = () => openBlock(idx);
+      card.addEventListener('click', triggerOpen);
+      card.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          triggerOpen();
+        }
+      });
+
+      fragment.appendChild(card);
+    });
+
+    dom.inicioBlocksGrid.innerHTML = '';
+    dom.inicioBlocksGrid.appendChild(fragment);
+  }
+
+  function openBlock(blockIdx) {
+    if (blockIdx < 0 || blockIdx >= BLOCKS_DATA.length) return;
+    const block = BLOCKS_DATA[blockIdx];
+
+    switchTab('coleccion');
+    resetAllFilters(false);
+
+    state.filters.idFrom = block.from;
+    state.filters.idTo = block.to;
+    state.filters.activeBlockIndex = blockIdx;
+
+    state.sortBy = 'id_asc';
+    if (dom.sortSelect) dom.sortSelect.value = 'id_asc';
+    state.pagination.pageSize = 100;
+    if (dom.pageSizeSelect) dom.pageSizeSelect.value = '100';
+    state.pagination.currentPage = 1;
+
+    applyFiltersAndSort();
+    history.replaceState(null, '', `#bloque-${blockIdx + 1}`);
+    scrollToCatalogTop();
+  }
+
+  function updateBlockNavBanner() {
+    if (!dom.blockNavBanner) return;
+    const bIdx = state.filters.activeBlockIndex;
+
+    if (bIdx >= 0 && bIdx < BLOCKS_DATA.length && state.filters.idFrom !== null) {
+      const block = BLOCKS_DATA[bIdx];
+      dom.blockNavBanner.classList.remove('hidden');
+
+      if (dom.blockNavTitle) {
+        dom.blockNavTitle.textContent = `Bloque ${block.label}`;
+      }
+      if (dom.blockNavMeta) {
+        const count = state.filteredCars.length;
+        dom.blockNavMeta.textContent = `${formatNumber(count)} coche${count === 1 ? '' : 's'}`;
+      }
+      if (dom.btnBlockPrev) {
+        dom.btnBlockPrev.disabled = bIdx === 0;
+        dom.btnBlockPrev.classList.toggle('disabled', bIdx === 0);
+      }
+      if (dom.btnBlockNext) {
+        dom.btnBlockNext.disabled = bIdx === BLOCKS_DATA.length - 1;
+        dom.btnBlockNext.classList.toggle('disabled', bIdx === BLOCKS_DATA.length - 1);
+      }
+    } else {
+      dom.blockNavBanner.classList.add('hidden');
+    }
+  }
+
+  function initBlockNavEvents() {
+    if (dom.btnInicioVerTodos) {
+      dom.btnInicioVerTodos.addEventListener('click', () => {
+        switchTab('coleccion');
+        resetAllFilters(true);
+        history.replaceState(null, '', '#coleccion');
+        scrollToCatalogTop();
+      });
+    }
+
+    if (dom.btnBlockBackInicio) {
+      dom.btnBlockBackInicio.addEventListener('click', () => {
+        switchTab('inicio');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
+
+    if (dom.btnBlockPrev) {
+      dom.btnBlockPrev.addEventListener('click', () => {
+        if (state.filters.activeBlockIndex > 0) {
+          openBlock(state.filters.activeBlockIndex - 1);
+        }
+      });
+    }
+
+    if (dom.btnBlockNext) {
+      dom.btnBlockNext.addEventListener('click', () => {
+        if (state.filters.activeBlockIndex < BLOCKS_DATA.length - 1) {
+          openBlock(state.filters.activeBlockIndex + 1);
+        }
+      });
+    }
+
+    if (dom.btnBlockClear) {
+      dom.btnBlockClear.addEventListener('click', () => {
+        state.filters.idFrom = null;
+        state.filters.idTo = null;
+        state.filters.activeBlockIndex = -1;
+        state.pagination.currentPage = 1;
+        applyFiltersAndSort();
+        history.replaceState(null, '', '#coleccion');
+      });
+    }
+  }
+
+  // =========================================================================
   // 16. EVENT LISTENERS
   // =========================================================================
   function initEventListeners() {
@@ -1820,6 +2026,13 @@
     dom.navBtns.forEach(btn => {
       btn.addEventListener('click', () => {
         const tab = btn.getAttribute('data-tab');
+        if (tab === 'coleccion' && state.filters.idFrom !== null) {
+          state.filters.idFrom = null;
+          state.filters.idTo = null;
+          state.filters.activeBlockIndex = -1;
+          state.pagination.currentPage = 1;
+          applyFiltersAndSort();
+        }
         switchTab(tab);
       });
     });

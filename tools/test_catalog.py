@@ -255,8 +255,19 @@ assert 'OfflineManager' in js_content
 assert 'cochecitos-images-v1' in js_content
 print("✔ Soporte PWA, Service Worker, Manifiesto e Iconos Offline verificados")
 
+# 18. Test Pantalla Principal e Índice de Bloques (1-100, 101-200, etc.)
+assert 'id="nav-tab-inicio"' in html_content
+assert 'id="tab-inicio"' in html_content
+assert 'id="block-nav-banner"' in html_content
+assert 'BLOCKS_DATA' in js_content
+assert 'renderInicioBlocks' in js_content
+assert 'openBlock' in js_content
+assert '.inicio-blocks-grid' in css_content
+assert '.inicio-block-card' in css_content
+print("✔ Pantalla principal con índice de 16 bloques y navegación verificados")
+
 print("==================================================")
-print(" ¡TODAS LAS PRUEBAS AUTOMATIZADAS PASARON (17/17)!")
+print(" ¡TODAS LAS PRUEBAS AUTOMATIZADAS PASARON (18/18)!")
 print("==================================================")
 
 
