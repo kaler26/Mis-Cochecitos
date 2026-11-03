@@ -2877,6 +2877,7 @@ a {
   display: flex;
   flex-direction: column;
   position: relative;
+  min-height: 200px;
   transition: transform var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base);
   user-select: none;
   -webkit-tap-highlight-color: transparent;
@@ -2898,6 +2899,7 @@ a {
   position: relative;
   width: 100%;
   aspect-ratio: 1 / 1;
+  min-height: 140px;
   background: radial-gradient(circle at center, rgba(255, 255, 255, 0.04) 0%, rgba(0, 0, 0, 0.4) 100%);
   display: flex;
   align-items: center;

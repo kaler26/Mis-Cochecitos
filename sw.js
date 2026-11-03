@@ -1,5 +1,5 @@
 // Service Worker para MIS COCHECITOS (PWA Offline)
-const CACHE_STATIC = 'cochecitos-static-v3.3';
+const CACHE_STATIC = 'cochecitos-static-v3.4';
 const CACHE_IMAGES = 'cochecitos-images-v1';
 
 const STATIC_ASSETS = [
@@ -48,7 +48,33 @@ self.addEventListener('fetch', (event) => {
 
   const url = new URL(request.url);
 
-  // Manejo de Fotografías (Cache-First + Guardado en memoria privada)
+  // 1. Manejo de páginas HTML / Navegación: Network-First (online siempre carga la última versión)
+  const isHtml = request.mode === 'navigate' || 
+                 (request.headers.get('accept') && request.headers.get('accept').includes('text/html')) ||
+                 url.pathname.endsWith('.html') ||
+                 url.pathname.endsWith('/');
+
+  if (isHtml) {
+    event.respondWith(
+      fetch(request)
+        .then((networkResponse) => {
+          if (networkResponse && networkResponse.status === 200) {
+            const copy = networkResponse.clone();
+            caches.open(CACHE_STATIC).then((cache) => cache.put(request, copy));
+          }
+          return networkResponse;
+        })
+        .catch(async () => {
+          const cached = await caches.match(request);
+          if (cached) return cached;
+          const fallback = await caches.match('./index.html');
+          return fallback || caches.match('./');
+        })
+    );
+    return;
+  }
+
+  // 2. Manejo de Fotografías (Cache-First + Guardado en memoria privada)
   const isImage = url.pathname.includes('/images/') || 
                   url.pathname.endsWith('.png') || 
                   url.pathname.endsWith('.jpg') || 
@@ -82,7 +108,7 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Manejo de Código, Estilos y Base de Datos (Stale-While-Revalidate)
+  // 3. Manejo de Código, Estilos y Base de Datos (Stale-While-Revalidate)
   event.respondWith(
     caches.open(CACHE_STATIC).then(async (cache) => {
       const cachedResponse = await cache.match(request);

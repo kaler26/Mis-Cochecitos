@@ -1919,7 +1919,7 @@
 
       card.innerHTML = `
         <div class="inicio-block-media">
-          <img src="./${escapeHtml(block.image)}" alt="Coches ${block.label}" class="inicio-block-img" loading="lazy">
+          <img src="./${escapeHtml(block.image)}" alt="Coches ${block.label}" class="inicio-block-img">
           <span class="inicio-block-badge">#${idx + 1}</span>
         </div>
         <div class="inicio-block-info">
@@ -2512,9 +2512,18 @@
           navigator.serviceWorker.register('./sw.js')
             .then(reg => {
               console.log('Service Worker registrado:', reg.scope);
+              reg.update();
               updateStatus();
             })
             .catch(err => console.warn('Service Worker no registrado:', err));
+        });
+
+        let refreshing = false;
+        navigator.serviceWorker.addEventListener('controllerchange', () => {
+          if (!refreshing) {
+            refreshing = true;
+            window.location.reload();
+          }
         });
       }
 
