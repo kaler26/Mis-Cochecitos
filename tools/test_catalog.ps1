@@ -149,7 +149,7 @@ if (-not ($htmlContent.Contains('rel="manifest"') -and $htmlContent.Contains('id
 Write-Host "[OK] Soporte PWA, Service Worker, Manifiesto e Iconos Offline verificados" -ForegroundColor Green
 
 # 8. Test Pantalla Principal e Indice de Bloques (1-100, 101-200, etc.)
-if (-not ($htmlContent.Contains('id="nav-tab-inicio"') -and $htmlContent.Contains('id="tab-inicio"') -and $htmlContent.Contains('id="block-nav-banner"'))) {
+if (-not ($htmlContent.Contains('id="nav-tab-inicio"') -and $htmlContent.Contains('id="tab-inicio"') -and $htmlContent.Contains('id="block-nav-banner"')) -or $htmlContent.Contains('class="inicio-hero"')) {
     Write-Host "[ERROR] Faltan componentes de pantalla de Inicio en index.html" -ForegroundColor Red
     exit 1
 }

@@ -122,7 +122,6 @@
 
     // Pantalla de Inicio y Bloques de 100
     inicioBlocksGrid: document.getElementById('inicio-blocks-grid'),
-    btnInicioVerTodos: document.getElementById('btn-inicio-ver-todos'),
     blockNavBanner: document.getElementById('block-nav-banner'),
     btnBlockBackInicio: document.getElementById('btn-block-back-inicio'),
     blockNavTitle: document.getElementById('block-nav-title'),
@@ -1993,15 +1992,6 @@
   }
 
   function initBlockNavEvents() {
-    if (dom.btnInicioVerTodos) {
-      dom.btnInicioVerTodos.addEventListener('click', () => {
-        switchTab('coleccion');
-        resetAllFilters(true);
-        history.replaceState(null, '', '#coleccion');
-        scrollToCatalogTop();
-      });
-    }
-
     if (dom.btnBlockBackInicio) {
       dom.btnBlockBackInicio.addEventListener('click', () => {
         switchTab('inicio');

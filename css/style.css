@@ -2772,67 +2772,6 @@ a {
 /* ==========================================================================
    SECCIÓN INICIO: ÍNDICE VISUAL POR BLOQUES (1-100, 101-200, ETC.)
    ========================================================================== */
-.inicio-hero {
-  background: linear-gradient(180deg, var(--bg-surface) 0%, rgba(20, 23, 29, 0.4) 100%);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-lg);
-  padding: 2.25rem 1.5rem;
-  margin-bottom: 2rem;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-}
-
-.inicio-hero::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, #ff3344, #3b82f6, #ff3344);
-}
-
-.inicio-hero-container {
-  max-width: 720px;
-  margin: 0 auto;
-}
-
-.inicio-hero-badge {
-  display: inline-block;
-  font-size: 0.76rem;
-  font-weight: 800;
-  letter-spacing: 0.8px;
-  text-transform: uppercase;
-  color: #ff5263;
-  background: rgba(255, 51, 68, 0.12);
-  border: 1px solid rgba(255, 51, 68, 0.35);
-  padding: 0.3rem 0.85rem;
-  border-radius: var(--radius-full);
-  margin-bottom: 0.85rem;
-}
-
-.inicio-hero-title {
-  font-size: 2.25rem;
-  font-weight: 900;
-  letter-spacing: -0.5px;
-  color: var(--text-primary);
-  margin-bottom: 0.5rem;
-}
-
-.inicio-hero-desc {
-  font-size: 1rem;
-  color: var(--text-secondary);
-  line-height: 1.5;
-  margin-bottom: 1.35rem;
-}
-
-.inicio-hero-actions {
-  display: flex;
-  justify-content: center;
-  gap: 0.75rem;
-}
-
 /* Cuadrícula de Bloques */
 .inicio-blocks-section {
   margin-bottom: 3rem;
@@ -2855,15 +2794,6 @@ a {
   .inicio-blocks-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 0.85rem;
-  }
-
-  .inicio-hero {
-    padding: 1.75rem 1rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .inicio-hero-title {
-    font-size: 1.7rem;
   }
 }
 

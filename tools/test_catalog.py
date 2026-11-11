@@ -258,6 +258,7 @@ print("✔ Soporte PWA, Service Worker, Manifiesto e Iconos Offline verificados"
 # 18. Test Pantalla Principal e Índice de Bloques (1-100, 101-200, etc.)
 assert 'id="nav-tab-inicio"' in html_content
 assert 'id="tab-inicio"' in html_content
+assert 'class="inicio-hero"' not in html_content
 assert 'id="block-nav-banner"' in html_content
 assert 'BLOCKS_DATA' in js_content
 assert 'renderInicioBlocks' in js_content
