@@ -1964,67 +1964,69 @@
   }
 
   function updateBlockNavBanner() {
-    if (!dom.blockNavBanner) return;
+    const banners = document.querySelectorAll('.block-nav-banner');
+    if (!banners.length) return;
     const bIdx = state.filters.activeBlockIndex;
 
     if (bIdx >= 0 && bIdx < BLOCKS_DATA.length && state.filters.idFrom !== null) {
       const block = BLOCKS_DATA[bIdx];
-      dom.blockNavBanner.classList.remove('hidden');
+      const count = state.filteredCars.length;
+      const titleText = `Bloque ${block.label}`;
+      const metaText = `${formatNumber(count)} coche${count === 1 ? '' : 's'}`;
 
-      if (dom.blockNavTitle) {
-        dom.blockNavTitle.textContent = `Bloque ${block.label}`;
-      }
-      if (dom.blockNavMeta) {
-        const count = state.filteredCars.length;
-        dom.blockNavMeta.textContent = `${formatNumber(count)} coche${count === 1 ? '' : 's'}`;
-      }
-      if (dom.btnBlockPrev) {
-        dom.btnBlockPrev.disabled = bIdx === 0;
-        dom.btnBlockPrev.classList.toggle('disabled', bIdx === 0);
-      }
-      if (dom.btnBlockNext) {
-        dom.btnBlockNext.disabled = bIdx === BLOCKS_DATA.length - 1;
-        dom.btnBlockNext.classList.toggle('disabled', bIdx === BLOCKS_DATA.length - 1);
-      }
+      banners.forEach(b => b.classList.remove('hidden'));
+
+      document.querySelectorAll('.block-nav-title').forEach(el => el.textContent = titleText);
+      document.querySelectorAll('.block-nav-meta').forEach(el => el.textContent = metaText);
+
+      document.querySelectorAll('.btn-block-prev').forEach(btn => {
+        btn.disabled = bIdx === 0;
+        btn.classList.toggle('disabled', bIdx === 0);
+      });
+      document.querySelectorAll('.btn-block-next').forEach(btn => {
+        btn.disabled = bIdx === BLOCKS_DATA.length - 1;
+        btn.classList.toggle('disabled', bIdx === BLOCKS_DATA.length - 1);
+      });
     } else {
-      dom.blockNavBanner.classList.add('hidden');
+      banners.forEach(b => b.classList.add('hidden'));
     }
   }
 
   function initBlockNavEvents() {
-    if (dom.btnBlockBackInicio) {
-      dom.btnBlockBackInicio.addEventListener('click', () => {
+    document.querySelectorAll('.btn-block-back-inicio').forEach(btn => {
+      btn.addEventListener('click', () => {
         switchTab('inicio');
         window.scrollTo({ top: 0, behavior: 'smooth' });
       });
-    }
+    });
 
-    if (dom.btnBlockPrev) {
-      dom.btnBlockPrev.addEventListener('click', () => {
+    document.querySelectorAll('.btn-block-prev').forEach(btn => {
+      btn.addEventListener('click', () => {
         if (state.filters.activeBlockIndex > 0) {
           openBlock(state.filters.activeBlockIndex - 1);
         }
       });
-    }
+    });
 
-    if (dom.btnBlockNext) {
-      dom.btnBlockNext.addEventListener('click', () => {
+    document.querySelectorAll('.btn-block-next').forEach(btn => {
+      btn.addEventListener('click', () => {
         if (state.filters.activeBlockIndex < BLOCKS_DATA.length - 1) {
           openBlock(state.filters.activeBlockIndex + 1);
         }
       });
-    }
+    });
 
-    if (dom.btnBlockClear) {
-      dom.btnBlockClear.addEventListener('click', () => {
+    document.querySelectorAll('.btn-block-clear').forEach(btn => {
+      btn.addEventListener('click', () => {
         state.filters.idFrom = null;
         state.filters.idTo = null;
         state.filters.activeBlockIndex = -1;
         state.pagination.currentPage = 1;
         applyFiltersAndSort();
         history.replaceState(null, '', '#coleccion');
+        scrollToCatalogTop();
       });
-    }
+    });
   }
 
   // =========================================================================

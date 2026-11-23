@@ -21,7 +21,7 @@
     })();
   </script>
   <link rel="icon" type="image/png" href="./images/logo.png">
-  <link rel="stylesheet" href="./css/style.css?v=4.0">
+  <link rel="stylesheet" href="./css/style.css?v=4.1">
   <!-- Soporte PWA (Progressive Web App) y Modo Offline -->
   <link rel="manifest" href="./manifest.json">
   <meta name="mobile-web-app-capable" content="yes">
@@ -312,7 +312,7 @@
       <!-- BANNER DE NAVEGACIÓN ENTRE BLOQUES (Visible al entrar en un bloque de 100) -->
       <div id="block-nav-banner" class="block-nav-banner hidden" aria-label="Navegación de bloque activo">
         <div class="block-nav-left">
-          <button type="button" id="btn-block-back-inicio" class="btn btn-secondary btn-sm">
+          <button type="button" id="btn-block-back-inicio" class="btn btn-secondary btn-sm btn-block-back-inicio">
             <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <line x1="19" y1="12" x2="5" y2="12"></line>
               <polyline points="12 19 5 12 12 5"></polyline>
@@ -325,13 +325,13 @@
           <span class="block-nav-meta" id="block-nav-meta">100 coches</span>
         </div>
         <div class="block-nav-right">
-          <button type="button" id="btn-block-prev" class="btn btn-secondary btn-sm" aria-label="Bloque anterior">
+          <button type="button" id="btn-block-prev" class="btn btn-secondary btn-sm btn-block-prev" aria-label="Bloque anterior">
             ← Anterior
           </button>
-          <button type="button" id="btn-block-next" class="btn btn-secondary btn-sm" aria-label="Bloque siguiente">
+          <button type="button" id="btn-block-next" class="btn btn-secondary btn-sm btn-block-next" aria-label="Bloque siguiente">
             Siguiente →
           </button>
-          <button type="button" id="btn-block-clear" class="btn btn-ghost btn-sm" title="Ver toda la colección sin filtro de bloque">
+          <button type="button" id="btn-block-clear" class="btn btn-ghost btn-sm btn-block-clear" title="Ver toda la colección sin filtro de bloque">
             Ver todos
           </button>
         </div>
@@ -539,6 +539,34 @@
         <nav id="pagination" class="pagination-nav" aria-label="Navegación de páginas">
           <!-- Renderizado dinámicamente por app.js -->
         </nav>
+
+        <!-- BANNER INFERIOR DE NAVEGACIÓN ENTRE BLOQUES -->
+        <div id="block-nav-banner-bottom" class="block-nav-banner block-nav-banner-bottom hidden" aria-label="Navegación inferior de bloque activo">
+          <div class="block-nav-left">
+            <button type="button" id="btn-block-bottom-back-inicio" class="btn btn-secondary btn-sm btn-block-back-inicio">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+              </svg>
+              <span>Volver a Inicio</span>
+            </button>
+          </div>
+          <div class="block-nav-center">
+            <span class="block-nav-title" id="block-nav-bottom-title">Bloque 1-100</span>
+            <span class="block-nav-meta" id="block-nav-bottom-meta">100 coches</span>
+          </div>
+          <div class="block-nav-right">
+            <button type="button" id="btn-block-bottom-prev" class="btn btn-secondary btn-sm btn-block-prev" aria-label="Bloque anterior">
+              ← Anterior
+            </button>
+            <button type="button" id="btn-block-bottom-next" class="btn btn-secondary btn-sm btn-block-next" aria-label="Bloque siguiente">
+              Siguiente →
+            </button>
+            <button type="button" id="btn-block-bottom-clear" class="btn btn-ghost btn-sm btn-block-clear" title="Ver toda la colección sin filtro de bloque">
+              Ver todos
+            </button>
+          </div>
+        </div>
       </section>
 
     </section>
@@ -1177,7 +1205,7 @@
   <script src="./data/cars.js"></script>
   <script src="./data/special_collections.js"></script>
 
-  <!-- SCRIPT PRINCIPAL (v=4.0 para evitar que el navegador use caché antigua) -->
-  <script src="./js/app.js?v=4.0"></script>
+  <!-- SCRIPT PRINCIPAL (v=4.1 para evitar que el navegador use caché antigua) -->
+  <script src="./js/app.js?v=4.1"></script>
 </body>
 </html>

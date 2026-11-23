@@ -864,7 +864,7 @@ a {
 .car-model-name {
   font-size: 0.95rem;
   font-weight: 700;
-  color: #ffffff;
+  color: var(--text-primary);
   line-height: 1.25;
   margin: 0.2rem 0 0.45rem 0;
   display: -webkit-box;
@@ -3192,7 +3192,7 @@ a {
   background: radial-gradient(ellipse at 50% 65%, #ffffff 0%, #e2e8f0 85%);
 }
 
-[data-theme="light"] .car-model {
+[data-theme="light"] .car-model-name {
   color: var(--text-primary);
 }
 
@@ -3372,4 +3372,9 @@ a {
 
 [data-theme="light"] .cars-grid.compact-list-mode .car-card:hover {
   background-color: var(--bg-surface-hover);
+}
+
+.block-nav-banner-bottom {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
 }
