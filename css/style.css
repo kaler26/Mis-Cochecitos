@@ -3039,3 +3039,337 @@ a {
   }
 }
 
+
+/* ==========================================================================
+   17. TEMA CLARO (LIGHT THEME)
+   ========================================================================== */
+[data-theme="light"] {
+  /* Paleta Light Theme */
+  --bg-main: #f0f2f5;
+  --bg-surface: #ffffff;
+  --bg-surface-elevated: #f8f9fa;
+  --bg-surface-hover: #e9ecef;
+  --bg-input: #ffffff;
+  --bg-modal-backdrop: rgba(15, 23, 42, 0.65);
+
+  /* Bordes y separadores */
+  --border-subtle: #e2e8f0;
+  --border-highlight: #cbd5e1;
+  --border-focus: #ff3344;
+
+  /* Tipografía y textos */
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+  --text-inverse: #ffffff;
+
+  /* Color de Acento */
+  --accent: #d90429;
+  --accent-hover: #ef233c;
+  --accent-soft: rgba(217, 4, 41, 0.08);
+  --accent-glow: rgba(217, 4, 41, 0.2);
+
+  /* Acentos de insignias para fondos claros */
+  --badge-competition-bg: #fee2e2;
+  --badge-competition-text: #b91c1c;
+  --badge-competition-border: #fca5a5;
+
+  --badge-street-bg: #dbeafe;
+  --badge-street-text: #1d4ed8;
+  --badge-street-border: #93c5fd;
+
+  /* Sombras */
+  --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-card-hover: 0 10px 25px rgba(0, 0, 0, 0.12), 0 0 14px rgba(217, 4, 41, 0.15);
+  --shadow-modal: 0 20px 45px rgba(0, 0, 0, 0.25);
+}
+
+/* Iconos del botón de cambio de tema */
+.theme-icon-moon {
+  display: none;
+}
+.theme-icon-sun {
+  display: inline-block;
+}
+[data-theme="light"] .theme-icon-sun {
+  display: none;
+}
+[data-theme="light"] .theme-icon-moon {
+  display: inline-block;
+}
+
+.nav-btn-theme {
+  border-color: rgba(251, 191, 36, 0.35);
+  color: #fbbf24;
+}
+
+.nav-btn-theme:hover {
+  background-color: rgba(251, 191, 36, 0.12);
+  border-color: #fbbf24;
+  color: #fde68a;
+}
+
+[data-theme="light"] .nav-btn-theme {
+  border-color: rgba(99, 102, 241, 0.35);
+  color: #6366f1;
+}
+
+[data-theme="light"] .nav-btn-theme:hover {
+  background-color: rgba(99, 102, 241, 0.12);
+  border-color: #6366f1;
+  color: #4f46e5;
+}
+
+/* Ajustes específicos de tema claro */
+[data-theme="light"] .site-header {
+  background-color: rgba(255, 255, 255, 0.95);
+  border-bottom-color: var(--border-subtle);
+}
+
+[data-theme="light"] .brand-title {
+  color: var(--text-primary);
+}
+
+[data-theme="light"] .brand-logo-wrap {
+  background-color: #ffffff;
+  border-color: var(--border-subtle);
+}
+
+[data-theme="light"] .nav-btn {
+  color: var(--text-secondary);
+}
+
+[data-theme="light"] .nav-btn:hover {
+  color: var(--text-primary);
+  background-color: var(--bg-surface-hover);
+}
+
+[data-theme="light"] .nav-btn.active {
+  color: #ffffff;
+  background-color: var(--accent);
+}
+
+[data-theme="light"] .collection-summary {
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  border-color: var(--border-subtle);
+  box-shadow: var(--shadow-card);
+}
+
+[data-theme="light"] .stat-number {
+  color: var(--text-primary);
+}
+
+[data-theme="light"] .stat-val {
+  color: var(--text-primary);
+}
+
+[data-theme="light"] .search-input {
+  background-color: #ffffff;
+  border-color: var(--border-subtle);
+  color: var(--text-primary);
+}
+
+[data-theme="light"] .search-input:focus {
+  background-color: #ffffff;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+[data-theme="light"] .filter-select,
+[data-theme="light"] .year-input {
+  background-color: #ffffff;
+  border-color: var(--border-subtle);
+  color: var(--text-primary);
+}
+
+[data-theme="light"] .car-card {
+  background-color: var(--bg-surface);
+  border-color: var(--border-subtle);
+  box-shadow: var(--shadow-card);
+}
+
+[data-theme="light"] .car-card-media {
+  background: radial-gradient(ellipse at 50% 65%, #ffffff 0%, #e2e8f0 85%);
+}
+
+[data-theme="light"] .car-model {
+  color: var(--text-primary);
+}
+
+[data-theme="light"] .car-card-id {
+  background-color: rgba(255, 255, 255, 0.88);
+  border-color: var(--border-subtle);
+  color: var(--text-primary);
+}
+
+[data-theme="light"] .inicio-block-card {
+  background-color: var(--bg-surface);
+  border-color: var(--border-subtle);
+  box-shadow: var(--shadow-card);
+}
+
+[data-theme="light"] .inicio-block-media {
+  background: radial-gradient(circle at center, #ffffff 0%, #e2e8f0 100%);
+}
+
+[data-theme="light"] .inicio-block-info {
+  background: rgba(248, 250, 252, 0.95);
+  border-top-color: var(--border-subtle);
+}
+
+[data-theme="light"] .inicio-block-range {
+  color: var(--text-primary);
+}
+
+[data-theme="light"] .block-nav-banner {
+  background: linear-gradient(90deg, rgba(255, 51, 68, 0.08) 0%, #ffffff 50%, rgba(59, 130, 246, 0.08) 100%);
+  border-color: rgba(255, 51, 68, 0.25);
+  box-shadow: var(--shadow-card);
+}
+
+[data-theme="light"] .block-nav-title {
+  color: var(--text-primary);
+}
+
+[data-theme="light"] .decade-chip {
+  background-color: #ffffff;
+  border-color: var(--border-subtle);
+  color: var(--text-secondary);
+}
+
+[data-theme="light"] .decade-chip:hover {
+  background-color: var(--bg-surface-hover);
+  color: var(--text-primary);
+}
+
+[data-theme="light"] .decade-chip.active {
+  color: var(--accent);
+  background-color: var(--accent-soft);
+  border-color: var(--accent);
+  box-shadow: 0 0 8px rgba(217, 4, 41, 0.2);
+}
+
+[data-theme="light"] .page-btn {
+  background-color: #ffffff;
+  border-color: var(--border-subtle);
+  color: var(--text-primary);
+}
+
+[data-theme="light"] .page-btn.active {
+  background-color: var(--accent);
+  color: #ffffff;
+  border-color: var(--accent);
+}
+
+[data-theme="light"] .modal-card {
+  background-color: var(--bg-surface);
+  border-color: var(--border-subtle);
+  box-shadow: var(--shadow-modal);
+}
+
+[data-theme="light"] .modal-image-col {
+  background: radial-gradient(ellipse at 50% 60%, #ffffff 0%, #e2e8f0 85%);
+  border-right-color: var(--border-subtle);
+}
+
+[data-theme="light"] .modal-model-title {
+  color: var(--text-primary);
+}
+
+[data-theme="light"] .modal-image-badge,
+[data-theme="light"] .modal-zoom-hint {
+  background-color: rgba(255, 255, 255, 0.9);
+  border-color: var(--border-subtle);
+  color: var(--text-primary);
+}
+
+[data-theme="light"] .spec-row {
+  border-bottom-color: var(--border-subtle);
+}
+
+[data-theme="light"] .spec-value {
+  color: var(--text-primary);
+}
+
+[data-theme="light"] .chart-card {
+  background-color: var(--bg-surface);
+  border-color: var(--border-subtle);
+  box-shadow: var(--shadow-card);
+}
+
+[data-theme="light"] .chart-title {
+  color: var(--text-primary);
+}
+
+[data-theme="light"] .bar-track {
+  background-color: #e2e8f0;
+}
+
+[data-theme="light"] .hero-ff {
+  background: linear-gradient(135deg, rgba(234, 88, 12, 0.12) 0%, rgba(255, 255, 255, 0.95) 100%);
+  border-color: rgba(234, 88, 12, 0.25);
+}
+
+[data-theme="light"] .hero-pop {
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.12) 0%, rgba(255, 255, 255, 0.95) 100%);
+  border-color: rgba(168, 85, 247, 0.25);
+}
+
+[data-theme="light"] .hero-motos {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.12) 0%, rgba(255, 255, 255, 0.95) 100%);
+  border-color: rgba(16, 185, 129, 0.25);
+}
+
+[data-theme="light"] .special-hero-title {
+  color: var(--text-primary);
+}
+
+[data-theme="light"] .btn-secondary {
+  background-color: #ffffff;
+  border-color: var(--border-subtle);
+  color: var(--text-primary);
+}
+
+[data-theme="light"] .btn-secondary:hover:not(:disabled) {
+  background-color: var(--bg-surface-hover);
+  border-color: var(--border-highlight);
+  color: var(--text-primary);
+}
+
+[data-theme="light"] .btn-ghost {
+  background-color: transparent;
+  border-color: var(--border-subtle);
+  color: var(--text-primary);
+}
+
+[data-theme="light"] .btn-ghost:hover:not(:disabled) {
+  background-color: var(--bg-surface-hover);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+[data-theme="light"] .view-mode-btn {
+  background-color: #ffffff;
+  border-color: var(--border-subtle);
+  color: var(--text-secondary);
+}
+
+[data-theme="light"] .view-mode-btn:hover {
+  background-color: var(--bg-surface-hover);
+  color: var(--text-primary);
+}
+
+[data-theme="light"] .view-mode-btn.active {
+  background-color: var(--accent);
+  color: #ffffff;
+  border-color: var(--accent);
+}
+
+[data-theme="light"] .cars-grid.compact-list-mode .car-card {
+  background-color: #ffffff;
+  border-color: var(--border-subtle);
+}
+
+[data-theme="light"] .cars-grid.compact-list-mode .car-card:hover {
+  background-color: var(--bg-surface-hover);
+}

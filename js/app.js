@@ -2566,9 +2566,42 @@
   })();
 
   // =========================================================================
-  // 17. ARRANQUE
+  // 17. GESTIÓN DEL TEMA (OSCURO / CLARO)
+  // =========================================================================
+  function initTheme() {
+    const btn = document.getElementById('nav-btn-theme');
+    const textEl = document.getElementById('theme-btn-text');
+
+    function syncUI() {
+      const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+      if (textEl) textEl.textContent = isLight ? 'Oscuro' : 'Claro';
+      if (btn) btn.setAttribute('title', isLight ? 'Cambiar a tema oscuro' : 'Cambiar a tema claro');
+    }
+
+    syncUI();
+
+    if (btn) {
+      btn.addEventListener('click', () => {
+        const current = document.documentElement.getAttribute('data-theme');
+        const next = current === 'light' ? 'dark' : 'light';
+        if (next === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+        } else {
+          document.documentElement.removeAttribute('data-theme');
+        }
+        try {
+          localStorage.setItem('cochecitos-theme', next);
+        } catch (e) {}
+        syncUI();
+      });
+    }
+  }
+
+  // =========================================================================
+  // 18. ARRANQUE
   // =========================================================================
   document.addEventListener('DOMContentLoaded', () => {
+    initTheme();
     initEventListeners();
     loadData();
   });
