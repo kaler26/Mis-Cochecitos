@@ -1,24 +1,27 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
   <meta name="description" content="Catálogo y colección personal de coches a escala en miniatura.">
-  <meta name="theme-color" content="#0d0f12">
+  <meta name="theme-color" content="#f0f2f5" id="meta-theme-color">
   <title>MIS COCHECITOS · Coches a Escala</title>
   
-  <!-- Detección inmediata de tema guardado (evita parpadeo) -->
+  <!-- Detección inmediata de tema (Claro por defecto) -->
   <script>
     (function() {
       try {
-        if (localStorage.getItem('cochecitos-theme') === 'light') {
+        var t = localStorage.getItem('cochecitos-theme');
+        if (t === 'dark') {
+          document.documentElement.removeAttribute('data-theme');
+        } else {
           document.documentElement.setAttribute('data-theme', 'light');
         }
       } catch (e) {}
     })();
   </script>
   <link rel="icon" type="image/png" href="./images/logo.png">
-  <link rel="stylesheet" href="./css/style.css?v=3.9">
+  <link rel="stylesheet" href="./css/style.css?v=4.0">
   <!-- Soporte PWA (Progressive Web App) y Modo Offline -->
   <link rel="manifest" href="./manifest.json">
   <meta name="mobile-web-app-capable" content="yes">
@@ -105,7 +108,7 @@
           </svg>
           <span>Offline</span>
         </button>
-        <button type="button" class="nav-btn nav-btn-theme" id="nav-btn-theme" aria-label="Cambiar tema de color" title="Cambiar a tema claro">
+        <button type="button" class="nav-btn nav-btn-theme" id="nav-btn-theme" aria-label="Cambiar tema de color" title="Cambiar a tema oscuro">
           <svg class="nav-icon theme-icon-sun" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="5"></circle>
             <line x1="12" y1="1" x2="12" y2="3"></line>
@@ -120,7 +123,7 @@
           <svg class="nav-icon theme-icon-moon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
           </svg>
-          <span id="theme-btn-text">Claro</span>
+          <span id="theme-btn-text">Oscuro</span>
         </button>
       </nav>
     </div>
@@ -1174,7 +1177,7 @@
   <script src="./data/cars.js"></script>
   <script src="./data/special_collections.js"></script>
 
-  <!-- SCRIPT PRINCIPAL (v=3.9 para evitar que el navegador use caché antigua) -->
-  <script src="./js/app.js?v=3.9"></script>
+  <!-- SCRIPT PRINCIPAL (v=4.0 para evitar que el navegador use caché antigua) -->
+  <script src="./js/app.js?v=4.0"></script>
 </body>
 </html>

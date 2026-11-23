@@ -2571,11 +2571,21 @@
   function initTheme() {
     const btn = document.getElementById('nav-btn-theme');
     const textEl = document.getElementById('theme-btn-text');
+    const metaTheme = document.getElementById('meta-theme-color') || document.querySelector('meta[name="theme-color"]');
 
     function syncUI() {
       const isLight = document.documentElement.getAttribute('data-theme') === 'light';
       if (textEl) textEl.textContent = isLight ? 'Oscuro' : 'Claro';
       if (btn) btn.setAttribute('title', isLight ? 'Cambiar a tema oscuro' : 'Cambiar a tema claro');
+      if (metaTheme) metaTheme.setAttribute('content', isLight ? '#f0f2f5' : '#0d0f12');
+    }
+
+    // Por defecto es 'light', a menos que se haya guardado explícitamente 'dark'
+    const saved = localStorage.getItem('cochecitos-theme');
+    if (saved === 'dark') {
+      document.documentElement.removeAttribute('data-theme');
+    } else {
+      document.documentElement.setAttribute('data-theme', 'light');
     }
 
     syncUI();
