@@ -3044,17 +3044,17 @@ a {
    17. TEMA CLARO (LIGHT THEME)
    ========================================================================== */
 [data-theme="light"] {
-  /* Paleta Light Theme */
-  --bg-main: #f0f2f5;
-  --bg-surface: #ffffff;
-  --bg-surface-elevated: #f8f9fa;
-  --bg-surface-hover: #e9ecef;
+  /* Paleta Light Theme: Fichas gris claro y fondo de coches blanco */
+  --bg-main: #f8fafc;
+  --bg-surface: #f1f4f8;
+  --bg-surface-elevated: #e2e8f0;
+  --bg-surface-hover: #e2e8f0;
   --bg-input: #ffffff;
   --bg-modal-backdrop: rgba(15, 23, 42, 0.65);
 
   /* Bordes y separadores */
-  --border-subtle: #e2e8f0;
-  --border-highlight: #cbd5e1;
+  --border-subtle: #cbd5e1;
+  --border-highlight: #94a3b8;
   --border-focus: #ff3344;
 
   /* Tipografía y textos */
@@ -3185,11 +3185,12 @@ a {
 [data-theme="light"] .car-card {
   background-color: var(--bg-surface);
   border-color: var(--border-subtle);
-  box-shadow: var(--shadow-card);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 [data-theme="light"] .car-card-media {
-  background: radial-gradient(ellipse at 50% 65%, #ffffff 0%, #e2e8f0 85%);
+  background: #ffffff;
+  border-bottom: 1px solid var(--border-subtle);
 }
 
 [data-theme="light"] .car-model-name {
@@ -3197,7 +3198,7 @@ a {
 }
 
 [data-theme="light"] .car-card-id {
-  background-color: rgba(255, 255, 255, 0.88);
+  background-color: rgba(255, 255, 255, 0.92);
   border-color: var(--border-subtle);
   color: var(--text-primary);
 }
@@ -3205,15 +3206,16 @@ a {
 [data-theme="light"] .inicio-block-card {
   background-color: var(--bg-surface);
   border-color: var(--border-subtle);
-  box-shadow: var(--shadow-card);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 [data-theme="light"] .inicio-block-media {
-  background: radial-gradient(circle at center, #ffffff 0%, #e2e8f0 100%);
+  background: #ffffff;
+  border-bottom: 1px solid var(--border-subtle);
 }
 
 [data-theme="light"] .inicio-block-info {
-  background: rgba(248, 250, 252, 0.95);
+  background: var(--bg-surface);
   border-top-color: var(--border-subtle);
 }
 
@@ -3268,7 +3270,7 @@ a {
 }
 
 [data-theme="light"] .modal-image-col {
-  background: radial-gradient(ellipse at 50% 60%, #ffffff 0%, #e2e8f0 85%);
+  background: #ffffff;
   border-right-color: var(--border-subtle);
 }
 
@@ -3366,12 +3368,18 @@ a {
 }
 
 [data-theme="light"] .cars-grid.compact-list-mode .car-card {
-  background-color: #ffffff;
+  background-color: var(--bg-surface);
   border-color: var(--border-subtle);
 }
 
 [data-theme="light"] .cars-grid.compact-list-mode .car-card:hover {
   background-color: var(--bg-surface-hover);
+}
+
+[data-theme="light"] .cars-grid.compact-list-mode .car-card-media {
+  background: #ffffff;
+  border-bottom: none;
+  border-right: 1px solid var(--border-subtle);
 }
 
 .block-nav-banner-bottom {

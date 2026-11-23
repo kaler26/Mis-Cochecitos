@@ -2579,7 +2579,7 @@
       const isLight = document.documentElement.getAttribute('data-theme') === 'light';
       if (textEl) textEl.textContent = isLight ? 'Oscuro' : 'Claro';
       if (btn) btn.setAttribute('title', isLight ? 'Cambiar a tema oscuro' : 'Cambiar a tema claro');
-      if (metaTheme) metaTheme.setAttribute('content', isLight ? '#f0f2f5' : '#0d0f12');
+      if (metaTheme) metaTheme.setAttribute('content', isLight ? '#f8fafc' : '#0d0f12');
     }
 
     // Por defecto es 'light', a menos que se haya guardado explícitamente 'dark'
