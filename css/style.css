@@ -518,8 +518,17 @@ a {
   font-size: 0.85rem;
   font-weight: 600;
   cursor: pointer;
+  background-color: var(--bg-surface-elevated);
+  color: var(--text-primary);
   border: 1px solid transparent;
   transition: all var(--transition-fast);
+}
+
+.btn:disabled,
+.btn.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
 }
 
 .btn-secondary {
@@ -528,7 +537,7 @@ a {
   color: var(--text-secondary);
 }
 
-.btn-secondary:hover {
+.btn-secondary:hover:not(:disabled) {
   background-color: var(--bg-surface-hover);
   border-color: var(--border-highlight);
   color: #ffffff;
@@ -536,12 +545,38 @@ a {
 
 .btn-primary {
   background-color: var(--accent);
+  border-color: var(--accent);
   color: #ffffff;
   box-shadow: 0 2px 8px var(--accent-glow);
 }
 
-.btn-primary:hover {
+.btn-primary:hover:not(:disabled) {
   background-color: var(--accent-hover);
+  border-color: var(--accent-hover);
+}
+
+.btn-accent {
+  background-color: var(--accent);
+  border-color: var(--accent);
+  color: #ffffff;
+  box-shadow: 0 2px 8px var(--accent-glow);
+}
+
+.btn-accent:hover:not(:disabled) {
+  background-color: var(--accent-hover);
+  border-color: var(--accent-hover);
+}
+
+.btn-ghost {
+  background-color: transparent;
+  border-color: var(--border-highlight);
+  color: var(--text-primary);
+}
+
+.btn-ghost:hover:not(:disabled) {
+  background-color: var(--bg-surface-hover);
+  border-color: var(--accent);
+  color: #ffffff;
 }
 
 .btn-sm {
